@@ -1,11 +1,24 @@
 {
-  "name": "bone",
-  "version": "0.0.1",
-  "description": "javascirpt toolkit",
-  "main": "index.js",
-  "scripts": {
-    "test": "make"
-  },
-  "author": "wyicwx@gmail.com",
-  "license": "MIT"
+	"name": "bone",
+	"version": "0.0.1",
+	"description": "javascirpt toolkit",
+	"main": "index.js",
+	"scripts": {
+		"test": "make"
+	},
+	"author": "wyicwx@gmail.com",
+	"license": "MIT",
+	"dependencies": {
+		"colors": "~0.6.1",
+		"async": "~0.9.0",
+		"minimatch": "~0.2.14",
+		"through2": "~0.4.1",
+		"akostream": "~0.0.1",
+		"glob": "~3.2.9",
+		"resolve": "~0.6.1"
+	},
+	"devDependencies": {
+		"mocha": "*",
+		"blanket": "*"
+	}
 }
