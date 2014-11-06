@@ -1,6 +1,6 @@
 {
   "name": "bone",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "javascirpt toolkit",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,8 @@
     "akostream": "~0.0.1",
     "glob": "~3.2.9",
     "resolve": "~0.6.1",
-    "mkdirp": "~0.5.0"
+    "mkdirp": "~0.5.0",
+    "underscore": "~1.7.0"
   },
   "devDependencies": {
     "mocha": "*",
