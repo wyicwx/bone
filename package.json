@@ -17,6 +17,11 @@
     "mkdirp": "~0.5.0",
     "underscore": "~1.7.0"
   },
+  "config": {
+    "blanket": {
+      "pattern": "bone/lib"
+    }
+  },
   "devDependencies": {
     "mocha": "*",
     "blanket": "*"

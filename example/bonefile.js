@@ -1,72 +1,93 @@
-var bone = require('bone');
-var combine = require('bone-combine');
-var include = require('bone-include');
-var connect = require('bone-connect');
+var bone = require('../index.js');
+var plugins = require('./plugins.js');
+// virtual folder 'dist'
+var distDir = bone.dest('dist');
+// virtual folder 'dist/vendor'
+var vendor = distDir.dest('vendor');
 
-var filesDir = bone.define('./files');
-// define ~/bonetmp copy from ~/src
-filesDir.define('./bonetmp')
-	.src('./src/**/*.js')
-
-filesDir.define('./bonetmp')
-	.src('./src/**/*.js')
-	.rename(function(name) {
-		return '_tmp_'+name;
-	});
-
-filesDir.define('./bonetmp/abc.js')
-	.src('./src/models/a.js');
-
-filesDir.define('./dist/index.js')
-	.src('./bonetmp/models/a.js');
-
-// define combine file
-bone.define('~/bonetmp/vfile.js')
-	.src('./abc.js')
-	.act(combine([
-		'~/a.js',
-		'~/b.js'
-	]));
-// (((abc)+a+b)+c+d) 
-// define combine file
-bone.define('~/bonetmp/vfile.js')
-	.src('./abc.js')
-	.act(combine([
-		'~/a.js',
-		'~/b.js'
-	]))
-	.act(combine([
-		'~/c.js',
-		'~/d.js'
+vendor.dest('base-jquery-underscore-backbone-backbone.localStorage.js')
+	.src('~/src/bower_components/todomvc-common/base.js')
+	.act(plugins.concat([
+		'~/src/bower_components/jquery/jquery.js',
+		'~/src/bower_components/underscore/underscore.js',
+		'~/src/bower_components/backbone/backbone.js',
+		'~/src/bower_components/backbone.localStorage/backbone.localStorage.js'
 	]));
 
-bone.define('~/bonetmp')
-	.src('~/src/*.js')
-	.act(include())
-	.act();
+// virtual folder assets
+var assets = distDir.dest('assets');
 
-bone.define('~/bonetmp')
-	.src('~/src/**/*.less')
-	.act(less());
+assets.dest('/')
+	.src('~/src/bower_components/todomvc-common/*!(.js)');
 
-bone.define('~/bonetmp')
-	.src('~/src/**/*.[png|jpg|gif|jpeg]')
-	.act(base64())
-	.rename(function(filename) {
-		return filename.replace(/(png|jpg|gif|jpeg)$/, 'base64');
-	});
+		
 
-var combineInlcude = bone.wrapper(combine(),
-	include());
+// 资源文件夹
+// var projectDir = distDir.dest(pkg.name);
 
-bone.define('~/bonetmp')
-	.src('~/src/a.js')
-	.act(combineInlcude());
+// projectDir.dest('common')
+// 	.src('~/src/common/*.js')
 
+// projectDir.dest('img')
+// 	.src('~/src/img/*.png');
 
-connect(bone);
-proxy(bone);
-// var tmpDir = bone.define('~/bonetmp');
+// projectDir.dest('data')
+// 	.src('~/src/data/*.js');
 
-tmpDir.define('file.js')
-	
+// projectDir.dest('css')
+// 	.src('~/src/less/*.less')
+// 	.act(less())
+// 	.rename(function(file) {
+// 		return file.replace(/\.less$/, '.css');
+// 	});
+
+// projectDir.dest('mods')
+// 	.src('~/src/mods/*.js')
+// 	.act(transport({
+// 		paths : ['sea-modules'],
+//         idleading : pkg.name+'/',
+//         cwd: '~/src',
+//         alias : {
+//           'lib/cmd-zepto' : 'lib/cmd-zepto',
+//           'lib/cmd-underscore' : 'lib/cmd-underscore',
+//           'lib/cmd-backbone' : 'lib/cmd-backbone',
+//           'lib/cmd-mustache' : 'lib/cmd-mustache'
+//         }
+// 	}));
+
+// projectDir.dest('main.js')
+// 	.src('~/src/main.js')
+// 	.act(concat({
+// 		files: './mods/*.js'
+// 	}));
+
+// projectDir.dest('tpl')
+// 	.src('~/src/tpl/**/*.tpl')
+// 	.act(htmlminify())
+// 	.act(transport({
+// 		paths : ['sea-modules'],
+//         idleading : pkg.name+'/',
+//         cwd: '~/src',
+//         alias : {
+//           'lib/cmd-zepto' : 'lib/cmd-zepto',
+//           'lib/cmd-underscore' : 'lib/cmd-underscore',
+//           'lib/cmd-backbone' : 'lib/cmd-backbone',
+//           'lib/cmd-mustache' : 'lib/cmd-mustache'
+//         }
+// 	}))
+// 	.rename(function(file) {
+// 		return file+'.js';
+// 	});
+
+// // 临时文件夹
+// var tmpDir = bone.dest('bonetmp');
+
+// // 定义project
+// bone.project('dist', './dist/**/*.js');
+
+// var connect = require('bone-connect');
+// connect(bone)({
+// 	base: './dist'
+// });
+// var build = require('bone-build');
+// build(bone);
