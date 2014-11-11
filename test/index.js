@@ -2,6 +2,7 @@
 var assert = require('assert'),
 	bone = require('../index.js'),
 	Stream = require('stream').Stream,
+	fs = require('fs'),
 	os = require('os');
 
 require('../example/bonefile.js');
@@ -12,11 +13,11 @@ describe('bone.setup', function() {
 });
 
 describe('bone.fs', function() {
-	describe('createReadStream method', function() {
+	describe('createReadStream', function() {
 		it('create a exist file will return a stream obj', function() {
 			var stream = bone.fs.createReadStream('dist/vendor/base-jquery-underscore-backbone-backbone.localStorage.js');
 			if(stream instanceof Stream) {
-				assert.ok(true);		
+				assert.ok(true);
 			} else {
 				assert.ok(false);
 			}
@@ -121,6 +122,24 @@ describe('bone.fs', function() {
 
 	describe('readDir', function() {
 
+	});
+
+	describe('mkdir', function() {
+		it('depend on the mkdirp libraries, only test ~ mkdir', function() {
+			bone.fs.rm('~/mkdir');
+			bone.fs.mkdir('~/mkdir');
+			var dir = bone.fs.pathResolve('~/mkdir');
+			try {
+				var stat = fs.statSync(dir);
+				if(stat.isDirectory()) {
+					assert.ok(true);
+				} else {
+					assert.ok(false);
+				}
+			} catch(e) {
+				assert.ok(false);
+			}
+		});
 	});
 });
 
