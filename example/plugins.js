@@ -12,6 +12,14 @@ exports.author = bone.wrapper(function(buffer, encoding, callback) {
 	callback(null, Buffer.concat([author, buffer]));
 });
 
+exports.copyright = bone.wrapper(function(buffer, encoding, callback) {
+	var option = this.option;
+	var author = ['/**', ' * @copyright '+option.copyright||'',' */'];
+
+	author = new Buffer(author.join('\n'));
+
+	callback(null, Buffer.concat([author, buffer]));
+});
 
 exports.concat = bone.wrapper(function(buffer, encoding, callback) {
 	var option = this.option;
@@ -36,3 +44,5 @@ exports.concat = bone.wrapper(function(buffer, encoding, callback) {
 		callback(null, Buffer.concat(chunks));
 	});
 });
+
+exports.authorCopyright = bone.wrapper(exports.author, exports.copyright);

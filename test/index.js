@@ -55,6 +55,17 @@ describe('bone.fs', function() {
 			}
 		});
 
+		it('resolve ~folder to ~/folder', function() {
+			var cresult = bone.fs.pathResolve('~folder');
+			var sresult = bone.fs.pathResolve('~/folder');
+
+			if(cresult == sresult) {
+				assert.ok(true);
+			} else {
+				assert.ok(false);
+			}
+		});
+
 		it('resolve / to absolute path', function() {
 			var resolveResult = bone.fs.pathResolve('/');
 
@@ -107,13 +118,30 @@ describe('bone.fs', function() {
 	});
 
 	describe('createWriteStream', function() {
-		it('xxx', function() {
+		it('create write stream under not exist folder will throw a error', function() {
+			assert.throws(function() {
+				bone.fs.rm('~/notExist');
+				bone.fs.createWriteStream('~/notExist/File.js');
+			});
+		});
 
+		it('use focus param to create folder and create write stream', function() {
+			var dir = '~/notExist';
+			var file = dir+'/File.js';
+
+			bone.fs.rm(dir);
+
+			assert.doesNotThrow(function() {			
+				var stream = bone.fs.createWriteStream(file, {focus: true});
+				fs.existsSync(file);
+
+				bone.fs.rm(dir);
+			});
 		});
 	});
 
 	describe('readFile', function() {
-
+		
 	});
 
 	describe('search', function() {
