@@ -139,6 +139,25 @@ describe('bone.fs', function() {
 			} catch(e) {
 				assert.ok(false);
 			}
+			bone.fs.rm('~/mkdir');
+		});
+	});
+
+	describe('rm', function() {
+		it('support recursive delete file and folder', function() {
+			bone.fs.mkdir('~/rm/subdir');
+			var file1 = bone.fs.pathResolve('~/rm/toRm.js');
+			fs.writeFileSync(file1, 'test');
+			var file2 = bone.fs.pathResolve('~/rm/subdir/toRm.js');
+			fs.writeFileSync(file2, 'test');
+
+			bone.fs.rm('~/rm');
+			var dir = bone.fs.pathResolve('~/rm');
+			if(fs.existsSync(dir)) {
+				assert.ok(false);
+			} else {
+				assert.ok(true);
+			}
 		});
 	});
 });
