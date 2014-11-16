@@ -4,6 +4,7 @@ var assert = require('assert'),
 	path = require('path'),
 	glob = require('glob'),
 	Stream = require('stream').Stream,
+	_ = require('underscore'),
 	fs = require('fs'),
 	os = require('os');
 
@@ -222,18 +223,29 @@ describe('bone.fs', function() {
 	});
 
 	describe('search', function() {
-		var vresult = bone.fs.search('~/search/*');
-		var rresult = glob.sync(bone.fs.pathResolve('~/src/**/*'));
+		it('result correct', function() {
+			var vresult = bone.fs.search('~/src/**/*');
+			var rresult = glob.sync(bone.fs.pathResolve('~/src/**/*'));
 
-		if(vresult.length == rresult.length) {
-			
-		} else {
-			assert.ok(false);
-		}
+			if(ArrayContain(vresult, rresult)) {
+				assert.ok(true);
+			} else {
+				assert.ok(false);
+			}
+		});
 	});
 
 	describe('readDir', function() {
-
+		it('read virtual folder', function() {
+			var content = bone.fs.readDir('~/search');
+			var vcontent = fs.readdirSync(bone.fs.pathResolve('~/src/'));
+			
+			if(ArrayContain(content, vcontent)) {
+				assert.ok(true);
+			} else {
+				assert.ok(false);
+			}
+		});
 	});
 
 	describe('mkdir', function() {
@@ -275,8 +287,15 @@ describe('bone.fs', function() {
 });
 
 describe('bone.project', function() {
-	it('placeholder', function() {
+	it('support glob syntax', function() {
+		var files = bone.project('dist');
+		var searchResult = bone.fs.search('~/dist/**/*');
 
+		if(ArrayContain(files, searchResult)) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
 	});
 });
 
@@ -286,3 +305,16 @@ describe('bone.wrapper', function() {
 	});
 });
 
+function ArrayContain(a, b) {
+	var illagel = true;
+	_.each(a, function(file) {
+		if(!~_.indexOf(b, file)) {
+			illagel = false;
+		}
+	});
+	if(illagel) {
+		return true;
+	} else {
+		return false;
+	}
+}

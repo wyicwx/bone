@@ -18,3 +18,5 @@ dev.dest('./')
 // define a virtual folder 'search' for test search()
 var search = bone.dest('search');
 search.src('~/src/**/*');
+
+bone.project('dist', '~/dist/**/*');
