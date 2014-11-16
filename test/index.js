@@ -1,25 +1,48 @@
 'use strict';
 var assert = require('assert'),
 	bone = require('../index.js'),
+	path = require('path'),
+	glob = require('glob'),
 	Stream = require('stream').Stream,
 	fs = require('fs'),
 	os = require('os');
 
-require('../example/bonefile.js');
-bone.setup('./example');
+require('./bonefile.js');
+bone.setup('./test/raw');
 
 describe('bone.setup', function() {
-	it('placeholder', function() {});
+	it('placeholder', function() {
+		console.log(bone.fs.files);
+	});
 });
 
 describe('bone.dest', function() {
-	it('placeholder', function() {});
+	it('dest() define a folder when do not call src()', function() {
+		var result = bone.fs.existFile('~/dev/hello.js', {notFs: true});
+
+		if(result) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
+	});
+
+	it('dest() define a folder when src() input a glob string', function() {
+
+	});
+
+	it('src() pass non-string parameter will throw new error', function() {
+		assert.throws(function() {
+			bone.dest('~/dist')
+				.src(['~/src/empty/js.js']);
+		});
+	});
 });
 
 describe('bone.fs', function() {
 	describe('createReadStream', function() {
-		it('create a exist file will return a stream obj', function() {
-			var stream = bone.fs.createReadStream('dist/vendor/base-jquery-underscore-backbone-backbone.localStorage.js');
+		it('read a exist or defined file will return a stream obj', function() {
+			var stream = bone.fs.createReadStream('~/dist/js/hello.js');
 			if(stream instanceof Stream) {
 				assert.ok(true);
 			} else {
@@ -27,9 +50,32 @@ describe('bone.fs', function() {
 			}
 		});
 
-		it('create a not exist file will throw error', function() {
+		it('read a not exist file will throw error', function() {
 			assert.throws(function() {
-				bone.fs.createReadStream('dist/notExistFile.js');
+				bone.fs.createReadStream('~/dist/not/exist/file.js');
+			});
+		});
+
+		it('read a empty file return a valid stream(will trigger "end" event)', function(done) {
+			var stream = bone.fs.createReadStream('~/dist/empty/js.js');
+			var avild = true;
+			stream.on('data', function() {
+				done(false);
+				avild = false;
+			});
+
+			stream.on('end', function() {
+				if(avild) {
+					done();
+				}
+			});
+		});
+
+		it('read a virtual file is viable', function(done) {
+			var stream = bone.fs.createReadStream('~/dist/js/hello.js');
+
+			stream.on('data', function() {
+				done();
 			});
 		});
 	});
@@ -124,14 +170,14 @@ describe('bone.fs', function() {
 	describe('createWriteStream', function() {
 		it('create write stream under not exist folder will throw a error', function() {
 			assert.throws(function() {
-				bone.fs.rm('~/notExist');
-				bone.fs.createWriteStream('~/notExist/File.js');
+				bone.fs.rm('~/dist/not/exist');
+				bone.fs.createWriteStream('~/dist/not/exist/File.js');
 			});
 		});
 
 		it('use focus param to create folder and create write stream', function() {
-			var dir = '~/notExist';
-			var file = dir+'/File.js';
+			var dir = '~/dist/not/exist';
+			var file = path.join(dir, '/file.js');
 
 			bone.fs.rm(dir);
 
@@ -145,11 +191,45 @@ describe('bone.fs', function() {
 	});
 
 	describe('readFile', function() {
+		it('read a not exist file will throw error', function() {
+			assert.throws(function() {
+				bone.fs.readFile('~/dist/not/exist/file.js');
+			});
+		});
 
+		it('read a empty file', function(done) {
+			var content = fs.readFileSync(bone.fs.pathResolve('~/src/empty/js.js'));
+			bone.fs.readFile('~/dist/empty/js.js', function(err, c) {
+				if(content.toString() == c.toString()) {
+					done();
+				} else {
+					done(false);
+				}
+			});
+		});
+
+		it('read a virtual file as same as real file', function(done) {
+			var content = fs.readFileSync(bone.fs.pathResolve('~/src/js/hello.js'));
+
+			bone.fs.readFile('~/dist/js/hello.js', function(err, result) {
+				if(result.toString() == content.toString()) {
+					done();
+				} else {
+					done(false);
+				}
+			});
+		});
 	});
 
 	describe('search', function() {
+		var vresult = bone.fs.search('~/search/*');
+		var rresult = glob.sync(bone.fs.pathResolve('~/src/**/*'));
 
+		if(vresult.length == rresult.length) {
+			
+		} else {
+			assert.ok(false);
+		}
 	});
 
 	describe('readDir', function() {
@@ -195,10 +275,14 @@ describe('bone.fs', function() {
 });
 
 describe('bone.project', function() {
-	it('placeholder', function() {});
+	it('placeholder', function() {
+
+	});
 });
 
 describe('bone.wrapper', function() {
-	it('placeholder', function() {});
+	it('placeholder', function() {
+
+	});
 });
 
