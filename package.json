@@ -25,5 +25,9 @@
   "devDependencies": {
     "mocha": "*",
     "blanket": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wyicwx/bone.git"
   }
 }
