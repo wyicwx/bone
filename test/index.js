@@ -85,7 +85,7 @@ describe('bone.fs', function() {
 
 	describe('pathResolve', function() {
 		it('separator only / characters are used! on windows characters \\ will be converted into / ', function() {
-			if(!~os.platform().indexOf('win')) {
+			if(~os.platform().indexOf('win')) {
 				var result = bone.fs.pathResolve('~\\test\\characters');
 
 				if(result == '/test/characters') {
