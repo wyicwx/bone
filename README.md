@@ -1,16 +1,12 @@
 # Bone 
-> Javascript developer toolkit, based on virtual file system.
+> The virtualization file system
 
-![travis](https://api.travis-ci.org/wyicwx/bone.png)
-
-##INSTALL
-
-oming soon
+[![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone)
 
 ##GET START
-oming soon
 
-##DOC
+[get start](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
 
-coming soon
+##API
 
+[get start](https://github.com/wyicwx/bone/blob/master/docs/api.md)
