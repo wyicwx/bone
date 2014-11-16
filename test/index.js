@@ -9,11 +9,13 @@ var assert = require('assert'),
 	os = require('os');
 
 require('./bonefile.js');
-bone.setup('./test/raw');
+
 
 describe('bone.setup', function() {
-	it('placeholder', function() {
-		console.log(bone.fs.files);
+	it('correct', function() {
+		assert.doesNotThrow(function() {
+			bone.setup('./test/raw');
+		});
 	});
 });
 
