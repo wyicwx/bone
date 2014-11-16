@@ -1,5 +1,5 @@
 var bone = require('../index.js');
-var AKOStream = require('AKOStream');
+var AKOStream = require('akostream');
 var combine = AKOStream.combine;
 var aggre = AKOStream.aggre;
 
