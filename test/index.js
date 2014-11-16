@@ -9,7 +9,11 @@ require('../example/bonefile.js');
 bone.setup('./example');
 
 describe('bone.setup', function() {
+	it('placeholder', function() {});
+});
 
+describe('bone.dest', function() {
+	it('placeholder', function() {});
 });
 
 describe('bone.fs', function() {
@@ -141,7 +145,7 @@ describe('bone.fs', function() {
 	});
 
 	describe('readFile', function() {
-		
+
 	});
 
 	describe('search', function() {
@@ -190,6 +194,11 @@ describe('bone.fs', function() {
 	});
 });
 
-describe('bone.wrapper', function() {
-
+describe('bone.project', function() {
+	it('placeholder', function() {});
 });
+
+describe('bone.wrapper', function() {
+	it('placeholder', function() {});
+});
+
