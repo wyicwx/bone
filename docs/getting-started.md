@@ -17,6 +17,8 @@ bone.dest('dist')
 ```js
 bone.setup('./');
 ```
-###5.调用bone.fs的API或者使用[bone-cli](https://github.com/wyicwx/bone-cli)来操作虚拟文件
+###5.调用bone.fs的API或者使用CLI来操作虚拟文件
 
-bone.fs的API请参考[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档
++ bone.fs的API请查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档获取相关说明
+
++ cli请参考[bone-cli](https://github.com/wyicwx/bone-cli)模块用法
