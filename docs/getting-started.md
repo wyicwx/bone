@@ -15,4 +15,4 @@ bone.dest('dist')
 ```js
 bone.setup('./');
 ```
-5.调用bone.fs的API或者使用bone-cli来操作虚拟文件
+5.调用bone.fs的API或者使用[bone-cli](https://github.com/wyicwx/bone-cli)来操作虚拟文件
