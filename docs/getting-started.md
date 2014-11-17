@@ -11,3 +11,8 @@ var bone = require('bone');
 bone.dest('dist')
 	.src('~/src/**/*');
 ```
+4.设置你的虚拟根目录
+```js
+bone.setup('./');
+```
+5.调用bone.fs的API或者使用bone-cli来操作虚拟文件
