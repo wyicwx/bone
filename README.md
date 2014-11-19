@@ -1,7 +1,7 @@
 # Bone 
 > 基于虚拟文件系统的js构建工具
 
-<img src="/bone.gif" alt="bone" style="width: 50%;" />
+<img src="/bone.gif" alt="bone" width="50%"/>
 
 [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone)
 
