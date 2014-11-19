@@ -15,7 +15,7 @@ Bone提供一种简单的方式来将一个真实存在的文件映射成一个�
 
 ###示例
 
-这是一个简单的bone配置例子，你需要在项目文件夹下创建`bonefile.js`文件，并安装[bone-cli](https://github.com/wyicwx/bone-cli)
+这是一个简单bone配置例子的示范，你需要在项目文件夹下创建`bonefile.js`文件，并安装[bone-cli](https://github.com/wyicwx/bone-cli)
 
 ```js
 var bone = require('bone');
@@ -52,5 +52,8 @@ dist.dest('js')
 	.act(concat({
 		files: '~/src/lib/*.js'
 	}));
+
+// 加载支持connect的插件
+connect(bone);
 ```
 
