@@ -9,9 +9,9 @@ Bone提供一种简单的方式来将一个真实存在的文件映射成一个�
 
 ###文档
 
-新手？[新手上路](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
-点击查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档
+快速上手？点击[快速上手](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
 
+点击查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档
 
 ###示例
 
