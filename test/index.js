@@ -85,7 +85,7 @@ describe('bone.fs', function() {
 
 	describe('pathResolve', function() {
 		it('separator only / characters are used! on windows characters \\ will be converted into / ', function() {
-			if(~os.platform().indexOf('win')) {
+			if(os.platform().indexOf('win') == 0) {
 				var result = bone.fs.pathResolve('~\\test\\characters');
 
 				if(result == '/test/characters') {
@@ -283,6 +283,21 @@ describe('bone.fs', function() {
 				assert.ok(false);
 			} else {
 				assert.ok(true);
+			}
+		});
+	});
+
+	describe('refresh', function() {
+		it('to refresh glob match file(not exist before)', function() {
+			var file = bone.fs.pathResolve('~/src/js/afterAdd.js');
+			fs.writeFileSync(file, 'test');
+			bone.fs.refresh();
+			var exist = bone.fs.existFile(file)
+			bone.fs.rm(file);
+			if(exist) {
+				assert.ok(true);
+			} else {
+				assert.ok(false);
 			}
 		});
 	});
