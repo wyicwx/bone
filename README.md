@@ -5,7 +5,7 @@
 
 [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone)
 
-Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，并可以在映射的同时做一些文本上处理，这使得被映射的文件可以拥有原生js所不具有的各种各样的能力。
+Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，并可以在映射的同时对源文件做一些文本上处理，这使得被映射的文件可以拥有原生js所不具有的各种各样的能力。
 
 ###文档
 
@@ -58,4 +58,10 @@ connect(bone, {
 	base: './dist'
 });
 ```
+###扩展
 
++ [bone-less](https://github.com/wyicwx/bone-less)
++ [bone-concat](https://github.com/wyicwx/bone-concat)
++ [bone-htmlminify](https://github.com/wyicwx/bone-htmlminify)
++ [bone-include](https://github.com/wyicwx/bone-include)
++ [bone-uglify](https://github.com/wyicwx/bone-uglify)
