@@ -1,11 +1,11 @@
 # Bone 
 > 基于虚拟文件系统的js构建工具
 
-![Alt text](/bone.gif)
+<img src="/bone.gif" alt="bone" style="width: 50%;" />
 
 [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone)
 
-Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，
+Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，并可以在映射的同时做一些文本上处理，这使得被映射的文件可以拥有原生js所不具有的各种各样的能力。
 
 ###文档
 
