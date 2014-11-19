@@ -22,3 +22,7 @@ bone.setup('./');
 + bone.fs的API请查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档获取相关说明
 
 + cli请参考[bone-cli](https://github.com/wyicwx/bone-cli)模块用法
+
+###其他
+
++ [处理单元开发](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)
