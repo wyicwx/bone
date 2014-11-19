@@ -54,6 +54,8 @@ dist.dest('js')
 	}));
 
 // 加载支持connect的插件
-connect(bone);
+connect(bone, {
+	base: './dist'
+});
 ```
 
