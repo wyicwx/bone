@@ -10,7 +10,6 @@ var assert = require('assert'),
 
 require('./bonefile.js');
 
-
 describe('bone.setup', function() {
 	it('correct', function() {
 		assert.doesNotThrow(function() {
@@ -20,7 +19,7 @@ describe('bone.setup', function() {
 });
 
 describe('bone.dest', function() {
-	it('dest() define a folder when do not call src()', function() {
+	it('dest() define a parent folder when do not call src()', function() {
 		var result = bone.fs.existFile('~/dev/hello.js', {notFs: true});
 
 		if(result) {
@@ -30,14 +29,48 @@ describe('bone.dest', function() {
 		}
 	});
 
-	it('dest() define a folder when src() input a glob string', function() {
-
+	it('dest() define a folder when call src()', function() {
+		var result = bone.fs.existFile('~/dev/css.css', {notFs: true});
+		if(result) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
 	});
 
-	it('src() pass non-string parameter will throw new error', function() {
+	it('src() pass string or string array parameter only', function() {
 		assert.throws(function() {
 			bone.dest('~/dist')
-				.src(['~/src/empty/js.js']);
+				.src({});
+		});
+
+		assert.throws(function() {
+			bone.dest('~/dist')
+				.src([null, undefined]);
+		});
+	});
+
+	it('single file define', function() {
+		var exist = bone.fs.existFile('~/dist/js/main.js');
+
+		if(exist) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
+	});
+
+	it('rename() pass non-string or non-function parameter will throw error', function() {
+		assert.throws(function() {
+			bone.dest('~/dist')
+				.src(['~/src/rename/js.js'])
+				.rename({});
+		});
+
+		assert.throws(function() {
+			bone.dest('~/dist')
+				.src(['~/src/rename/js.js'])
+				.rename(1);
 		});
 	});
 });
