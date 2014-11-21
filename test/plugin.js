@@ -5,7 +5,7 @@ var aggre = AKOStream.aggre;
 
 exports.author = bone.wrapper(function(buffer, encoding, callback) {
 	var option = this.option;
-	var author = ['/**', ' * @author '+option.author||'',' */'];
+	var author = ['/**', ' * @author '+(option.author||'anonymous'),' */', ''];
 
 	author = new Buffer(author.join('\n'));
 
@@ -13,12 +13,14 @@ exports.author = bone.wrapper(function(buffer, encoding, callback) {
 });
 
 exports.copyright = bone.wrapper(function(buffer, encoding, callback) {
-	var option = this.option;
-	var author = ['/**', ' * @copyright '+option.copyright||'',' */'];
+	var option = this.option.defaults({
+		copyright: 'anonymous'
+	});
+	var copyright = ['/**', ' * @copyright '+option.copyright,' */', ''];
 
-	author = new Buffer(author.join('\n'));
+	copyright = new Buffer(copyright.join('\n'));
 
-	callback(null, Buffer.concat([author, buffer]));
+	callback(null, Buffer.concat([copyright, buffer]));
 });
 
 exports.concat = bone.wrapper(function(buffer, encoding, callback) {
@@ -46,3 +48,5 @@ exports.concat = bone.wrapper(function(buffer, encoding, callback) {
 });
 
 exports.authorCopyright = bone.wrapper(exports.author, exports.copyright);
+
+exports.authorCopyrightFixedOption = bone.wrapper(exports.author({author: 'wyicwx'}), exports.copyright({copyright: 'wyicwx'}));

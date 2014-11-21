@@ -20,7 +20,7 @@ describe('bone.setup', function() {
 
 describe('bone.dest', function() {
 	it('dest() define a parent folder when do not call src()', function() {
-		var result = bone.fs.existFile('~/dev/hello.js', {notFs: true});
+		var result = bone.fs.existFile('~/dev/js/hello.js', {notFs: true});
 
 		if(result) {
 			assert.ok(true);
@@ -71,6 +71,47 @@ describe('bone.dest', function() {
 			bone.dest('~/dist')
 				.src(['~/src/rename/js.js'])
 				.rename(1);
+		});
+	});
+
+	it('act() process source file', function(done) {
+		bone.fs.readFile('~/dev/js/hello_sign.js', function(err, buffer) {
+			var content = buffer.toString();
+
+			if(~content.search('@author wyicwx')) {
+				done();
+			} else {
+				done(false);
+			}
+		});
+	});
+
+	it('multi act() process source file', function(done) {
+		bone.fs.readFile('~/dev/js/hello_sign_copyright.js', function(err, buffer) {
+			var content = buffer.toString();
+
+			if(~content.search('@copyright wyicwx')) {
+				done();
+			} else {
+				done(false);
+			}
+		});
+	});
+
+	it('call rename() , act() and destroy() before src()  will throw error', function() {
+		assert.throws(function() {
+			bone.dest('dist')
+				.rename();
+		});
+
+		assert.throws(function() {
+			bone.dest('dist')
+				.act();
+		});
+
+		assert.throws(function() {
+			bone.dest('dist')
+				.destroy();
 		});
 	});
 });
@@ -350,8 +391,39 @@ describe('bone.project', function() {
 });
 
 describe('bone.wrapper', function() {
-	it('placeholder', function() {
+	it('option.defaults() set default value for some key', function(done) {
+		bone.fs.readFile('~/dev/js/hello_copyright_default.js', function(err, buffer) {
+			var content = buffer.toString();
 
+			if(~content.search('@copyright anonymous')) {
+				done();
+			} else {
+				done(false);
+			}
+ 		});
+	});
+
+	it('concat multi plugin to one', function(done) {
+		bone.fs.readFile('~/dev/js/hello_sign-copyright.js', function(err, buffer) {
+			var content = buffer.toString();
+			if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
+				done();
+			} else {
+				done(false);
+			}
+		});
+	});
+
+	it('concat multi option fixed\'s plugin to one', function(done) {
+		bone.fs.readFile('~/dev/js/hello_sign-copyright-fixed-option.js', function(err, buffer) {
+			var content = buffer.toString();
+
+			if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
+				done();
+			} else {
+				done(false);
+			}
+		});
 	});
 });
 
