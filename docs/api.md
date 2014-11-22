@@ -1,6 +1,6 @@
 #bone.fs API列表
 
-+ pathResolve()
++ [pathResolve()](#pathResolve)
 + createReadStream()
 + mkdir()
 + rm()
