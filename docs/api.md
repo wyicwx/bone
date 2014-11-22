@@ -1,0 +1,26 @@
+#bone.fs API列表
+
++ pathResolve()
++ createReadStream()
++ mkdir()
++ rm()
++ createWriteStream()
++ readFile()
++ search()
++ register()
++ refresh()
++ readDir()
++ existFile()
+
+
+####pathResolve()
+####createReadStream()
+####mkdir()
+####rm()
+####createWriteStream()
+####readFile()
+####search()
+####register()
+####refresh()
+####readDir()
+####existFile()
