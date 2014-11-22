@@ -12,6 +12,8 @@
 + [readDir()](#readdir)
 + [existFile()](#existfile)
 
+**注意**:`bone.fs`对象在`bone.setup(base)`执行之后才能调用
+
 ####pathResolve(file, dir)
 解析文件路径为绝对路径
 
