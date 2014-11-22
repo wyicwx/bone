@@ -12,7 +12,8 @@
 + [readDir()](#readdir)
 + [existFile()](#existfile)
 
-####pathResolve()
+####pathResolve(file, dir)
+
 ####createReadStream()
 ####mkdir()
 ####rm()
