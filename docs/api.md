@@ -1,17 +1,16 @@
 #bone.fs API列表
 
-+ [pathResolve()](#pathResolve)
-+ createReadStream()
-+ mkdir()
-+ rm()
-+ createWriteStream()
-+ readFile()
-+ search()
-+ register()
-+ refresh()
-+ readDir()
-+ existFile()
-
++ [pathResolve()](#pathresolve)
++ [createReadStream()](#createreadstream)
++ [mkdir()](#mkdir)
++ [rm()](#rm)
++ [createWriteStream()](#createwritestream)
++ [readFile()](#readfile)
++ [search()](#search)
++ [register()](#register)
++ [refresh()](#refresh)
++ [readDir()](#readdir)
++ [existFile()](#existfile)
 
 ####pathResolve()
 ####createReadStream()
