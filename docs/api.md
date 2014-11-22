@@ -1,16 +1,15 @@
 #bone.fs API列表
 
-+ [pathResolve()](#pathresolvefile-dir)
-+ [createReadStream()](#createreadstream)
-+ [mkdir()](#mkdir)
-+ [rm()](#rm)
-+ [createWriteStream()](#createwritestream)
-+ [readFile()](#readfile)
-+ [search()](#search)
-+ [register()](#register)
++ [pathResolve()](#pathresolvefilepath-dir)
++ [createReadStream()](#createreadstreamfilepath)
++ [mkdir()](#mkdirdir)
++ [rm()](#rmfilepath)
++ [createWriteStream()](#createwritestreamfilepath-option)
++ [readFile()](#readfilefilepath-callback)
++ [search()](#searchsearchvalue-option)
 + [refresh()](#refresh)
-+ [readDir()](#readdir)
-+ [existFile()](#existfile)
++ [readDir()](#readdirdir)
++ [existFile()](#existfilefilepath)
 
 **注意**:`bone.fs`对象在`bone.setup()`执行之后才能调用
 
