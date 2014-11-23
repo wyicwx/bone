@@ -5,7 +5,7 @@
 
 [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone)
 
-Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，并可以在映射的同时对源文件做一些文本上处理，这使得被映射的文件可以拥有原生js所不具有的各种各样的能力。
+Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，并可以在映射的同时通过[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)对源文件做一些处理。
 
 ###文档
 
