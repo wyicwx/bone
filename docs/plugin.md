@@ -76,6 +76,6 @@ scope.option.defaults = function(obj) {
 
 **source**：指向处理器正在处理的源文件的路径
 
-**argvs：处理函数的参数
+**argvs**：处理函数的参数
 
 ###合并处理器
