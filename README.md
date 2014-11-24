@@ -9,9 +9,11 @@ Bone提供一种简单的方式来将一个真实存在的文件映射成一个�
 
 ###文档
 
-快速上手？点击[快速上手](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
++ 快速上手？点击[快速上手](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
 
-点击查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档
++ 如何[定义一个文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
+
++ bone.fs接口文档查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档
 
 ###示例
 
