@@ -26,7 +26,7 @@ stream.pipe(wStream);
 
 bone.fs的API请查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档获取相关说明
 
-关于`bone.dest()`的如何[定义一个文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
+关于`bone.dest()`如何[定义一个文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
 
 ###其他
 
