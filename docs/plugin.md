@@ -49,5 +49,24 @@ var processor = bone.wrapper(function(buffer, encoding, callback) {
 
 	callback(null, buffer);
 });
+```
+
+**option**：传递的参数
+
+`this.option.defaults()`接受一个默认值对象返回参数
+```js
+var scope = {
+	option: option || {}
+};
+scope.option.defaults = function(obj) {
+	obj || (obj = {});
+	return _.extend(obj, option);
+};
+
+```
+
+**source**：指向处理器正在处理的源文件的路径
+
+**argvs：处理函数的参数
 
 ###合并处理器
