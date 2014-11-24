@@ -18,11 +18,17 @@ bone.dest('dist')
 bone.setup('./');
 ```
 ###5.调用bone.fs的API或者使用CLI来操作虚拟文件
+```js
+var stream = bone.fs.createReadStream('dist/main.js');
+var wStream = bone.fs.createWriteStream('build/main.js');
+stream.pipe(wStream);
+```
 
-+ bone.fs的API请查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档获取相关说明
+bone.fs的API请查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档获取相关说明
 
-+ cli请参考[bone-cli](https://github.com/wyicwx/bone-cli)模块用法
+关于`bone.dest()`的如何[定义一个文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
 
 ###其他
 
-+ [处理单元开发](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)
++ 命令行工具请参考[bone-cli](https://github.com/wyicwx/bone-cli)模块
++ 如何使用并开发自定义[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)
