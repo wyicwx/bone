@@ -88,3 +88,13 @@ scope.option.defaults = function(obj) {
 **argvs**：处理函数的参数
 
 ###合并处理器
+
+`bone.wrapper`可以传递多个处理器将其合并成一个，方便调用
+
+```js
+var multiProcessor = bone.wrapper(processA, processB, processC);
+
+bone.dest('dist')
+	.src('~/main.js')
+	.act(multiProcessor);
+```
