@@ -58,7 +58,7 @@ connect(bone, {
 	base: './dist'
 });
 ```
-###扩展
+###处理器
 
 + [bone-less](https://github.com/wyicwx/bone-less)
 + [bone-concat](https://github.com/wyicwx/bone-concat)
