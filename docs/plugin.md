@@ -15,12 +15,21 @@ bone.dest('dist')
 processor也可以不传递参数
 
 ```js
-var option = {};
-
 bone.dest('dist')
 	.src('~/main.js')
 	.act(processor);
 ```
+如果你有多个处理，需要调用多次`act()`来传入，处理器将按顺序进行处理
+
+```js
+bone.dest('dist')
+	.src('~/main.js')
+	.act(processorA)
+	.act(processorB)
+	.act(processorC);
+```
+
+处理器B获取到的源文件内容是已经被处理器A所处理后的内容，并不是`~/main.js`的源文件内容，处理器C获取到的是处理器B处理之后的内容，依次类推
 
 ###定义你自己的处理器
 ```js
