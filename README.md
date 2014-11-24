@@ -3,7 +3,7 @@
 
 <img src="/bone.gif" alt="bone" width="50%"/>
 
-[![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone)
+[![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone) [![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master)
 
 Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，并可以在映射的同时通过[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)对源文件做一些处理。
 
