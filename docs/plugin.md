@@ -11,7 +11,16 @@ bone.dest('dist')
 	.src('~/main.js')
 	.act(processor(option));
 ```
-processor
+
+processor也可以不传递参数
+
+```js
+var option = {};
+
+bone.dest('dist')
+	.src('~/main.js')
+	.act(processor);
+```
 
 ###定义你自己的处理器
 ```js
