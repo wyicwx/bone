@@ -25,7 +25,7 @@ var connect = require('bone-connect');
 var less = require('bone-less');
 var concat = require('bone-concat');
 
-// 定义编译文件夹，用来存放一些经过处理的文件
+// 定义release文件夹，用来存放最终的文件
 var dist = bone.dest('dist');
 
 // 在dist下定义文件夹css
