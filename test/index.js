@@ -250,6 +250,7 @@ describe('bone.fs', function() {
 				bone.fs.rm('~/dist/not/exist');
 				bone.fs.createWriteStream('~/dist/not/exist/File.js');
 			});
+
 		});
 
 		it('use focus param to create folder and create write stream', function() {
@@ -263,6 +264,7 @@ describe('bone.fs', function() {
 				fs.existsSync(file);
 
 				bone.fs.rm(dir);
+				bone.fs.rm('~/dist/not');
 			});
 		});
 	});
@@ -380,9 +382,11 @@ describe('bone.fs', function() {
 describe('bone.project', function() {
 	it('support glob syntax', function() {
 		var files = bone.project('dist');
-		var searchResult = bone.fs.search('~/dist/**/*');
-
-		if(ArrayContain(files, searchResult)) {
+		var searchResult = bone.fs.search('~/dist/**/*', {notFs: true});
+		searchResult = _.filter(searchResult, function(file) {
+			return bone.fs.existFile(file);
+		});
+		if(ArrayContain(files, searchResult, {strict: true})) {
 			assert.ok(true);
 		} else {
 			assert.ok(false);
@@ -427,8 +431,14 @@ describe('bone.wrapper', function() {
 	});
 });
 
-function ArrayContain(a, b) {
+function ArrayContain(a, b, option) {
+	option || (option = {});
 	var illagel = true;
+	if(option.strict) {
+		if(a.length !== b.length) {
+			illagel = false;
+		}
+	}
 	_.each(a, function(file) {
 		if(!~_.indexOf(b, file)) {
 			illagel = false;

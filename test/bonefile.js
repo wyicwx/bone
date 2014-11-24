@@ -6,6 +6,11 @@ var bone = require('../index.js'),
 var dist = bone.dest('dist');
 // copy src/**/* to dist/
 dist.src('~/src/**/*');
+// 
+dist.src('~/src/**/*')
+   .rename(function(filename) {
+      return 'rename-'+filename;
+   });
 // define single file
 dist.dest('js')
 	.src('~/src/js/hello.js')
