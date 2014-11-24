@@ -60,10 +60,10 @@ connect(bone, {
 	base: './dist'
 });
 ```
-###处理器
+###可用的处理器
 
-+ [bone-less](https://github.com/wyicwx/bone-less)
-+ [bone-concat](https://github.com/wyicwx/bone-concat)
-+ [bone-htmlminify](https://github.com/wyicwx/bone-htmlminify)
-+ [bone-include](https://github.com/wyicwx/bone-include)
-+ [bone-uglify](https://github.com/wyicwx/bone-uglify)
++ [bone-less](https://github.com/wyicwx/bone-less) less编译器
++ [bone-concat](https://github.com/wyicwx/bone-concat) 文件合并
++ [bone-htmlminify](https://github.com/wyicwx/bone-htmlminify) html压缩
++ [bone-include](https://github.com/wyicwx/bone-include) include功能
++ [bone-uglify](https://github.com/wyicwx/bone-uglify) uglify压缩器支持js和css压缩
