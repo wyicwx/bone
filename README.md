@@ -19,6 +19,7 @@ Bone提供一种简单的方式来将一个真实存在的文件映射成一个�
 
 这是一个简单bone配置例子的示范，你需要在项目文件夹下创建`bonefile.js`文件，并安装[bone-cli](https://github.com/wyicwx/bone-cli)
 
+
 ```js
 var bone = require('bone');
 var connect = require('bone-connect');
@@ -56,10 +57,17 @@ dist.dest('js')
 	}));
 
 // 加载支持connect的插件
-connect(bone, {
+bone.cli(connect({
 	base: './dist'
 });
 ```
+
+先安装依赖
+```sh
+$ npm install bone bone-connect bone-less bone-concat
+```
+
+
 ###可用的处理器
 
 + [bone-less](https://github.com/wyicwx/bone-less) less编译器
