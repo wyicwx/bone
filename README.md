@@ -59,12 +59,12 @@ dist.dest('js')
 // 加载支持connect的插件
 bone.cli(connect({
 	base: './dist'
-});
+}));
 ```
 
-先安装依赖
+安装示例中的依赖
 ```sh
-$ npm install bone bone-connect bone-less bone-concat
+$ npm install bone bone-connect bone-less bone-concat --save-dev
 ```
 
 
