@@ -114,6 +114,17 @@ describe('bone.dest', function() {
 				.destroy();
 		});
 	});
+
+	it('act() processor non-params', function(done) {
+		bone.fs.readFile('~/dev/js/hello_sign-noparam.js', function(err, buffer) {
+			var content = buffer.toString();
+			if(~content.search('@author anonymous')) {
+				done();
+			} else {
+				done(false);
+			}
+		});
+	});
 });
 
 describe('bone.fs', function() {

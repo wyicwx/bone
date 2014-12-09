@@ -66,6 +66,10 @@ dev.dest('js')
    .act(plugins.authorCopyrightFixedOption())
    .rename('hello_sign-copyright-fixed-option.js');
 
+dev.dest('js')
+   .src('./hello.js')
+   .act(plugins.authorCopyright)
+   .rename('hello_sign-noparam.js');
 
 // define a virtual folder 'search' for test search()
 var search = bone.dest('search');
