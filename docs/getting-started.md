@@ -8,7 +8,7 @@ $ npm install bone --save-dev
 ```js
 var bone = require('bone');
 ```
-###3.通过`dest()`定义你的虚拟文件
+###3.通过`dest()`定义你的虚拟文件夹
 ```js
 bone.dest('dist')
 	.src('~/src/**/*');
@@ -23,6 +23,7 @@ var stream = bone.fs.createReadStream('dist/main.js');
 var wStream = bone.fs.createWriteStream('build/main.js');
 stream.pipe(wStream);
 ```
+**注**:main.js文件在src文件夹下，通过bone映射到了dist/main.js
 
 bone.fs的API请查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档获取相关说明
 
