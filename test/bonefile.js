@@ -23,6 +23,10 @@ dist.dest('js')
    .src('./a.js')
    .rename('b.js');
 
+// copy dist
+var cdist = bone.dest('cdist');
+cdist.src('~/dist/**/*');
+
 // define a virtual folder 'dev' 
 var dev = bone.dest('dev');
 // copy ~/src/js/*.js to dev

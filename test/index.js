@@ -60,6 +60,16 @@ describe('bone.dest', function() {
 		}
 	});
 
+	it('use glob to map file of define file', function() {
+		var exist = bone.fs.existFile('~/cdist/js/main.js');
+
+		if(exist) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
+	});
+
 	it('rename() pass non-string or non-function parameter will throw error', function() {
 		assert.throws(function() {
 			bone.dest('~/dist')
