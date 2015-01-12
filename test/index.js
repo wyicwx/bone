@@ -282,18 +282,19 @@ describe('bone.fs', function() {
 
 			assert.doesNotThrow(function() {			
 				var stream = bone.fs.createWriteStream(file, {focus: true});
+				stream.write('\r\n');
+				stream.end();
 				fs.existsSync(file);
-
-				bone.fs.rm(dir);
-				bone.fs.rm('~/dist/not');
 			});
 		});
 	});
 
 	describe('readFile', function() {
 		it('read a not exist file will throw error', function() {
+			var file = '~/dist/not/exist/file.js';
+			bone.fs.rm(file);
 			assert.throws(function() {
-				bone.fs.readFile('~/dist/not/exist/file.js');
+				bone.fs.readFile(file);
 			});
 		});
 
