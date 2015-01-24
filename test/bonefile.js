@@ -75,6 +75,9 @@ dev.dest('js')
    .act(plugins.authorCopyright)
    .rename('hello_sign-noparam.js');
 
+dev.dest('track')
+   .src('~/dev/js/*');
+
 // define a virtual folder 'search' for test search()
 var search = bone.dest('search');
 search.src('~/src/**/*');

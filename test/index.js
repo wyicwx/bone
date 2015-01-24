@@ -176,6 +176,14 @@ describe('bone.fs', function() {
 				done();
 			});
 		});
+
+		it('read a file what mapping from virtual file', function() {
+			if(bone.fs.existFile('dev/track/hello.js', {notFs: true})) {
+				assert.ok(true);
+			} else {
+				assert.ok(false);
+			}
+		});
 	});
 
 	describe('pathResolve', function() {
