@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/wyicwx/bone.git"
@@ -14,5 +13,10 @@
   "bugs": {
     "url": "https://github.com/wyicwx/bone/issues"
   },
-  "homepage": "https://github.com/wyicwx/bone"
+  "homepage": "https://github.com/wyicwx/bone",
+  "devDependencies": {
+    "bone": "0.0.11",
+    "bone-less": "0.0.4",
+    "bone-connect": "0.0.19"
+  }
 }
