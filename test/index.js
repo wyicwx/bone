@@ -191,7 +191,7 @@ describe('bone.fs', function() {
 			if(os.platform().indexOf('win') == 0) {
 				var result = bone.fs.pathResolve('~\\test\\characters');
 
-				if(result == path.join(bone.fs.base, '/test/characters')) {
+				if(result == bone.fs.pathResolve(path.join(bone.fs.base, '/test/characters'))) {
 					assert.ok(true);
 				} else {
 					assert.ok(false);
@@ -225,7 +225,7 @@ describe('bone.fs', function() {
 		it('resolve / to absolute path', function() {
 			var resolveResult = bone.fs.pathResolve('/');
 
-			if(resolveResult == path.resolve('/')) {
+			if(resolveResult == bone.fs.pathResolve(path.resolve('/'))) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -245,7 +245,7 @@ describe('bone.fs', function() {
 		it('resolve . to relative some path', function() {
 			var resolveResult = bone.fs.pathResolve('./test', '/example');
 
-			if(resolveResult == path.resolve('/example/test')) {
+			if(resolveResult == bone.fs.pathResolve(path.resolve('/example/test'))) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
