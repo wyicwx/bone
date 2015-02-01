@@ -1,4 +1,6 @@
 body {
+	min-width: 640px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	background: #4ad2ff;
 	.header {
 		width: 100%;
@@ -11,6 +13,57 @@ body {
 		height: 545px;
 		width: 100%;
 		position: relative;
+		overflow: hidden;
+		.logo {
+			#logo {
+				position: absolute;
+				left: 50%;
+				margin-left: -165px;
+				top: 93px;
+			}
+			#logo2 {
+				position: absolute;
+				left: 50%;
+				margin-left: -67px;
+				top: 241px;
+			}
+		}
+		.halo {
+			position: absolute;
+			width: 640px;
+			height: 640px;
+			top: -240px;
+			left: 50%;
+			margin-left: -320px;
+			border-radius: 640px;
+			z-index: -1;
+			background-image: -webkit-radial-gradient(closest-side circle, #C0EFFD, #4ad2ff);
+			background-repeat: no-repeat;
+		}
+		.w {
+			padding-top: 379px;
+			color: white;
+			text-align: center;
+			font-size: 36px;
+			font-weight: lighter;
+			text-shadow: 2px 2px #15b3e7;
+			cursor: default;
+		}
+		.try {
+			height: 50px;
+			width: 200px;
+			margin: auto;
+			border: 2px solid white;
+			border-radius: 46px;
+			box-sizing: border-box;
+			font-size: 24px;
+			color: white;
+			padding: 7px 19px;
+			margin-top: 48px;
+			display: block;
+			letter-spacing: 1px;
+			text-decoration: none;
+		}
 	}
 	.list {
 		height: 611px;
@@ -21,14 +74,53 @@ body {
 				position: absolute;
 				top: 0;
 				left: 0;
-				height: 100%;
-				width: 50%;
-				background-color: white;
+				height: 0;
+				width: 0;
+				border-bottom: none;
+				border-top: 107px solid transparent;
+				border-right: none;
+				z-index: 1;
+			}
+			.left {
+				border-left: 760px solid white;
 			}
 			.right {
 				right: 0;
 				left: auto;
+				border-right: 760px solid white;
+			}
+			.center {
+				background-color: #15b3e7;
+				border-radius: 100px;
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				left: 50%;
+				margin-left: -50px;
+				bottom: -50px;
+				z-index: 0;
 			}
 		}
+		.c {
+			position: relative;
+			.left, .right {
+				position: absolute;
+				height: 504px;
+				background-color: white;
+				box-sizing: border-box;
+				width: 50%;
+			}
+			.left {
+				left: 0;
+				border-right: 2px solid #15b3e7;
+			}
+			.right {
+				right: 0;
+				border-left: 2px solid #15b3e7;
+			}
+		}
+	}
+	.icon_arr {
+		
 	}
 }
