@@ -84,7 +84,7 @@ body .intro .try .second {
   left: 0;
   top: 0;
   position: absolute;
-  transition: all 300ms ease-out;
+  transition: all 400ms ease-out;
 }
 body .intro .try .first {
   opacity: 1;
@@ -99,7 +99,7 @@ body .intro .try .arrow {
   top: 0;
   left: 0;
   padding: 3px;
-  transition: all 300ms ease-out;
+  transition: all 400ms ease-out;
 }
 body .intro .try:hover .first {
   opacity: 0;
