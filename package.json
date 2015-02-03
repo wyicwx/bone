@@ -17,6 +17,6 @@
   "devDependencies": {
     "bone": "0.0.15",
     "bone-less": "0.0.4",
-    "bone-connect": "0.0.19"
+    "bone-connect": "0.0.23"
   }
 }

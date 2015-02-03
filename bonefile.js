@@ -16,6 +16,7 @@ dist.dest('css')
 		return path.basename(filename, '.less') + '.css';
 	});
 
+bone.project('dist', '~/dist/**/*');
 
 bone.cli(connect({
 	base: '~/'
