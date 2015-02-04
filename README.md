@@ -1,7 +1,7 @@
 # Bone 
 > 基于虚拟文件系统的js构建工具
 
-<!-- <img src="/bone.png" alt="bone" width="50%"/> -->
+<img src="/bone.png" alt="bone" width="50%"/>
 
 [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone) [![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master)
 
