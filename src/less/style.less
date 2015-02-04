@@ -98,6 +98,10 @@ body {
 				left: 0;
 				padding: 3px;
 				transition: all 400ms ease-out;	
+				height: 40px;
+				width: 40px;
+				display: block;
+				background: data-uri('../images/arrow.png') no-repeat 3px 3px;
 			}
 			&:hover {
 				.first {
@@ -168,6 +172,32 @@ body {
 		}
 	}
 	.icon_arr {
-		
+		height: 0;
+		width: 0;
+		font-size: 0;
+		line-height: 0;
+		border-top: 8px solid white;
+		border-left: 16px solid transparent;
+		border-right: 16px solid transparent;
+		position: relative;
+		&:after {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+			border-top: 8px solid white;
+			border-left: 16px solid transparent;
+			border-right: 16px solid transparent;
+		}
+	}
+	.github {
+		width: 50px;
+		height: 50px;
+		margin-top: 5px;
+		margin-right: 10px;
+		background: data-uri('../images/github.png');
+		background-size: cover;
+		display: block;
+		float: right;
 	}
 }
