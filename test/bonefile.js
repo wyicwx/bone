@@ -91,6 +91,17 @@ dev.dest('dependentFile')
       ]
    }));
 
+dev.dest('dependentFile')
+   .src('~/dev/js/hello.js')
+   .act(plugins.concat({
+      files: [
+         '~/src/project/file2.js',
+         '~/src/project/file3.js',
+         '~/dev/css.css'
+      ]
+   }))
+   .rename('foo.js');
+
 // define a virtual folder 'search' for test search()
 var search = bone.dest('search');
 search.src('~/src/**/*');

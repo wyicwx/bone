@@ -503,31 +503,54 @@ describe('bone.utils', function() {
 		}
 	});
 
-	it('dependentFile', function(done) {
-		bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
-			var dependentFile = bone.utils.fs.track('dev/dependentFile/hello.js');
-			dependentFile = dependencies.concat(bone.utils.fs.track('~/dev/css.css'));
-			dependentFile.push(bone.fs.pathResolve('~/src/project/file1.js'));
+	// it('dependentFile', function(done) {
+	// 	bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
+	// 		var dependentFile = bone.utils.fs.track('dev/dependentFile/hello.js');
+	// 		dependentFile = dependencies.concat(bone.utils.fs.track('~/dev/css.css'));
+	// 		dependentFile.push(bone.fs.pathResolve('~/src/project/file1.js'));
 
-			dependentFile = bone.utils.uniq(dependentFile);
+	// 		dependentFile = bone.utils.uniq(dependentFile);
 
-			if(ArrayContain(dependentFile, dependencies)) {
-				done();
-			} else {
-				done(false);
-			}
-		});
-	});
+	// 		if(ArrayContain(dependentFile, dependencies)) {
+	// 			done();
+	// 		} else {
+	// 			done(false);
+	// 		}
+	// 	});
+	// });
 
-	it('dependentFile a not exist file will return false', function(done) {
-		bone.utils.fs.dependentFile('~/dist/not/exist/file.js', function(err) {
-			if(err) {
-				done();
-			} else {
-				done(false);
-			}
-		});
-	});
+	// it('dependentFile a not exist file will return false', function(done) {
+	// 	bone.utils.fs.dependentFile('~/dist/not/exist/file.js', function(err) {
+	// 		if(err) {
+	// 			done();
+	// 		} else {
+	// 			done(false);
+	// 		}
+	// 	});
+	// });
+
+	// it('dependentFile multi times at same time', function(done) {
+	// 	var map = {};
+	// 	var end = function() {
+	// 		if(map.a && map.b) {
+	// 			if(map.a.length == 6 && map.b.length == 7) {
+	// 				done();
+	// 			} else {
+	// 				done(false);
+	// 			}
+	// 		}
+			
+	// 	};
+	// 	bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(err, dependencies) {
+	// 		map.a = dependencies;
+	// 		end();
+	// 	});
+
+	// 	bone.utils.fs.dependentFile('dev/dependentFile/foo.js', function(err, dependencies) {
+	// 		map.b = dependencies;
+	// 		end();
+	// 	});
+	// });
 });
 
 function ArrayContain(a, b, option) {
