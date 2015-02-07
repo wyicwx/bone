@@ -19,5 +19,6 @@ dist.dest('css')
 bone.project('dist', '~/dist/**/*');
 
 bone.cli(connect({
-	base: '~/'
+	base: '~/',
+	livereload: true
 }))
