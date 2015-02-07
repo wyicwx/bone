@@ -78,6 +78,19 @@ dev.dest('js')
 dev.dest('track')
    .src('~/dev/js/*');
 
+dev.dest('trackRename')
+   .src('../track/hello.js')
+   .rename('foo.js');
+
+dev.dest('dependentFile')
+   .src('~/dev/js/hello.js')
+   .act(plugins.concat({
+      files: [
+         '~/src/project/file1.js',
+         '~/dev/css.css'
+      ]
+   }));
+
 // define a virtual folder 'search' for test search()
 var search = bone.dest('search');
 search.src('~/src/**/*');

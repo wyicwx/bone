@@ -461,6 +461,75 @@ describe('bone.wrapper', function() {
 	});
 });
 
+describe('bone.utils', function() {
+	it('track a virtual file', function() {
+		var trackFile = bone.utils.fs.track('dev/track/hello.js');
+
+		if(trackFile.length == 3) {
+			if(trackFile[0] == bone.fs.pathResolve('dev/track/hello.js')) {
+				if(trackFile[1] == bone.fs.pathResolve('dev/js/hello.js')) {
+					if(trackFile[2] == bone.fs.pathResolve('src/js/hello.js')) {
+						return assert.ok(true);
+					}
+				}
+			}
+		}
+
+		assert.ok(false);
+	});
+
+	it('track a rename virtual file', function() {
+		var trackFile = bone.utils.fs.track('dev/trackRename/foo.js');
+
+		if(trackFile.length == 4) {
+			if(trackFile[0] == bone.fs.pathResolve('dev/trackRename/foo.js')) {
+				if(trackFile[1] == bone.fs.pathResolve('dev/track/hello.js')) {
+					if(trackFile[2] == bone.fs.pathResolve('dev/js/hello.js')) {
+						if(trackFile[3] == bone.fs.pathResolve('src/js/hello.js')) {
+							return assert.ok(true);
+						}
+					}
+				}
+			}
+		}
+		assert.ok(false);
+	});
+
+	it('track a not exist file will return false', function() {
+		if(bone.utils.fs.track('~/dist/not/exist/file.js') === false) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
+	});
+
+	it('dependentFile', function(done) {
+		bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
+			var dependentFile = bone.utils.fs.track('dev/dependentFile/hello.js');
+			dependentFile = dependencies.concat(bone.utils.fs.track('~/dev/css.css'));
+			dependentFile.push(bone.fs.pathResolve('~/src/project/file1.js'));
+
+			dependentFile = bone.utils.uniq(dependentFile);
+
+			if(ArrayContain(dependentFile, dependencies)) {
+				done();
+			} else {
+				done(false);
+			}
+		});
+	});
+
+	it('dependentFile a not exist file will return false', function(done) {
+		bone.utils.fs.dependentFile('~/dist/not/exist/file.js', function(err) {
+			if(err) {
+				done();
+			} else {
+				done(false);
+			}
+		});
+	});
+});
+
 function ArrayContain(a, b, option) {
 	option || (option = {});
 	var illagel = true;

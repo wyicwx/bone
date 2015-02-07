@@ -1,6 +1,6 @@
 {
   "name": "bone",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "javascirpt toolkit",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,8 @@
     "akostream": "0.0.2",
     "glob": "~3.2.9",
     "mkdirp": "~0.5.0",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "async": "~0.9.0"
   },
   "config": {
     "blanket": {

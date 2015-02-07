@@ -35,7 +35,7 @@ exports.concat = bone.wrapper(function(buffer, encoding, callback) {
 	files.forEach(function(file) {
 		file = bone.fs.pathResolve(file, destPath);
 		bone.fs.search(file).forEach(function(f) {
-			streams.push(aggre(bone.createReadStream(f)));
+			streams.push(aggre(bone.fs.createReadStream(f)));
 		});
 	});
 	var chunks = [buffer]
