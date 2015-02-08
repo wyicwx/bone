@@ -17,6 +17,8 @@
   "devDependencies": {
     "bone": "0.0.16",
     "bone-less": "0.0.4",
-    "bone-connect": "0.0.23"
+    "bone-connect": "0.0.26",
+    "bone-css-sprite": "0.0.2",
+    "bone-concat": "0.0.7"
   }
 }

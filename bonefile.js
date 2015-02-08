@@ -1,7 +1,9 @@
 var path = require('path');
 var bone = require('bone');
 var less = require('bone-less');
+var concat = require('bone-concat');
 var connect = require('bone-connect');
+var sprite = require('bone-css-sprite');
 
 var dist = bone.dest('dist');
 
@@ -11,6 +13,9 @@ dist.src('~/src/**/*');
 // compile less to css
 dist.dest('css')
 	.src('~/src/less/*')
+	.act(concat({
+		files: '~/src/sprite/icon.less'
+	}))
 	.act(less)
 	.rename(function(filename) {
 		return path.basename(filename, '.less') + '.css';
@@ -21,4 +26,18 @@ bone.project('dist', '~/dist/**/*');
 bone.cli(connect({
 	base: '~/',
 	livereload: true
-}))
+}));
+
+bone.cli(sprite);
+
+bone.task('sprite', {
+	name: 'css-sprite',
+	params: {
+		src: '~/src/icons/*.png',
+		out: '~/src/images/',
+		name: 'icon_sprite',
+		style: '~/src/sprite/icon.less',
+		processor: 'less',
+		orientation: 'binary-tree'
+	}
+});
