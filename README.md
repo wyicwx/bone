@@ -7,11 +7,11 @@
 
 ###又一个轮子？
 
-市面上的构建工具诸如Grunt、Gulp做线下的任务处理已经可以满足大部分的需求了，但是他们毕竟更趋近于通用工具（可以构建nodejs、webjs或者其他语言）而不是专注于前端开发方面的，为了满足自身快速开发业务的需求，在开发工作过程中不断改进和提炼功能，并且参照了grunt、gulp的部分原型，于是Bone诞生了。
+　　市面上的构建工具诸如Grunt、Gulp对任务处理已经可以满足大部分前端开发的需求了，但是他们毕竟更趋近于通用工具（可以构建nodejs、webjs或者其他语言）而不是专注于前端开发方面的，Bone的诞生是为了满足前端快速开发业务的需求，参照了grunt、gulp的部分原型，同时加入了许多在前端开发刚需的特性。当然，Bone和Grunt&Gulp并不冲突，可以很友好的共存。
 
 ###核心
 
-这个模块是Bone的核心功能，为了让使用者有更容易读懂Bone的配置文件，核心模块提供了一种类似操作系统里文件系统的概念，我称它为虚拟文件系统，即将一个虚拟的文件地址映射到一个真实存在的文件地址上，同时可以标注虚拟文件是由何种方式对源文件处理（注意这里不对真实文件做任何处理，源文件是指对真实文件的在内容上的拷贝），对源文件的处理我称它为[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)，通过底下的示例你可以对Bone的虚拟文件系统有一个初步的了解。
+　　这个模块是Bone的核心功能，为了让使用者更容易读懂Bone的配置文件，核心模块提供了一种类似操作系统里文件系统的概念，我称它为虚拟文件系统，即将一个虚拟的文件地址映射到一个真实存在的文件地址上，同时可以标注虚拟文件是由何种方式对源文件处理（注意这里不对真实文件做任何处理，源文件是指对真实文件的在内容上的拷贝），对源文件的处理模块我称它为[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)，通过下面的示例你可以对Bone的虚拟文件系统有一个初步的了解。
 
 ###示例
 
@@ -75,9 +75,7 @@ $ bone connect
 ###文档
 
 + 快速上手？点击[快速上手](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
-
 + 如何[定义虚拟文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
-
 + bone.fs接口调用文档 [API](https://github.com/wyicwx/bone/blob/master/docs/api.md)
 
 ###常用处理器
