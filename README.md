@@ -1,35 +1,32 @@
 # Bone 
-> 基于虚拟文件系统的js构建工具
+> web前端开发构建工具集核心
 
 <img src="/bone.png" alt="bone" width="50%"/>
 
 [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone) [![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master)
 
-Bone提供一种简单的方式来将一个真实存在的文件映射成一个虚拟的文件，并可以在映射的同时通过[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)对源文件做一些处理。
+###又一个轮子？
 
-###文档
+市面上的构建工具诸如Grunt、Gulp做线下的任务处理已经可以满足大部分的需求了，但是他们毕竟更趋近于通用工具（可以构建nodejs、webjs或者其他语言）而不是专注于前端开发方面的，为了满足自身快速开发业务的需求，在开发工作过程中不断改进和提炼功能，并且参照了grunt、gulp的部分原型，于是Bone诞生了。
 
-+ 快速上手？点击[快速上手](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
+###核心
 
-+ 如何[定义一个文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
-
-+ bone.fs接口文档查看[API](https://github.com/wyicwx/bone/blob/master/docs/api.md)文档
+这个模块是Bone的核心功能，为了让使用者有更容易读懂Bone的配置文件，核心模块提供了一种类似操作系统里文件系统的概念，我称它为虚拟文件系统，即将一个虚拟的文件地址映射到一个真实存在的文件地址上，同时可以标注虚拟文件是由何种方式对源文件处理（注意这里不对真实文件做任何处理，源文件是指对真实文件的在内容上的拷贝），对源文件的处理我称它为[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)，通过底下的示例你可以对Bone的虚拟文件系统有一个初步的了解。
 
 ###示例
 
-这是一个简单bone配置例子的示范，你需要在项目文件夹下创建`bonefile.js`文件，并安装[bone-cli](https://github.com/wyicwx/bone-cli)
-
+这是一个简单Bone配置例子的示范，你需要在项目文件夹下创建`bonefile.js`文件，并安装[bone-cli](https://github.com/wyicwx/bone-cli)
 
 ```js
 var bone = require('bone');
-var connect = require('bone-connect');
-var less = require('bone-less');
-var concat = require('bone-concat');
+var connect = require('bone-cli-connect');
+var less = require('bone-act-less');
+var concat = require('bone-act-concat');
 
 // 定义release文件夹，用来存放最终的文件
 var dist = bone.dest('dist');
 
-// 在dist下定义文件夹css
+// 在dist下定义文件夹css（通过dist变量的链式调用为指定定义再其下的文件）
 dist.dest('css')
 	// 指定映射来源src/less下所有.less后缀的文件
    .src('~/src/less/*.less')
@@ -58,20 +55,34 @@ dist.dest('js')
 
 // 加载支持connect的插件
 bone.cli(connect({
-	base: './dist'
+	base: './dist',
+	port: 8080
 }));
 ```
 
+**ps**:'~/'符号指bonefile.js文件所在的文件夹位置，Bone中的文件路径都使用fs.pathResolve解析，详情请参阅[api](https://github.com/wyicwx/bone/blob/master/docs/api.md#pathresolvefilepath-dir)
+
 安装示例中的依赖
 ```sh
-$ npm install bone bone-connect bone-less bone-concat --save-dev
+$ npm install bone bone-connect bone-act-less bone-act-concat --save-dev
 ```
 
+启用connect后通过浏览http://localhost:8080查看文件
+```sh
+$ bone connect
+```
 
-###可用的处理器
+###文档
 
-+ [bone-less](https://github.com/wyicwx/bone-less) less编译器
-+ [bone-concat](https://github.com/wyicwx/bone-concat) 文件合并
-+ [bone-htmlminify](https://github.com/wyicwx/bone-htmlminify) html压缩
-+ [bone-include](https://github.com/wyicwx/bone-include) include功能
++ 快速上手？点击[快速上手](https://github.com/wyicwx/bone/blob/master/docs/getting-started.md)
+
++ 如何[定义虚拟文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
+
++ bone.fs接口调用文档 [API](https://github.com/wyicwx/bone/blob/master/docs/api.md)
+
+###常用处理器
+
++ [bone-act-less](https://github.com/wyicwx/bone-less) less编译器
++ [bone-act-concat](https://github.com/wyicwx/bone-concat) 文件合并
++ [bone-act-include](https://github.com/wyicwx/bone-include) include功能
 + [bone-uglify](https://github.com/wyicwx/bone-uglify) uglify压缩器支持js和css压缩
