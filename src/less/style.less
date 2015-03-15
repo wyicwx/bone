@@ -1,6 +1,6 @@
 body {
 	min-width: 640px;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 	background: #4ad2ff;
 	.header {
 		width: 100%;
@@ -8,6 +8,28 @@ body {
 		background: #2e2e2e;
 		-webkit-box-shadow: 0px 0px 10px rgba(4,4,4,0.35);
 		box-shadow: 0px 0px 10px rgba(4,4,4,0.35);
+		.project {
+			color: white;
+			font-size: 22px;
+			opacity: 0.6;
+			text-decoration: none;
+			line-height: 60px;
+			padding-left: 10px;
+			&:hover {
+				opacity: 1;
+			}
+		}
+		.github {
+			width: 50px;
+			height: 50px;
+			margin-top: 5px;
+			margin-right: 10px;
+			margin-left: 10px;
+			background: data-uri('../images/github.png');
+			background-size: cover;
+			display: block;
+			float: left;
+		}
 	}
 	.intro {
 		height: 545px;
@@ -66,6 +88,13 @@ body {
 			cursor: pointer;
 			position: relative;
 			overflow: hidden;
+			white-space: nowrap;
+			line-height: 32px;
+			-moz-user-select: none; /*火狐*/
+			-webkit-user-select: none;  /*webkit浏览器*/
+			-ms-user-select: none;   /*IE10*/
+			-khtml-user-select: none; /*早期浏览器*/
+			user-select: none;
 			.mask {
 				background: #ffbb29;
 				position: absolute;
@@ -172,10 +201,28 @@ body {
 			.left {
 				left: 0;
 				border-right: 2px solid #15b3e7;
+				.label {
+					right: 47px;
+					&:first-child {
+						top: 53px;
+					}
+					&:last-child {
+						top: 252px
+					}
+				}
 			}
 			.right {
 				right: 0;
 				border-left: 2px solid #15b3e7;
+				.label {
+					left: 49px;
+					&:first-child {
+						top: 153px;
+					}
+					&:last-child {
+						top: 354px;
+					}
+				}
 			}
 			.arrow {
 				width: 40px;
@@ -221,7 +268,43 @@ body {
 					.sprite(@arrow_right);
 				}
 			}
-
+			.label {
+				position: absolute;
+				width: 300px;
+				span {
+					width: 80px;
+					height: 80px;
+					float: left;
+					&.easy {
+						background: data-uri('../images/icon_easy.png') no-repeat;
+					}
+					&.quality {
+						background: data-uri('../images/icon_qu.png') no-repeat;
+					}
+					&.efficient {
+						background: data-uri('../images/icon_efficient.png') no-repeat;
+					}
+					&.learn {
+						background: data-uri('../images/icon_learn.png') no-repeat;
+					}
+				}
+				p {
+					margin: 0 0 0 104px;
+					color: #777777;
+					font-size: 14px;
+					word-wrap: break-word;
+					word-break: break-all;
+					line-height: 18px;
+					b {
+						display: block;
+						color: #15b3e7;
+						font-weight: normal;
+						font-size: 18px;
+						line-height: 1;
+						margin-bottom: 5px;
+					}
+				}
+			}
 		}
 		.bottom {
 			position: absolute;
@@ -244,6 +327,13 @@ body {
 	.footer {
 		background: #4c4c4c;
 		height: 100px;
+		color: #cbcbcb;
+		text-align: center;
+		line-height: 100px;
+		a {
+			color: #cbcbcb;
+			text-decoration: none;
+		}
 	}
 	.icon_arr {
 		height: 0;
@@ -263,15 +353,5 @@ body {
 			border-left: 16px solid transparent;
 			border-right: 16px solid transparent;
 		}
-	}
-	.github {
-		width: 50px;
-		height: 50px;
-		margin-top: 5px;
-		margin-right: 10px;
-		background: data-uri('../images/github.png');
-		background-size: cover;
-		display: block;
-		float: right;
 	}
 }
