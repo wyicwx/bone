@@ -330,6 +330,19 @@ describe('bone.fs', function() {
 		});
 	});
 
+	describe('writeFile', function() {
+		it('write file and create folder', function() {
+			bone.fs.rm('~/folder');
+			bone.fs.writeFile('~/folder/foo.js', 'test', {focus: true});
+
+			if(fs.existsSync(bone.fs.pathResolve('~/folder/foo.js'))) {
+				assert.ok(true);
+			} else {
+				assert.ok(false);
+			}
+		});
+	});
+
 	describe('search', function() {
 		it('result correct', function() {
 			var vresult = bone.fs.search('~/src/**/*');
