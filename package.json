@@ -1,6 +1,6 @@
 {
   "name": "bone",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "javascirpt toolkit",
   "main": "index.js",
   "scripts": {
