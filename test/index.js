@@ -484,39 +484,49 @@ describe('bone.project', function() {
 	});
 });
 
-describe('bone.wrapper', function() {
-	it('option.defaults() set default value for some key', function(done) {
-		bone.fs.readFile('~/dev/js/hello_copyright_default.js', function(err, buffer) {
-			var content = buffer.toString();
+describe('bone.helper', function() {
+	describe('wrapper', function() {
+		it('option.defaults() set default value for some key', function(done) {
+			bone.fs.readFile('~/dev/js/hello_copyright_default.js', function(err, buffer) {
+				var content = buffer.toString();
 
-			if(~content.search('@copyright anonymous')) {
-				done();
-			} else {
-				done(false);
-			}
- 		});
-	});
+				if(~content.search('@copyright anonymous')) {
+					done();
+				} else {
+					done(false);
+				}
+	 		});
+		});
 
-	it('concat multi plugin to one', function(done) {
-		bone.fs.readFile('~/dev/js/hello_sign-copyright.js', function(err, buffer) {
-			var content = buffer.toString();
-			if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
-				done();
-			} else {
-				done(false);
-			}
+		it('concat multi plugin to one', function(done) {
+			bone.fs.readFile('~/dev/js/hello_sign-copyright.js', function(err, buffer) {
+				var content = buffer.toString();
+				if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
+					done();
+				} else {
+					done(false);
+				}
+			});
+		});
+
+		it('concat multi option fixed\'s plugin to one', function(done) {
+			bone.fs.readFile('~/dev/js/hello_sign-copyright-fixed-option.js', function(err, buffer) {
+				var content = buffer.toString();
+
+				if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
+					done();
+				} else {
+					done(false);
+				}
+			});
 		});
 	});
 
-	it('concat multi option fixed\'s plugin to one', function(done) {
-		bone.fs.readFile('~/dev/js/hello_sign-copyright-fixed-option.js', function(err, buffer) {
-			var content = buffer.toString();
-
-			if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
-				done();
-			} else {
-				done(false);
-			}
+	describe('autoRefresh', function() {
+		it('run away', function() {
+			assert.doesNotThrow(function() {
+				bone.helper.autoRefresh(true);
+			});
 		});
 	});
 });
