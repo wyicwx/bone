@@ -135,6 +135,52 @@ describe('bone.dest', function() {
 			}
 		});
 	});
+
+	it('cwd() change work directory', function() {
+		var cwdret = bone.fs.search('~/cwd/all/**/*');
+		var origret = bone.fs.search('~/src/**/*');
+
+		if(cwdret.length === origret.length) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
+	});
+
+	it('cwd() copy subfolder', function() {
+		if(bone.fs.existFile('~/cwd/folder/js/hello.js')) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
+	});
+
+	it('throw error when call cwd() after src()!', function() {
+		assert.throws(function() {
+			bone.dest('cwd/src')
+				.src('~/src/**')
+				.cwd('~/src');
+		});
+	});
+
+	it('throw error define over file', function() {
+		var file;
+		assert.throws(function() {
+			file = bone.dest('dist/js')
+			.src('~/src/js/hello.js')
+			.rename('main.js');
+
+			bone.fs.refresh();
+		});
+		file.destroy();
+		bone.fs.refresh();
+	});
+
+	it('throw error when over reference file', function() {
+		assert.throws(function() {
+			bone.fs.readFile('~/overReferences/bar.js');
+		});
+	});
 });
 
 describe('bone.fs', function() {
@@ -336,6 +382,7 @@ describe('bone.fs', function() {
 			bone.fs.writeFile('~/folder/foo.js', 'test', {focus: true});
 
 			if(fs.existsSync(bone.fs.pathResolve('~/folder/foo.js'))) {
+				bone.fs.rm('~/folder');
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -357,14 +404,14 @@ describe('bone.fs', function() {
 	});
 
 	describe('readDir', function() {
-		it('read virtual folder', function() {
+		it('read virtual folder', function(done) {
 			var content = bone.fs.readDir('~/search');
 			var vcontent = fs.readdirSync(bone.fs.pathResolve('~/src/'));
-			
-			if(ArrayContain(content, vcontent)) {
-				assert.ok(true);
+
+			if(ArrayContain(content, vcontent, {strict: true})) {
+				done();
 			} else {
-				assert.ok(false);
+				done(false);
 			}
 		});
 	});

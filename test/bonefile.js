@@ -102,8 +102,20 @@ dev.dest('dependentFile')
    }))
    .rename('foo.js');
 
+bone.dest('cwd/all')
+   .cwd('~/src')
+   .src('./**/*');
+
+bone.dest('cwd/folder')
+   .cwd('~/src')
+   .src('js/hello.js');
+
 // define a virtual folder 'search' for test search()
-var search = bone.dest('search');
-search.src('~/src/**/*');
+bone.dest('search')
+   .src('~/src/**/*');
+
+// over reference
+bone.dest('overReferences')
+   .src('./bar.js');
 
 bone.project('dist', '~/dist/**/*');
