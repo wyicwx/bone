@@ -23,7 +23,7 @@ var connect = require('bone-cli-connect');
 var less = require('bone-act-less');
 var concat = require('bone-act-concat');
 
-// 定义release文件夹，用来存放最终的文件
+// 定义生成文件夹dist，用来存放最终的文件
 var dist = bone.dest('dist');
 
 // 在dist下定义文件夹css（通过dist变量的链式调用为指定定义再其下的文件）

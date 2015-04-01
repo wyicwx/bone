@@ -525,7 +525,7 @@ describe('bone.helper', function() {
 	describe('autoRefresh', function() {
 		it('run away', function() {
 			assert.doesNotThrow(function() {
-				bone.helper.autoRefresh(true);
+				bone.helper.autoRefresh();
 			});
 		});
 	});

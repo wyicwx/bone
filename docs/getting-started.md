@@ -5,20 +5,33 @@
 $ npm install bone --save-dev
 ```
 ###2.创建`bonefile.js`
+```shell
+touch bonefile.js
+```
+打开并编辑bonefile.js文件
 ```js
 var bone = require('bone');
 ```
 ###3.通过`dest()`定义你的虚拟文件夹
 ```js
+var bone = require('bone');
+
 bone.dest('dist')
 	.src('~/src/**/*');
 ```
 ###4.设置你的虚拟根目录
 ```js
+var bone = require('bone');
+
+bone.dest('dist')
+	.src('~/src/**/*');
+
 bone.setup('./');
 ```
 ###5.调用bone.fs的API或者使用CLI来操作虚拟文件
 ```js
+bone.setup('./');
+
 var stream = bone.fs.createReadStream('dist/main.js');
 var wStream = bone.fs.createWriteStream('build/main.js');
 stream.pipe(wStream);
