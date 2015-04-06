@@ -382,7 +382,9 @@ describe('bone.fs', function() {
 			bone.fs.writeFile('~/folder/foo.js', 'test', {focus: true});
 
 			if(fs.existsSync(bone.fs.pathResolve('~/folder/foo.js'))) {
-				bone.fs.rm('~/folder');
+				process.nextTick(function() {
+					bone.fs.rm('~/folder');
+				});
 				assert.ok(true);
 			} else {
 				assert.ok(false);

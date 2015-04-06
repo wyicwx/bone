@@ -1,6 +1,6 @@
 {
   "name": "bone",
-  "version": "0.0.18",
+  "version": "0.0.21",
   "description": "javascirpt toolkit",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "wyicwx@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "akostream": "0.0.2",
+    "akostream": "~0.0.5",
     "async": "~0.9.0",
-    "chokidar": "^1.0.0-rc4",
+    "chokidar": "~1.0.0-rc1",
     "colors": "~0.6.1",
     "glob": "~3.2.9",
     "minimatch": "~0.2.14",
