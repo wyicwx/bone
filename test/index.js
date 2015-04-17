@@ -14,6 +14,7 @@ describe('bone.setup', function() {
 	it('correct', function() {
 		assert.doesNotThrow(function() {
 			bone.setup('./test/raw');
+			bone.log('');
 		});
 	});
 });
@@ -527,7 +528,11 @@ describe('bone.helper', function() {
 	describe('autoRefresh', function() {
 		it('run away', function() {
 			assert.doesNotThrow(function() {
-				bone.helper.autoRefresh();
+				bone.helper.autoRefresh(function(watcher) {
+					if(!watcher) {
+						throw new Error();
+					}
+				});
 			});
 		});
 	});
