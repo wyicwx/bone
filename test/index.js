@@ -475,7 +475,7 @@ describe('bone.fs', function() {
 describe('bone.project', function() {
 	it('support glob syntax', function() {
 		var files = bone.project('dist');
-		var searchResult = bone.fs.search('~/dist/**/*', {notFs: true});
+		var searchResult = bone.fs.search('~/dist/**/*');
 		searchResult = _.filter(searchResult, function(file) {
 			return bone.fs.existFile(file);
 		});
