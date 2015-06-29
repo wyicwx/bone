@@ -14,7 +14,6 @@ describe('bone.setup', function() {
 	it('correct', function() {
 		assert.doesNotThrow(function() {
 			bone.setup('./test/raw');
-			bone.log('');
 		});
 	});
 });
@@ -177,9 +176,13 @@ describe('bone.dest', function() {
 		bone.fs.refresh();
 	});
 
-	it('throw error when over reference file', function() {
-		assert.throws(function() {
-			bone.fs.readFile('~/overReferences/bar.js');
+	it('throw error when over reference file', function(done) {
+		bone.fs.readFile('~/overReferences/bar.js', function(error, data) {
+			if(error) {
+				done();
+			} else {
+				done(false);
+			}
 		});
 	});
 });
@@ -345,11 +348,15 @@ describe('bone.fs', function() {
 	});
 
 	describe('readFile', function() {
-		it('read a not exist file will throw error', function() {
+		it('read a not exist file will throw error', function(done) {
 			var file = '~/dist/not/exist/file.js';
 			bone.fs.rm(file);
-			assert.throws(function() {
-				bone.fs.readFile(file);
+			bone.fs.readFile(file, function(error, data) {
+				if(error) {
+					done();
+				} else {
+					done(false);
+				}
 			});
 		});
 
@@ -485,6 +492,20 @@ describe('bone.project', function() {
 			assert.ok(false);
 		}
 	});
+
+	it('array as option', function() {
+		var files = bone.project('distArray');
+	});
+
+	it('files empty', function() {
+		var files = bone.project('emptyProject');
+
+		if(_.isUndefined(files)) {
+			return assert.ok(true);
+		}
+
+		assert.ok(false);
+	});
 });
 
 describe('bone.helper', function() {
@@ -528,6 +549,11 @@ describe('bone.helper', function() {
 	describe('autoRefresh', function() {
 		it('run away', function() {
 			assert.doesNotThrow(function() {
+				bone.helper.autoRefresh(function(watcher) {
+					if(!watcher) {
+						throw new Error();
+					}
+				});
 				bone.helper.autoRefresh(function(watcher) {
 					if(!watcher) {
 						throw new Error();

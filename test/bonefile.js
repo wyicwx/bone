@@ -119,3 +119,5 @@ bone.dest('overReferences')
    .src('./bar.js');
 
 bone.project('dist', '~/dist/**/*');
+bone.project('distArray', ['~/dist/**/*']);
+bone.project('emptyProject');
