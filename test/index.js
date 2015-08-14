@@ -9,7 +9,7 @@ var assert = require('assert'),
 	os = require('os');
 
 require('./bonefile.js');
-
+bone.status.test = true;
 describe('bone.setup', function() {
 	it('correct', function() {
 		assert.doesNotThrow(function() {
@@ -126,6 +126,7 @@ describe('bone.dest', function() {
 	});
 
 	it('act() processor non-params', function(done) {
+		var track = bone.utils.fs.track('~/dev/js/hello_sign-noparam.js');
 		bone.fs.readFile('~/dev/js/hello_sign-noparam.js', function(err, buffer) {
 			var content = buffer.toString();
 			if(~content.search('@author anonymous')) {
