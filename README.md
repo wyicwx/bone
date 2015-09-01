@@ -7,7 +7,7 @@
 
 ###又一个轮子？
 
-　　市面上的构建工具诸如Grunt、Gulp对任务处理已经可以满足大部分前端开发的需求了，但是这些工具毕竟更趋近于通用化（可以构建javascript、nodejs甚至用于其他语言）而不是专注于前端开发方面的，Bone的诞生是为了满足前端快速开发业务的需求，参照了grunt、gulp的部分原型，同时加入了许多在前端开发刚需的特性。当然，Bone和Grunt&Gulp并不冲突，可以很友好的共存。
+　　不，Bone和Grunt&Gulp不同！Bone提供一种简易的方式来整合前端开发在开发阶段的各种工具，通过各种[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)来对源文件进行处理。当然Bone和Grunt&Gulp并不冲突，通过Bone处理后的文件可以再通过其他的构建工具进行进一步的处理。
 
 ###核心
 
