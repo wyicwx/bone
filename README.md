@@ -81,6 +81,7 @@ $ bone connect
 ###常用处理器
 
 + [bone-act-less](https://github.com/wyicwx/bone-act-less) less编译器
++ [bone-act-sass](https://github.com/jansesun/bone-act-sass) sass编译器
 + [bone-act-concat](https://github.com/wyicwx/bone-act-concat) 文件合并
 + [bone-act-include](https://github.com/wyicwx/bone-act-include) include功能
 + [bone-act-uglify](https://github.com/wyicwx/bone-act-uglify) uglify压缩器支持js和css压缩
