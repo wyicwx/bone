@@ -78,6 +78,11 @@ $ bone connect
 + 如何[定义虚拟文件](https://github.com/wyicwx/bone/blob/master/docs/file.md)
 + bone.fs接口调用文档 [API](https://github.com/wyicwx/bone/blob/master/docs/api.md)
 
+###常用服务器
+
++ [bone-cli-connect](https://github.com/wyicwx/bone-cli-connect) 
++ [bone-cli-proxy](https://github.com/wyicwx/bone-cli-proxy) 
+
 ###常用处理器
 
 + [bone-act-less](https://github.com/wyicwx/bone-act-less) less编译器
