@@ -27,15 +27,16 @@ exports.concat = bone.wrapper(function(buffer, encoding, callback) {
 	var option = this.option;
 	var files = option.files || [];
 	var destPath = this.destPath;
+	var fs = this.fs;
 
 	if(!Array.isArray(files)) {
 		files = [files];
 	}
 	var streams = [];
 	files.forEach(function(file) {
-		file = bone.fs.pathResolve(file, destPath);
-		bone.fs.search(file).forEach(function(f) {
-			streams.push(aggre(bone.fs.createReadStream(f)));
+		file = fs.pathResolve(file, destPath);
+		fs.search(file).forEach(function(f) {
+			streams.push(aggre(fs.createReadStream(f)));
 		});
 	});
 	var chunks = [buffer]

@@ -6,7 +6,8 @@ var assert = require('assert'),
 	Stream = require('stream').Stream,
 	_ = require('underscore'),
 	fs = require('fs'),
-	os = require('os');
+	os = require('os'),
+	bonefs;
 
 require('./bonefile.js');
 bone.status.test = true;
@@ -14,13 +15,15 @@ describe('bone.setup', function() {
 	it('correct', function() {
 		assert.doesNotThrow(function() {
 			bone.setup('./test/raw');
+			var FileSystem = require('../lib/fs.js');
+			bonefs = FileSystem.getFs();
 		});
 	});
 });
 
 describe('bone.dest', function() {
 	it('dest() define a parent folder when do not call src()', function() {
-		var result = bone.fs.existFile('~/dev/js/hello.js', {notFs: true});
+		var result = bonefs.existFile('~/dev/js/hello.js', {notFs: true});
 
 		if(result) {
 			assert.ok(true);
@@ -30,7 +33,7 @@ describe('bone.dest', function() {
 	});
 
 	it('dest() define a folder when call src()', function() {
-		var result = bone.fs.existFile('~/dev/css.css', {notFs: true});
+		var result = bonefs.existFile('~/dev/css.css', {notFs: true});
 		if(result) {
 			assert.ok(true);
 		} else {
@@ -51,7 +54,7 @@ describe('bone.dest', function() {
 	});
 
 	it('single file define', function() {
-		var exist = bone.fs.existFile('~/dist/js/main.js');
+		var exist = bonefs.existFile('~/dist/js/main.js');
 
 		if(exist) {
 			assert.ok(true);
@@ -61,7 +64,7 @@ describe('bone.dest', function() {
 	});
 
 	it('use glob to map file of define file', function() {
-		var exist = bone.fs.existFile('~/cdist/js/main.js');
+		var exist = bonefs.existFile('~/cdist/js/main.js');
 
 		if(exist) {
 			assert.ok(true);
@@ -85,7 +88,7 @@ describe('bone.dest', function() {
 	});
 
 	it('act() process source file', function(done) {
-		bone.fs.readFile('~/dev/js/hello_sign.js', function(err, buffer) {
+		bonefs.readFile('~/dev/js/hello_sign.js', function(err, buffer) {
 			var content = buffer.toString();
 
 			if(~content.search('@author wyicwx')) {
@@ -97,7 +100,7 @@ describe('bone.dest', function() {
 	});
 
 	it('multi act() process source file', function(done) {
-		bone.fs.readFile('~/dev/js/hello_sign_copyright.js', function(err, buffer) {
+		bonefs.readFile('~/dev/js/hello_sign_copyright.js', function(err, buffer) {
 			var content = buffer.toString();
 
 			if(~content.search('@copyright wyicwx')) {
@@ -127,7 +130,7 @@ describe('bone.dest', function() {
 
 	it('act() processor non-params', function(done) {
 		var track = bone.utils.fs.track('~/dev/js/hello_sign-noparam.js');
-		bone.fs.readFile('~/dev/js/hello_sign-noparam.js', function(err, buffer) {
+		bonefs.readFile('~/dev/js/hello_sign-noparam.js', function(err, buffer) {
 			var content = buffer.toString();
 			if(~content.search('@author anonymous')) {
 				done();
@@ -138,8 +141,8 @@ describe('bone.dest', function() {
 	});
 
 	it('cwd() change work directory', function() {
-		var cwdret = bone.fs.search('~/cwd/all/**/*');
-		var origret = bone.fs.search('~/src/**/*');
+		var cwdret = bonefs.search('~/cwd/all/**/*');
+		var origret = bonefs.search('~/src/**/*');
 
 		if(cwdret.length === origret.length) {
 			assert.ok(true);
@@ -149,7 +152,7 @@ describe('bone.dest', function() {
 	});
 
 	it('cwd() copy subfolder', function() {
-		if(bone.fs.existFile('~/cwd/folder/js/hello.js')) {
+		if(bonefs.existFile('~/cwd/folder/js/hello.js')) {
 			assert.ok(true);
 		} else {
 			assert.ok(false);
@@ -171,14 +174,14 @@ describe('bone.dest', function() {
 			.src('~/src/js/hello.js')
 			.rename('main.js');
 
-			bone.fs.refresh();
+			bonefs.refresh();
 		});
 		file.destroy();
-		bone.fs.refresh();
+		bonefs.refresh();
 	});
 
 	it('throw error when over reference file', function(done) {
-		bone.fs.readFile('~/overReferences/bar.js', function(error, data) {
+		bonefs.readFile('~/overReferences/bar.js', function(error, data) {
 			if(error) {
 				done();
 			} else {
@@ -191,7 +194,7 @@ describe('bone.dest', function() {
 describe('bone.fs', function() {
 	describe('createReadStream', function() {
 		it('read a exist or defined file will return a stream obj', function() {
-			var stream = bone.fs.createReadStream('~/dist/js/hello.js');
+			var stream = bonefs.createReadStream('~/dist/js/hello.js');
 			if(stream instanceof Stream) {
 				assert.ok(true);
 			} else {
@@ -201,12 +204,12 @@ describe('bone.fs', function() {
 
 		it('read a not exist file will throw error', function() {
 			assert.throws(function() {
-				bone.fs.createReadStream('~/dist/not/exist/file.js');
+				bonefs.createReadStream('~/dist/not/exist/file.js');
 			});
 		});
 
 		it('read a empty file return a valid stream(will trigger "end" event)', function(done) {
-			var stream = bone.fs.createReadStream('~/dist/empty/js.js');
+			var stream = bonefs.createReadStream('~/dist/empty/js.js');
 			var avild = true;
 			stream.on('data', function() {
 				done(false);
@@ -221,7 +224,7 @@ describe('bone.fs', function() {
 		});
 
 		it('read a virtual file is viable', function(done) {
-			var stream = bone.fs.createReadStream('~/dist/js/hello.js');
+			var stream = bonefs.createReadStream('~/dist/js/hello.js');
 
 			stream.on('data', function() {
 				done();
@@ -229,7 +232,7 @@ describe('bone.fs', function() {
 		});
 
 		it('read a file what mapping from virtual file', function() {
-			if(bone.fs.existFile('dev/track/hello.js', {notFs: true})) {
+			if(bonefs.existFile('dev/track/hello.js', {notFs: true})) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -240,9 +243,9 @@ describe('bone.fs', function() {
 	describe('pathResolve', function() {
 		it('separator only / characters are used! on windows characters \\ will be converted into / ', function() {
 			if(os.platform().indexOf('win') == 0) {
-				var result = bone.fs.pathResolve('~\\test\\characters');
+				var result = bonefs.pathResolve('~\\test\\characters');
 
-				if(result == bone.fs.pathResolve(path.join(bone.fs.base, '/test/characters'))) {
+				if(result == bonefs.pathResolve(path.join(bonefs.base, '/test/characters'))) {
 					assert.ok(true);
 				} else {
 					assert.ok(false);
@@ -253,9 +256,9 @@ describe('bone.fs', function() {
 		});
 
 		it('resolve ~ to bone\'s base path', function() {
-			var resolveResult = bone.fs.pathResolve('~');
+			var resolveResult = bonefs.pathResolve('~');
 
-			if(resolveResult == bone.fs.base) {
+			if(resolveResult == bonefs.base) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -263,8 +266,8 @@ describe('bone.fs', function() {
 		});
 
 		it('resolve ~folder to ~/folder', function() {
-			var cresult = bone.fs.pathResolve('~folder');
-			var sresult = bone.fs.pathResolve('~/folder');
+			var cresult = bonefs.pathResolve('~folder');
+			var sresult = bonefs.pathResolve('~/folder');
 
 			if(cresult == sresult) {
 				assert.ok(true);
@@ -274,9 +277,9 @@ describe('bone.fs', function() {
 		});
 
 		it('resolve / to absolute path', function() {
-			var resolveResult = bone.fs.pathResolve('/');
+			var resolveResult = bonefs.pathResolve('/');
 
-			if(resolveResult == bone.fs.pathResolve(path.resolve('/'))) {
+			if(resolveResult == bonefs.pathResolve(path.resolve('/'))) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -284,9 +287,9 @@ describe('bone.fs', function() {
 		});
 
 		it('resolve . default to bone\'s base path', function() {
-			var resolveResult = bone.fs.pathResolve('.');
+			var resolveResult = bonefs.pathResolve('.');
 
-			if(resolveResult == bone.fs.base) {
+			if(resolveResult == bonefs.base) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -294,9 +297,9 @@ describe('bone.fs', function() {
 		});
 
 		it('resolve . to relative some path', function() {
-			var resolveResult = bone.fs.pathResolve('./test', '/example');
+			var resolveResult = bonefs.pathResolve('./test', '/example');
 
-			if(resolveResult == bone.fs.pathResolve(path.resolve('/example/test'))) {
+			if(resolveResult == bonefs.pathResolve(path.resolve('/example/test'))) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -304,9 +307,9 @@ describe('bone.fs', function() {
 		});
 
 		it('resolve "" default to bone\'s base path', function() {
-			var resolveResult = bone.fs.pathResolve('');
+			var resolveResult = bonefs.pathResolve('');
 
-			if(resolveResult == bone.fs.base) {
+			if(resolveResult == bonefs.base) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -314,9 +317,9 @@ describe('bone.fs', function() {
 		});
 
 		it('support resolve ~ dir path', function() {
-			var resolveResult = bone.fs.pathResolve('.', '~');
+			var resolveResult = bonefs.pathResolve('.', '~');
 
-			if(resolveResult == bone.fs.base) {
+			if(resolveResult == bonefs.base) {
 				assert.ok(true);
 			} else {
 				assert.ok(false);
@@ -327,8 +330,8 @@ describe('bone.fs', function() {
 	describe('createWriteStream', function() {
 		it('create write stream under not exist folder will throw a error', function() {
 			assert.throws(function() {
-				bone.fs.rm('~/dist/not/exist');
-				bone.fs.createWriteStream('~/dist/not/exist/File.js');
+				bonefs.rm('~/dist/not/exist');
+				bonefs.createWriteStream('~/dist/not/exist/File.js');
 			});
 
 		});
@@ -337,10 +340,10 @@ describe('bone.fs', function() {
 			var dir = '~/dist/not/exist';
 			var file = path.join(dir, '/file.js');
 
-			bone.fs.rm(dir);
+			bonefs.rm(dir);
 
 			assert.doesNotThrow(function() {			
-				var stream = bone.fs.createWriteStream(file, {focus: true});
+				var stream = bonefs.createWriteStream(file, {focus: true});
 				stream.write('\r\n');
 				stream.end();
 				fs.existsSync(file);
@@ -351,8 +354,8 @@ describe('bone.fs', function() {
 	describe('readFile', function() {
 		it('read a not exist file will throw error', function(done) {
 			var file = '~/dist/not/exist/file.js';
-			bone.fs.rm(file);
-			bone.fs.readFile(file, function(error, data) {
+			bonefs.rm(file);
+			bonefs.readFile(file, function(error, data) {
 				if(error) {
 					done();
 				} else {
@@ -362,8 +365,8 @@ describe('bone.fs', function() {
 		});
 
 		it('read a empty file', function(done) {
-			var content = fs.readFileSync(bone.fs.pathResolve('~/src/empty/js.js'));
-			bone.fs.readFile('~/dist/empty/js.js', function(err, c) {
+			var content = fs.readFileSync(bonefs.pathResolve('~/src/empty/js.js'));
+			bonefs.readFile('~/dist/empty/js.js', function(err, c) {
 				if(content.toString() == c.toString()) {
 					done();
 				} else {
@@ -373,9 +376,9 @@ describe('bone.fs', function() {
 		});
 
 		it('read a virtual file as same as real file', function(done) {
-			var content = fs.readFileSync(bone.fs.pathResolve('~/src/js/hello.js'));
+			var content = fs.readFileSync(bonefs.pathResolve('~/src/js/hello.js'));
 
-			bone.fs.readFile('~/dist/js/hello.js', function(err, result) {
+			bonefs.readFile('~/dist/js/hello.js', function(err, result) {
 				if(result.toString() == content.toString()) {
 					done();
 				} else {
@@ -387,12 +390,12 @@ describe('bone.fs', function() {
 
 	describe('writeFile', function() {
 		it('write file and create folder', function() {
-			bone.fs.rm('~/folder');
-			bone.fs.writeFile('~/folder/foo.js', 'test', {focus: true});
+			bonefs.rm('~/folder');
+			bonefs.writeFile('~/folder/foo.js', 'test', {focus: true});
 
-			if(fs.existsSync(bone.fs.pathResolve('~/folder/foo.js'))) {
+			if(fs.existsSync(bonefs.pathResolve('~/folder/foo.js'))) {
 				process.nextTick(function() {
-					bone.fs.rm('~/folder');
+					bonefs.rm('~/folder');
 				});
 				assert.ok(true);
 			} else {
@@ -403,8 +406,8 @@ describe('bone.fs', function() {
 
 	describe('search', function() {
 		it('result correct', function() {
-			var vresult = bone.fs.search('~/src/**/*');
-			var rresult = glob.sync(bone.fs.pathResolve('~/src/**/*'));
+			var vresult = bonefs.search('~/src/**/*');
+			var rresult = glob.sync(bonefs.pathResolve('~/src/**/*'));
 
 			if(ArrayContain(vresult, rresult)) {
 				assert.ok(true);
@@ -416,8 +419,8 @@ describe('bone.fs', function() {
 
 	describe('readDir', function() {
 		it('read virtual folder', function(done) {
-			var content = bone.fs.readDir('~/search');
-			var vcontent = fs.readdirSync(bone.fs.pathResolve('~/src/'));
+			var content = bonefs.readDir('~/search');
+			var vcontent = fs.readdirSync(bonefs.pathResolve('~/src/'));
 
 			if(ArrayContain(content, vcontent, {strict: true})) {
 				done();
@@ -429,9 +432,9 @@ describe('bone.fs', function() {
 
 	describe('mkdir', function() {
 		it('depend on the mkdirp libraries, only test ~ mkdir', function() {
-			bone.fs.rm('~/mkdir');
-			bone.fs.mkdir('~/mkdir');
-			var dir = bone.fs.pathResolve('~/mkdir');
+			bonefs.rm('~/mkdir');
+			bonefs.mkdir('~/mkdir');
+			var dir = bonefs.pathResolve('~/mkdir');
 			try {
 				var stat = fs.statSync(dir);
 				if(stat.isDirectory()) {
@@ -442,20 +445,20 @@ describe('bone.fs', function() {
 			} catch(e) {
 				assert.ok(false);
 			}
-			bone.fs.rm('~/mkdir');
+			bonefs.rm('~/mkdir');
 		});
 	});
 
 	describe('rm', function() {
 		it('support recursive delete file and folder', function() {
-			bone.fs.mkdir('~/rm/subdir');
-			var file1 = bone.fs.pathResolve('~/rm/toRm.js');
+			bonefs.mkdir('~/rm/subdir');
+			var file1 = bonefs.pathResolve('~/rm/toRm.js');
 			fs.writeFileSync(file1, 'test');
-			var file2 = bone.fs.pathResolve('~/rm/subdir/toRm.js');
+			var file2 = bonefs.pathResolve('~/rm/subdir/toRm.js');
 			fs.writeFileSync(file2, 'test');
 
-			bone.fs.rm('~/rm');
-			var dir = bone.fs.pathResolve('~/rm');
+			bonefs.rm('~/rm');
+			var dir = bonefs.pathResolve('~/rm');
 			if(fs.existsSync(dir)) {
 				assert.ok(false);
 			} else {
@@ -466,11 +469,11 @@ describe('bone.fs', function() {
 
 	describe('refresh', function() {
 		it('to refresh glob match file(not exist before)', function() {
-			var file = bone.fs.pathResolve('~/src/js/afterAdd.js');
+			var file = bonefs.pathResolve('~/src/js/afterAdd.js');
 			fs.writeFileSync(file, 'test');
-			bone.fs.refresh();
-			var exist = bone.fs.existFile(file)
-			bone.fs.rm(file);
+			bonefs.refresh();
+			var exist = bonefs.existFile(file)
+			bonefs.rm(file);
 			if(exist) {
 				assert.ok(true);
 			} else {
@@ -483,9 +486,9 @@ describe('bone.fs', function() {
 describe('bone.project', function() {
 	it('support glob syntax', function() {
 		var files = bone.project('dist');
-		var searchResult = bone.fs.search('~/dist/**/*');
+		var searchResult = bonefs.search('~/dist/**/*');
 		searchResult = _.filter(searchResult, function(file) {
-			return bone.fs.existFile(file);
+			return bonefs.existFile(file);
 		});
 		if(ArrayContain(files, searchResult, {strict: true})) {
 			assert.ok(true);
@@ -512,7 +515,7 @@ describe('bone.project', function() {
 describe('bone.helper', function() {
 	describe('wrapper', function() {
 		it('option.defaults() set default value for some key', function(done) {
-			bone.fs.readFile('~/dev/js/hello_copyright_default.js', function(err, buffer) {
+			bonefs.readFile('~/dev/js/hello_copyright_default.js', function(err, buffer) {
 				var content = buffer.toString();
 
 				if(~content.search('@copyright anonymous')) {
@@ -524,7 +527,7 @@ describe('bone.helper', function() {
 		});
 
 		it('concat multi plugin to one', function(done) {
-			bone.fs.readFile('~/dev/js/hello_sign-copyright.js', function(err, buffer) {
+			bonefs.readFile('~/dev/js/hello_sign-copyright.js', function(err, buffer) {
 				var content = buffer.toString();
 				if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
 					done();
@@ -535,7 +538,7 @@ describe('bone.helper', function() {
 		});
 
 		it('concat multi option fixed\'s plugin to one', function(done) {
-			bone.fs.readFile('~/dev/js/hello_sign-copyright-fixed-option.js', function(err, buffer) {
+			bonefs.readFile('~/dev/js/hello_sign-copyright-fixed-option.js', function(err, buffer) {
 				var content = buffer.toString();
 
 				if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
@@ -570,9 +573,9 @@ describe('bone.utils', function() {
 		var trackFile = bone.utils.fs.track('dev/track/hello.js');
 
 		if(trackFile.length == 3) {
-			if(trackFile[0] == bone.fs.pathResolve('dev/track/hello.js')) {
-				if(trackFile[1] == bone.fs.pathResolve('dev/js/hello.js')) {
-					if(trackFile[2] == bone.fs.pathResolve('src/js/hello.js')) {
+			if(trackFile[0] == bonefs.pathResolve('dev/track/hello.js')) {
+				if(trackFile[1] == bonefs.pathResolve('dev/js/hello.js')) {
+					if(trackFile[2] == bonefs.pathResolve('src/js/hello.js')) {
 						return assert.ok(true);
 					}
 				}
@@ -586,10 +589,10 @@ describe('bone.utils', function() {
 		var trackFile = bone.utils.fs.track('dev/trackRename/foo.js');
 
 		if(trackFile.length == 4) {
-			if(trackFile[0] == bone.fs.pathResolve('dev/trackRename/foo.js')) {
-				if(trackFile[1] == bone.fs.pathResolve('dev/track/hello.js')) {
-					if(trackFile[2] == bone.fs.pathResolve('dev/js/hello.js')) {
-						if(trackFile[3] == bone.fs.pathResolve('src/js/hello.js')) {
+			if(trackFile[0] == bonefs.pathResolve('dev/trackRename/foo.js')) {
+				if(trackFile[1] == bonefs.pathResolve('dev/track/hello.js')) {
+					if(trackFile[2] == bonefs.pathResolve('dev/js/hello.js')) {
+						if(trackFile[3] == bonefs.pathResolve('src/js/hello.js')) {
 							return assert.ok(true);
 						}
 					}
@@ -611,7 +614,7 @@ describe('bone.utils', function() {
 	// 	bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
 	// 		var dependentFile = bone.utils.fs.track('dev/dependentFile/hello.js');
 	// 		dependentFile = dependencies.concat(bone.utils.fs.track('~/dev/css.css'));
-	// 		dependentFile.push(bone.fs.pathResolve('~/src/project/file1.js'));
+	// 		dependentFile.push(bonefs.pathResolve('~/src/project/file1.js'));
 
 	// 		dependentFile = bone.utils.uniq(dependentFile);
 
