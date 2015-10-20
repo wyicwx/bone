@@ -610,21 +610,21 @@ describe('bone.utils', function() {
 		}
 	});
 
-	// it('dependentFile', function(done) {
-	// 	bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
-	// 		var dependentFile = bone.utils.fs.track('dev/dependentFile/hello.js');
-	// 		dependentFile = dependencies.concat(bone.utils.fs.track('~/dev/css.css'));
-	// 		dependentFile.push(bonefs.pathResolve('~/src/project/file1.js'));
+	it('dependentFile', function(done) {
+		bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
+			var dependentFile = [
+				bonefs.pathResolve('~/src/project/file1.js'),
+				bonefs.pathResolve('~/src/js/hello.js'),
+				bonefs.pathResolve('~/src/css/css.css')
+			];
 
-	// 		dependentFile = bone.utils.uniq(dependentFile);
-
-	// 		if(ArrayContain(dependentFile, dependencies)) {
-	// 			done();
-	// 		} else {
-	// 			done(false);
-	// 		}
-	// 	});
-	// });
+			if(ArrayContain(dependentFile, dependencies)) {
+				done();
+			} else {
+				done(false);
+			}
+		});
+	});
 
 	// it('dependentFile a not exist file will return false', function(done) {
 	// 	bone.utils.fs.dependentFile('~/dist/not/exist/file.js', function(err) {
