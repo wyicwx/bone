@@ -5,7 +5,7 @@ var bone = require('../index.js');
 
 bone.status.test = true;
 bone.status.watch = true;
-describe('cache', function() {
+describe('bone.cache', function() {
 	it('set without parameters or 1 parameter only, return false', function() {
 		var ret1 = cache.set();
 		var ret2 = cache.set('file.js');
@@ -137,6 +137,4 @@ describe('cache', function() {
 			assert.ok(false);
 		}
 	});
-
-
 });

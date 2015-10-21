@@ -183,6 +183,12 @@ describe('bone.dest', function() {
 	it('throw error when over reference file', function(done) {
 		bonefs.readFile('~/overReferences/bar.js', function(error, data) {
 			if(error) {
+				var File = require('../lib/file.js');
+				_.each(File.fileList, function(item) {
+					if(item.destination == 'overReferences') {
+						File.fileList = _.without(File.fileList, item);
+					}
+				});
 				done();
 			} else {
 				done(false);
@@ -566,98 +572,6 @@ describe('bone.helper', function() {
 			});
 		});
 	});
-});
-
-describe('bone.utils', function() {
-	it('track a virtual file', function() {
-		var trackFile = bone.utils.fs.track('dev/track/hello.js');
-
-		if(trackFile.length == 3) {
-			if(trackFile[0] == bonefs.pathResolve('dev/track/hello.js')) {
-				if(trackFile[1] == bonefs.pathResolve('dev/js/hello.js')) {
-					if(trackFile[2] == bonefs.pathResolve('src/js/hello.js')) {
-						return assert.ok(true);
-					}
-				}
-			}
-		}
-
-		assert.ok(false);
-	});
-
-	it('track a rename virtual file', function() {
-		var trackFile = bone.utils.fs.track('dev/trackRename/foo.js');
-
-		if(trackFile.length == 4) {
-			if(trackFile[0] == bonefs.pathResolve('dev/trackRename/foo.js')) {
-				if(trackFile[1] == bonefs.pathResolve('dev/track/hello.js')) {
-					if(trackFile[2] == bonefs.pathResolve('dev/js/hello.js')) {
-						if(trackFile[3] == bonefs.pathResolve('src/js/hello.js')) {
-							return assert.ok(true);
-						}
-					}
-				}
-			}
-		}
-		assert.ok(false);
-	});
-
-	it('track a not exist file will return false', function() {
-		if(bone.utils.fs.track('~/dist/not/exist/file.js') === false) {
-			assert.ok(true);
-		} else {
-			assert.ok(false);
-		}
-	});
-
-	it('dependentFile', function(done) {
-		bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
-			var dependentFile = [
-				bonefs.pathResolve('~/src/project/file1.js'),
-				bonefs.pathResolve('~/src/js/hello.js'),
-				bonefs.pathResolve('~/src/css/css.css')
-			];
-
-			if(ArrayContain(dependentFile, dependencies)) {
-				done();
-			} else {
-				done(false);
-			}
-		});
-	});
-
-	// it('dependentFile a not exist file will return false', function(done) {
-	// 	bone.utils.fs.dependentFile('~/dist/not/exist/file.js', function(err) {
-	// 		if(err) {
-	// 			done();
-	// 		} else {
-	// 			done(false);
-	// 		}
-	// 	});
-	// });
-
-	// it('dependentFile multi times at same time', function(done) {
-	// 	var map = {};
-	// 	var end = function() {
-	// 		if(map.a && map.b) {
-	// 			if(map.a.length == 6 && map.b.length == 7) {
-	// 				done();
-	// 			} else {
-	// 				done(false);
-	// 			}
-	// 		}
-			
-	// 	};
-	// 	bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(err, dependencies) {
-	// 		map.a = dependencies;
-	// 		end();
-	// 	});
-
-	// 	bone.utils.fs.dependentFile('dev/dependentFile/foo.js', function(err, dependencies) {
-	// 		map.b = dependencies;
-	// 		end();
-	// 	});
-	// });
 });
 
 function ArrayContain(a, b, option) {
