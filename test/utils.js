@@ -134,7 +134,6 @@ describe('bone.utils', function() {
 			bonefs.rm(path.join(__dirname, './raw/search'));	
 		};
 
-		var override = bonefs.pathResolve('~/overReferences/bar.js');
 		bone.helper.autoRefreshStop();
 
 		rmTmp();
