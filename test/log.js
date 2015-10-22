@@ -30,14 +30,10 @@ describe('bone.log', function() {
 		}
 	});
 
-	it('show error log normal', function() {
+	it('show throw error log in test mode', function() {
 		assert.throws(function() {
 			log.error('show info error normal');
 		});
-
-		// if(bone.logInfo.pop().indexOf('show info error normal') == -1) {
-		// 	assert.ok(false);
-		// }
 	});
 
 	it('show debug log normal', function() {

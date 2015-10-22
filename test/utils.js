@@ -157,6 +157,16 @@ describe('bone.utils', function() {
 	});
 });
 
+describe('bone.debug', function() {
+	it('showMem', function() {
+		bone.status.debug = true;
+		assert.doesNotThrow(function() {
+			bone.utils.debug.showMem();
+			bone.status.debug = false;
+		});
+	});
+});
+
 function ArrayContain(a, b, option) {
 	option || (option = {});
 	var illagel = true;
