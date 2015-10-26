@@ -48,7 +48,7 @@ var plugins = {
 		});
 	})
 };
-	
+
 plugins.authorCopyright = bone.wrapper(plugins.author, plugins.copyright),
 plugins.authorCopyrightFixedOption = bone.wrapper(plugins.author({
 	author: 'wyicwx'
@@ -155,6 +155,9 @@ dev.dest('dependentFile')
 		]
 	}))
 	.rename('foo.js');
+
+dev.dest('change')
+	.src('~/src/js/change.js');
 
 bone.dest('cwd/all')
 	.cwd('~/src')

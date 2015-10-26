@@ -62,6 +62,22 @@ describe('bone.cache', function() {
 		});
 	});
 
+	it('set empty stream', function(done) {
+		var origin = bone.utils.stream.origin('');
+
+		cache.set('emptyStream.js', origin);
+		origin.on('end', function() {
+			process.nextTick(function() {
+				var result = cache.get('emptyStream.js')
+				if(!result) {
+					done(false);
+				} else {
+					done();
+				}
+			});
+		});
+	});
+
 	it('get cached buffer', function(done) {
 		var buffer = new Buffer('testCacheBuffer');
 		var origin = bone.utils.stream.origin(buffer);
