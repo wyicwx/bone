@@ -125,7 +125,7 @@ describe('bone.utils', function() {
 		}, {slient: true});
 	});
 
-	it('mapAll2local ', function(done) {
+	it('mapAll2local', function(done) {
 		var rmTmp = function() {
 			bonefs.rm(path.join(__dirname, './raw/dist'));
 			bonefs.rm(path.join(__dirname, './raw/cdist'));
@@ -154,6 +154,18 @@ describe('bone.utils', function() {
 			rmTmp();
 			done();
 		}, {slient: true});
+	});
+
+	it('getAllVirtualFiles', function() {
+		var FileSystem = require('../lib/fs.js');
+		var filesF = _.keys(FileSystem.files);
+		var files = bone.utils.fs.getAllVirtualFiles();
+
+		if(ArrayContain(filesF, files)) {
+			assert.ok(true);
+		} else {
+			assert.ok(false);
+		}
 	});
 });
 
