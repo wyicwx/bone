@@ -159,6 +159,9 @@ dev.dest('dependentFile')
 dev.dest('change')
 	.src('~/src/js/change.js');
 
+dev.dest('change')
+	.src('~/src/js/added.js');
+
 bone.dest('cwd/all')
 	.cwd('~/src')
 	.src('./**/*');

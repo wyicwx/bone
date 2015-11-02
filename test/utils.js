@@ -145,6 +145,9 @@ describe('bone.utils', function() {
 				return done(false);
 			}
 
+			if(!list.length) {
+				return done(false);
+			}
 			_.each(list, function(file) {
 				if(!fs.existsSync(file)) {
 					assert.ok(false);
