@@ -7,16 +7,19 @@ var assert = require('assert'),
 	_ = require('underscore'),
 	fs = require('fs'),
 	os = require('os'),
+	FileSystem = require('../lib/fs.js'),
 	bonefs;
 
-require('./bonefile.js');
+bone.setup('./test/raw');
+bonefs = FileSystem.fs;
+
+require('./bone/bonefile.js');
+
 bone.status.test = true;
 describe('bone.setup', function() {
 	it('correct', function() {
 		assert.doesNotThrow(function() {
-			bone.setup('./test/raw');
-			var FileSystem = require('../lib/fs.js');
-			bonefs = FileSystem.getFs();
+			bone.run();
 		});
 	});
 });
@@ -489,34 +492,34 @@ describe('bone.fs', function() {
 	});
 });
 
-describe('bone.project', function() {
-	it('support glob syntax', function() {
-		var files = bone.project('dist');
-		var searchResult = bonefs.search('~/dist/**/*');
-		searchResult = _.filter(searchResult, function(file) {
-			return bonefs.existFile(file);
-		});
-		if(ArrayContain(files, searchResult, {strict: true})) {
-			assert.ok(true);
-		} else {
-			assert.ok(false);
-		}
-	});
+// describe('bone.project', function() {
+// 	it('support glob syntax', function() {
+// 		var files = bone.project('dist');
+// 		var searchResult = bonefs.search('~/dist/**/*');
+// 		searchResult = _.filter(searchResult, function(file) {
+// 			return bonefs.existFile(file);
+// 		});
+// 		if(ArrayContain(files, searchResult, {strict: true})) {
+// 			assert.ok(true);
+// 		} else {
+// 			assert.ok(false);
+// 		}
+// 	});
 
-	it('array as option', function() {
-		var files = bone.project('distArray');
-	});
+// 	it('array as option', function() {
+// 		var files = bone.project('distArray');
+// 	});
 
-	it('files empty', function() {
-		var files = bone.project('emptyProject');
+// 	it('files empty', function() {
+// 		var files = bone.project('emptyProject');
 
-		if(_.isUndefined(files)) {
-			return assert.ok(true);
-		}
+// 		if(_.isUndefined(files)) {
+// 			return assert.ok(true);
+// 		}
 
-		assert.ok(false);
-	});
-});
+// 		assert.ok(false);
+// 	});
+// });
 
 describe('bone.helper', function() {
 	describe('wrapper', function() {
@@ -574,13 +577,13 @@ describe('bone.helper', function() {
 
 		it('change file will clean cache', function(done) {
 			var cache = require('../lib/cache.js');
-			var filePath = bone.fs.pathResolve('~/dev/change/change.js');
-			var sourcePath = bone.fs.pathResolve('~/src/js/change.js');
+			var filePath = bonefs.pathResolve('~/dev/change/change.js');
+			var sourcePath = bonefs.pathResolve('~/src/js/change.js');
 
 			bone.helper.autoRefresh(function(watcher) {
 				bone.status.watch = true;
 				fs.writeFileSync(sourcePath, '');
-				bone.fs.readFile('~/dev/change/change.js', function(error, buffer) {
+				bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
 					var cached = cache.get(filePath);
 
 					if(!cache.get(filePath)) {
@@ -604,11 +607,11 @@ describe('bone.helper', function() {
 		it('add or delete file will clean cache and refresh file system.', function(done) {
 
 			var cache = require('../lib/cache.js');
-			var addFile = bone.fs.pathResolve('~/src/js/add.js');
+			var addFile = bonefs.pathResolve('~/src/js/add.js');
 			var doChange= function() {
 				bone.helper.autoRefresh(function(watcher) {
-					bone.fs.readFile('~/dev/change/change.js', function(error, buffer) {
-						var filePath = bone.fs.pathResolve('~/dev/change/change.js');
+					bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
+						var filePath = bonefs.pathResolve('~/dev/change/change.js');
 
 						if(!cache.get(filePath)) {
 							return done(false);

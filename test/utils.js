@@ -164,7 +164,7 @@ describe('bone.utils', function() {
 		var filesF = _.keys(FileSystem.files);
 		var files = bone.utils.fs.getAllVirtualFiles();
 
-		if(ArrayContain(filesF, files)) {
+		if(files.length && ArrayContain(filesF, files)) {
 			assert.ok(true);
 		} else {
 			assert.ok(false);

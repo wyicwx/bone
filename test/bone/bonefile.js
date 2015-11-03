@@ -2,7 +2,7 @@
 var AKOStream = require('akostream');
 var combine = AKOStream.combine;
 var aggre = AKOStream.aggre;
-var bone = require('../index.js');
+var bone = require('../../index.js');
 var plugins = {
 	author: bone.wrapper(function(buffer, encoding, callback) {
 		var option = this.option;
@@ -178,6 +178,6 @@ bone.dest('search')
 bone.dest('overReferences')
 	.src('./bar.js');
 
-bone.project('dist', '~/dist/**/*');
-bone.project('distArray', ['~/dist/**/*']);
-bone.project('emptyProject');
+// bone.project('dist', '~/dist/**/*');
+// bone.project('distArray', ['~/dist/**/*']);
+// bone.project('emptyProject');
