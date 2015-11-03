@@ -605,30 +605,39 @@ describe('bone.helper', function() {
 
 			var cache = require('../lib/cache.js');
 			var addFile = bone.fs.pathResolve('~/src/js/add.js');
+			var doChange= function() {
+				bone.helper.autoRefresh(function(watcher) {
+					bone.fs.readFile('~/dev/change/change.js', function(error, buffer) {
+						var filePath = bone.fs.pathResolve('~/dev/change/change.js');
 
-			if(fs.existsSync(addFile)) {
-				fs.unlinkSync(addFile);
-			}
-
-			bone.helper.autoRefresh(function(watcher) {
-				bone.fs.readFile('~/dev/change/change.js', function(error, buffer) {
-					var filePath = bone.fs.pathResolve('~/dev/change/change.js');
-
-					if(!cache.get(filePath)) {
-						return done(false);
-					}
-
-					fs.writeFileSync(addFile, 'add file');
-
-					setTimeout(function() {
-						if(cache.get(filePath)) {
+						if(!cache.get(filePath)) {
 							return done(false);
 						}
-						fs.unlinkSync(addFile);
-						done();
-					}, 400);
+						fs.writeFile(addFile, 'add file', function(err) {
+							if(err) {
+								return done(false);
+							}
+							setTimeout(function() {
+								if(cache.get(filePath)) {
+									return done(false);
+								}
+								fs.unlinkSync(addFile);
+								done();
+							}, 400);
+						});
+					});
 				});
-			});
+			}
+			if(fs.existsSync(addFile)) {
+				fs.unlinkSync(addFile);
+				setTimeout(function() {
+					doChange();
+				}, 400);
+			} else {
+				doChange();
+			}
+
+			
 		});
 	});
 });
