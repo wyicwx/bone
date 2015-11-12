@@ -108,7 +108,7 @@ describe('bone.utils', function() {
 		});
 	});
 
-	it('map2local ', function(done) {
+	it('map2local virtual file', function(done) {
 		var dirpath = path.join(__dirname, './raw/dist/js');
 		var filepath = path.join(dirpath, 'hello.js');
 
@@ -122,7 +122,17 @@ describe('bone.utils', function() {
 				bonefs.rm(dirpath);
 				done(false);
 			}
-		}, {slient: true});
+		});
+	});
+
+	it('map2local real file', function(done) {
+		bone.utils.fs.map2local('raw/js/hello.js', function(error) {
+			if(error) {
+				return done(false);
+			}
+
+			done();
+		});
 	});
 
 	it('mapAll2local', function(done) {
@@ -156,7 +166,7 @@ describe('bone.utils', function() {
 
 			rmTmp();
 			done();
-		}, {slient: true});
+		});
 	});
 
 	it('getAllVirtualFiles', function() {
