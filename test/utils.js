@@ -2,7 +2,7 @@
 var assert = require('assert');
 var cache = require('../lib/cache.js');
 var bone = require('../index.js');
-var _ = require('underscore');
+var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 

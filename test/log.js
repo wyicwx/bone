@@ -2,7 +2,7 @@
 var assert = require('assert');
 var log = require('../lib/log.js');
 var bone = require('../index.js');
-var _ = require('underscore');
+var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 
