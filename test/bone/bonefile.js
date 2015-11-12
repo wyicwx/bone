@@ -166,6 +166,10 @@ bone.dest('cwd/all')
 	.cwd('~/src')
 	.src('./**/*');
 
+bone.dest('cwd/js')
+	.cwd('~/src')
+	.src('./js/**/*');
+
 bone.dest('cwd/folder')
 	.cwd('~/src')
 	.src('js/hello.js');
@@ -178,6 +182,6 @@ bone.dest('search')
 bone.dest('overReferences')
 	.src('./bar.js');
 
-// bone.project('dist', '~/dist/**/*');
-// bone.project('distArray', ['~/dist/**/*']);
-// bone.project('emptyProject');
+bone.dest('notExist')
+	.src('./*/notExist.js');
+
