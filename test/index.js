@@ -639,8 +639,6 @@ describe('bone.helper', function() {
 			} else {
 				doChange();
 			}
-
-			
 		});
 	});
 });
