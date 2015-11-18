@@ -180,6 +180,10 @@ describe('bone.utils', function() {
 			assert.ok(false);
 		}
 	});
+
+	it('getByDependent file', function() {
+
+	});
 });
 
 describe('bone.debug', function() {

@@ -608,37 +608,56 @@ describe('bone.helper', function() {
 
 			var cache = require('../lib/cache.js');
 			var addFile = bonefs.pathResolve('~/src/js/add.js');
-			var doChange= function() {
-				bone.helper.autoRefresh(function(watcher) {
-					bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
-						var filePath = bonefs.pathResolve('~/dev/change/change.js');
 
-						if(!cache.get(filePath)) {
-							return done(false);
-						}
-						fs.writeFile(addFile, 'add file', function(err) {
-							if(err) {
-								return done(false);
-							}
-							setTimeout(function() {
-								if(cache.get(filePath)) {
-									return done(false);
-								}
-								fs.unlinkSync(addFile);
-								done();
-							}, 400);
-						});
-					});
-				});
-			}
 			if(fs.existsSync(addFile)) {
 				fs.unlinkSync(addFile);
-				setTimeout(function() {
-					doChange();
-				}, 400);
-			} else {
-				doChange();
 			}
+
+			bone.helper.autoRefresh(function(watcher) {
+				bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
+					var filePath = bonefs.pathResolve('~/dev/change/change.js');
+
+					if(!cache.get(filePath)) {
+						return done(false);
+					}
+					fs.writeFile(addFile, 'add file', function(err) {
+						if(err) {
+							return done(false);
+						}
+						setTimeout(function() {
+							fs.unlinkSync(addFile);
+							if(cache.get(filePath)) {
+								return done(false);
+							}
+							done();
+						}, 600);
+					});
+				});
+			});
+		});
+
+		it('delete file ', function(done) {
+			bone.helper.autoRefresh(function(watcher) {
+				var addFile = bonefs.pathResolve('~/src/js/temp.js');
+				var Data = require('../lib/data.js');
+
+				fs.writeFileSync(addFile, 'test');
+
+				bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesA) {
+					fs.unlinkSync(addFile);
+					setTimeout(function() {
+						bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesB) {
+							var diff = _.difference(dependenciesA, dependenciesB);
+
+							if(diff.length == 1 && diff[0] == addFile) {
+								done();
+							} else {
+								done(false);
+							}
+						});
+					}, 600);
+				});				
+			});
 		});
 	});
 });

@@ -156,6 +156,15 @@ dev.dest('dependentFile')
 	}))
 	.rename('foo.js');
 
+dev.dest('dependentFile')
+	.src('~/dev/js/hello.js')
+	.act(plugins.concat({
+		files: [
+			'~/src/js/*.js'
+		]
+	}))
+	.rename('concatGlob.js');
+
 dev.dest('change')
 	.src('~/src/js/change.js');
 
