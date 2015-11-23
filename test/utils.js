@@ -182,7 +182,11 @@ describe('bone.utils', function() {
 	});
 
 	it('getByDependent file', function() {
+		
 
+		bone.utils.fs.getByDependentFile();
+
+		
 	});
 });
 
