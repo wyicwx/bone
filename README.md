@@ -2,8 +2,8 @@
 > web前端开发构建工具集核心
 
 <img src="/bone.png" alt="bone" width="50%"/>
-
-[![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone) [![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master)
+[![NPM version](https://img.shields.io/npm/v/bone.svg?style=flat)](https://npmjs.org/package/bone) [![NPM version](https://img.shields.io/npm/dm/bone.svg?style=flat)](https://npmjs.org/package/bone) [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone) 
+[![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master)
 
 ###又一个轮子？
 
