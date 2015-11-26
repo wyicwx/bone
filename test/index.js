@@ -76,18 +76,19 @@ describe('bone.dest', function() {
 		}
 	});
 
-	it('rename() pass non-string or non-function parameter will throw error', function() {
-		assert.throws(function() {
-			bone.dest('~/dist')
-				.src(['~/src/rename/js.js'])
-				.rename({});
-		});
-
-		assert.throws(function() {
-			bone.dest('~/dist')
-				.src(['~/src/rename/js.js'])
-				.rename(1);
-		});
+	it('rename() is runing correct', function() {
+		if(!bonefs.existFile('~/dist/js/hello.jsx')) {
+			assert.ok(false);
+		}
+		if(!bonefs.existFile('~/dist/js/hello.jsfile')) {
+			assert.ok(false);
+		}
+		if(!bonefs.existFile('~/dist/js/renameHello.js')) {
+			assert.ok(false);
+		}
+		if(!bonefs.existFile('~/dist/js/renameHello.jsx')) {
+			assert.ok(false);
+		}
 	});
 
 	it('act() process source file', function(done) {
@@ -158,6 +159,29 @@ describe('bone.dest', function() {
 		if(bonefs.existFile('~/cwd/folder/js/hello.js')) {
 			assert.ok(true);
 		} else {
+			assert.ok(false);
+		}
+	});
+
+	it("temp() should be not show in search's result", function() {
+		var result = bonefs.search('~/temp/*');
+		if(result.length) {
+			assert.ok(false);
+		}
+	});
+
+	it('temp() utils.fs.getAllVirtualFiles should be not show in result', function() {
+		var result = bone.utils.fs.getAllVirtualFiles();
+
+		result = _.filter(result, function(filePath) {
+			if(filePath.indexOf('temp') != -1) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+
+		if(result.length) {
 			assert.ok(false);
 		}
 	});
@@ -395,6 +419,34 @@ describe('bone.fs', function() {
 				}
 			});
 		});
+
+		it('read file with option that has act', function(done) {
+			var act = bone.wrapper(function(buffer, encoding, callback) {
+				var ctx = buffer.toString();
+
+				ctx += '|test';
+
+				callback(null, ctx);
+			});
+
+			bonefs.readFile('~/src/js/hello.js', {act: act}, function(err, buffer) {
+				if(err) {
+					return done(false);
+				}
+
+				if(buffer.toString() != "alert('hello world!');|test") {
+					return done(false);
+				}
+
+				bonefs.readFile('~/src/js/hello.js', function(err, buffer) {
+					if(buffer.toString() == "alert('hello world!');") {
+						done();
+					} else {
+						done(false);
+					}
+				});
+			});
+		});
 	});
 
 	describe('writeFile', function() {
@@ -418,23 +470,19 @@ describe('bone.fs', function() {
 			var vresult = bonefs.search('~/src/**/*');
 			var rresult = glob.sync(bonefs.pathResolve('~/src/**/*'));
 
-			if(ArrayContain(vresult, rresult)) {
-				assert.ok(true);
-			} else {
+			if(_.intersection(vresult, rresult).length != rresult.length) {
 				assert.ok(false);
 			}
 		});
 	});
 
 	describe('readDir', function() {
-		it('read virtual folder', function(done) {
+		it('read virtual folder', function() {
 			var content = bonefs.readDir('~/search');
 			var vcontent = fs.readdirSync(bonefs.pathResolve('~/src/'));
 
-			if(ArrayContain(content, vcontent, {strict: true})) {
-				done();
-			} else {
-				done(false);
+			if(_.intersection(content, vcontent).length != content.length) {
+				assert.ok(false);
 			}
 		});
 	});
@@ -580,7 +628,7 @@ describe('bone.helper', function() {
 			var filePath = bonefs.pathResolve('~/dev/change/change.js');
 			var sourcePath = bonefs.pathResolve('~/src/js/change.js');
 
-			bone.helper.autoRefresh(function(watcher) {
+			bone.helper.autoRefresh(function() {
 				bone.status.watch = true;
 				fs.writeFileSync(sourcePath, '');
 				bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
@@ -605,15 +653,13 @@ describe('bone.helper', function() {
 		});
 
 		it('add or delete file will clean cache and refresh file system.', function(done) {
-
 			var cache = require('../lib/cache.js');
 			var addFile = bonefs.pathResolve('~/src/js/add.js');
 
 			if(fs.existsSync(addFile)) {
 				fs.unlinkSync(addFile);
 			}
-
-			bone.helper.autoRefresh(function(watcher) {
+			bone.helper.autoRefresh(function() {
 				bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
 					var filePath = bonefs.pathResolve('~/dev/change/change.js');
 
@@ -625,12 +671,16 @@ describe('bone.helper', function() {
 							return done(false);
 						}
 						setTimeout(function() {
-							fs.unlinkSync(addFile);
-							if(cache.get(filePath)) {
-								return done(false);
+							var result = false;
+							if(!cache.get(filePath)) {
+								result = null;
 							}
-							done();
-						}, 600);
+							fs.unlink(addFile, function() {							
+								setTimeout(function() {
+									done(result);
+								}, 400);
+							});
+						}, 400);
 					});
 				});
 			});
@@ -641,43 +691,26 @@ describe('bone.helper', function() {
 				var addFile = bonefs.pathResolve('~/src/js/temp.js');
 				var Data = require('../lib/data.js');
 
-				fs.writeFileSync(addFile, 'test');
-
-				bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesA) {
-					fs.unlinkSync(addFile);
+				fs.writeFile(addFile, 'test', function() {
 					setTimeout(function() {
-						bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesB) {
-							var diff = _.difference(dependenciesA, dependenciesB);
+					bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesA) {
+						fs.unlink(addFile, function() {
+							setTimeout(function() {
+							bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesB) {
+								var diff = _.difference(dependenciesA, dependenciesB);
 
-							if(diff.length == 1 && diff[0] == addFile) {
-								done();
-							} else {
-								done(false);
-							}
+								if(diff.length == 1 && diff[0] == addFile) {
+									done();
+								} else {
+									done(false);
+								}
+							});
+							}, 400);
 						});
-					}, 600);
-				});				
+					});
+					}, 400);
+				});
 			});
 		});
 	});
 });
-
-function ArrayContain(a, b, option) {
-	option || (option = {});
-	var illagel = true;
-	if(option.strict) {
-		if(a.length !== b.length) {
-			illagel = false;
-		}
-	}
-	_.each(a, function(file) {
-		if(!~_.indexOf(b, file)) {
-			illagel = false;
-		}
-	});
-	if(illagel) {
-		return true;
-	} else {
-		return false;
-	}
-}

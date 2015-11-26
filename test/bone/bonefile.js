@@ -58,9 +58,9 @@ plugins.authorCopyrightFixedOption = bone.wrapper(plugins.author({
 
 // define a virtual folder 'dist'
 var dist = bone.dest('dist');
-// copy src/**/* to dist/
+// map src/**/* to dist/
 dist.src('~/src/**/*');
-// 
+
 dist.src('~/src/**/*')
 	.rename(function(filename) {
 		return 'rename-' + filename;
@@ -76,17 +76,44 @@ dist.dest('js')
 dist.dest('js')
 	.src('./a.js')
 	.rename('b.js');
+// kind of rename type
+dist.dest('js')
+	.src('~/src/js/hello.js')
+	.rename({
+		ext: '.jsx'
+	});
+dist.dest('js')
+	.src('~/src/js/hello.js')
+	.rename({
+		ext: 'jsfile'
+	});
+dist.dest('js')
+	.src('~/src/js/hello.js')
+	.rename({
+		name: 'renameHello'
+	});
+dist.dest('js')
+	.src('~/src/js/hello.js')
+	.rename({
+		name: 'renameHello',
+		ext: '.jsx'
+	});
 
-// copy dist
+// temp dir
+bone.dest('temp')
+	.temp(true)
+	.src('~/src/js/*.js');
+
+// map dist
 var cdist = bone.dest('cdist');
 cdist.src('~/dist/**/*');
 
 // define a virtual folder 'dev' 
 var dev = bone.dest('dev');
-// copy ~/src/js/*.js to dev
+// map ~/src/js/*.js to dev
 dev.dest('js')
 	.src('~/src/js/*.js');
-// copy ~/src/css/css.css to dev/css.css
+// map ~/src/css/css.css to dev/css.css
 bone.dest('dev').src('~/src/css/css.css');
 // define ~/dev/js/hello.js pass through author() processor
 dev.dest('js')

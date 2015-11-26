@@ -5,6 +5,7 @@ var bone = require('../index.js');
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
+var Data = require('../lib/data.js');
 
 
 bone.status.test = true;
@@ -182,11 +183,16 @@ describe('bone.utils', function() {
 	});
 
 	it('getByDependent file', function() {
-		
+		var filePath = bonefs.pathResolve('~/src/js/hello.js');
+		var files = bone.utils.fs.getByDependentFile(filePath);
 
-		bone.utils.fs.getByDependentFile();
-
-		
+		if(files.length <= 0) {
+			assert.ok(false);
+		}
+		var intersection = _.intersection(files, [filePath]);
+		if(intersection.length) {
+			assert.ok(false);
+		}
 	});
 });
 
