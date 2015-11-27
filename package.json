@@ -32,5 +32,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/wyicwx/bone.git"
+  },
+  "engines": {
+    "node": ">=0.12"
   }
 }
