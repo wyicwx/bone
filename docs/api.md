@@ -1,50 +1,53 @@
-#bone.fs API列表
+#fs API列表
 
 + [pathResolve()](#pathresolvefilepath-dir)
 + [createReadStream()](#createreadstreamfilepath)
 + [mkdir()](#mkdirdir)
 + [rm()](#rmfilepath)
 + [createWriteStream()](#createwritestreamfilepath-option)
-+ [readFile()](#readfilefilepath-callback)
++ [readFile()](#readfilefilepath-option-callback)
++ [writeFile()](#writefilefilepath-callback)
 + [search()](#searchsearchvalue-option)
 + [refresh()](#refresh)
 + [readDir()](#readdirdir)
 + [existFile()](#existfilefilepath)
 
-**注意**:`bone.fs`对象在`bone.setup()`执行之后才能调用
+**注意**:`fs`对象只有在`处理器`和`自定义命令行`内通过参数传递获得
 
-####pathResolve(filepath, dir)
+####pathResolve(filePath, dir)
 解析文件路径为绝对路径
 
 在bone中支持`~`,`./`,`../`,`/`四种定位方式都通过`pathResolve`函数来解析。
-参数dir没有定义的情况下为bone.fs.base，即`bone.setup(base)`
+参数dir没有定义的情况下为bone.status.base，即`bone.setup(base)`传递的参数base
 
 ```js
 bone.setup('/base/path');
 
-bone.fs.pathResolve('~/a/b/c');
+fs.pathResolve('~/a/b/c');
 // return
 '/base/path/a/b/c'
 
-bone.fs.pathResolve('./a/b/c');
+fs.pathResolve('./a/b/c');
 // return
 '/base/path/a/b/c'
 
-bone.fs.pathResolve('./a/b/c', '/base/otherpath');
+fs.pathResolve('./a/b/c', '/base/otherpath');
 // return
 '/base/otherpath/a/b/c'
 
-bone.fs.pathResolve('../');
+fs.pathResolve('../');
 // return
 '/base'
 
-bone.fs.pathResolve('/base/otherpath');
+fs.pathResolve('/base/otherpath');
 // return
 '/base/otherpath'
 ```
 
-####createReadStream(filepath)
+####createReadStream(filePath)
 创建一个读取虚拟文件或者真实文件的流对象，当读取的文件不存在时会丢出一个错误
+
+通过option可传递act对象，读取文件后再经过act处理
 
 ```js
 bone.dest('dist')
@@ -52,43 +55,71 @@ bone.dest('dist')
 
 bone.setup('./');
 
-var stream = bone.fs.createReadStream('~/dist/main.js');
+var stream = fs.createReadStream('~/dist/main.js');
+
+var streamAct = fs.createReadStream('~/dist/main.js', {
+	act: concat()
+});
 ```
 
 ####mkdir(dir)
 创建文件夹，支持递归创建
 
 ```js
-bone.fs.mkdir('~/dist/release/js');
+fs.mkdir('~/dist/release/js');
 ```
 
-####rm(filepath)
+####rm(filePath)
 删除文件或文件夹，当传入参数是一个文件夹时会删除其子文件夹及文件
 
+*ps:*这个函数非常危险，请确认后再使用
+
 ```js
-bone.fs.rm('~/dist')
+fs.rm('~/dist')
 ```
 
-####createWriteStream(filepath, option)
-创建一个本地文件的写入流，参数focus强制建立文件夹，在不存在的文件夹路径下创建并且没有传入focus参数会报错
+####createWriteStream(filePath, option)
+创建一个本地文件的写入流，参数focus强制建立文件夹
+
+没有传入focus参数的情况下，在不存在的文件夹路径下创建文件会报错
 
 ```js
-var rStream = bone.fs.createReadStream('')
-var wStream = bone.fs.createWriteStream('~/dist/release/js/main.js', {
+var rStream = fs.createReadStream('')
+var wStream = fs.createWriteStream('~/dist/release/js/main.js', {
 	focus: true
 });
 rStream.pipe(wStream);
 ```
 
-####readFile(filepath, callback)
+####readFile(filePath, option, callback)
 读取文件
 
+参数同[createReadStream()](#createreadstreamfilepath)
+
 ```js
-bone.fs.readFile('~/dist/not/exist/file.js', function(e, buffer) {
+fs.readFile('~/dist/not/exist/file.js', function(e, buffer) {
 	if(e) {
 		console.log(e);
 	}
 });
+
+fs.readFile('~/dist/app.js', {
+	act: concat()
+}, function(e, buffer) {
+	console.log(buffer.toString());
+})
+```
+
+####writeFile(filePath, callback)
+写文件
+
+参数同[createWriteStream()](#createwritestreamfilepath-option)
+
+```js
+fs.writeFile('~/dist/foo.js', 'hello world', {
+	focus: true
+});
+
 ```
 
 ####search(searchValue, option)
@@ -131,11 +162,11 @@ bone.dest('dist')
 	]);
 bone.setup('/base/path');
 
-bone.fs.readDir('./dist');
+fs.readDir('./dist');
 // return
 ['main.js', 'jquery.js']
 
-bone.fs.readDir('~/src', {
+fs.readDir('~/src', {
 	notFs: true
 });
 // return
@@ -153,19 +184,19 @@ bone.dest('dist')
 	]);
 bone.setup('/base/path');
 
-bone.fs.existFile('./dist/main.js');
+fs.existFile('./dist/main.js');
 // return
 true
 
-bone.fs.existFile('./dist/index.js');
+fs.existFile('./dist/index.js');
 // return
 false
 
-bone.fs.existFile('~/src/main.js');
+fs.existFile('~/src/main.js');
 // return
 true
 
-bone.fs.existFile('~/src/main.js', {
+fs.existFile('~/src/main.js', {
 	notFs: true
 });
 // return
