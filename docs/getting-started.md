@@ -28,13 +28,9 @@ bone.dest('dist')
 
 bone.setup('./');
 ```
-###5.调用bone.fs的API或者使用CLI来操作虚拟文件
-```js
-bone.setup('./');
-
-var stream = bone.fs.createReadStream('dist/main.js');
-var wStream = bone.fs.createWriteStream('build/main.js');
-stream.pipe(wStream);
+###5.调用bone内置命令`bone build`生成文件
+```shell
+$ bone build
 ```
 **注**:main.js文件在src文件夹下，通过bone映射到了dist/main.js
 

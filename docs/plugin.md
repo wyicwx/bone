@@ -13,6 +13,18 @@ bone.dest('dist')
 ```
 **注**：`act()`必须在调用过`src()`后执行，否则会报错
 
+processor第二个参数传递filter来过滤通过的文件是否使用该处理器
+
+```js
+bone.dest('dist')
+	.src('~/main.js')
+	.act(processor(option, {
+		filter: function(runtime) {
+			return true;
+		}
+	}))
+```
+
 processor也可以不传递参数
 
 ```js
@@ -55,9 +67,12 @@ var processor = bone.wrapper(function(buffer, encoding, callback) {
 	/*
 	{
 		source: 'file full path',
+		destination: 'file destination path',
 		option: { 
 			defaults: [Function] 
 		},
+		fs: <Object>,
+		bone: <Object>,
 		argvs: {
 			buffer: <Buffer>,
 			encoding: 'buffer',

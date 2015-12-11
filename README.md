@@ -6,12 +6,6 @@
 [![NPM version](https://img.shields.io/npm/v/bone.svg?style=flat)](https://npmjs.org/package/bone) [![NPM version](https://img.shields.io/npm/dm/bone.svg?style=flat)](https://npmjs.org/package/bone) [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone) 
 [![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master)
 
-
-<!-- 
-
-　　不，Bone和Grunt&Gulp截然不同！Bone Bone提供一种简易的方式来整合前端开发在开发阶段的各种工具，通过各种[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)来对源文件进行处理。当然Bone和Grunt&Gulp并不冲突，通过Bone处理后的文件可以再通过其他的构建工具进行进一步的处理。
--->
-
 ###核心概念
 
 　　这个模块是Bone的核心功能，为了让使用者更容易读懂Bone的配置文件，核心模块提供了一种类似操作系统里文件系统的概念，我称它为虚拟文件系统，即将一个虚拟的文件地址映射到一个真实存在的文件地址上，同时可以标注虚拟文件是由何种方式对源文件处理（注意这里不对真实文件做任何处理，源文件是指对真实文件的在内容上的拷贝），对源文件的处理模块我称它为[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)，通过下面的示例你可以对Bone的虚拟文件系统有一个初步的了解。
@@ -67,7 +61,7 @@ bone.cli(connect({
 
 安装示例中的依赖
 ```sh
-$ npm install bone bone-connect bone-act-less bone-act-concat --save-dev
+$ npm install bone bone-cli-connect bone-act-less bone-act-concat --save-dev
 ```
 
 启用connect后通过浏览http://localhost:8080查看文件
@@ -75,14 +69,25 @@ $ npm install bone bone-connect bone-act-less bone-act-concat --save-dev
 $ bone connect
 ```
 
-###Grunt && Glup 
-	
-　　to be continued.
-　　<!-- 通过bone.cli的`task`开启子进程调用Grunt或Glup -->
+###Grunt && Glup共存
+```js
+bone.task('grunt', {
+	exec: 'grunt'
+});
+```
+
+```js
+bone.task('gulp', {
+	exec: 'gulp',
+	params: 'default'
+});
+```
+
+bone.task的exec通过开启子进程，调用系统内其他命令行工具
 
 ###性能
-	
-　　to be continued.
+
+当启用`bone-cli-connect`或`bone-cli-proxy`时开启内部缓存，通过bone的fs api接口读取的文件内容都将会以buffer的形式缓存到内存里，当文件内容发生变化时，bone根据文件的依赖清空相应文件的缓存，缓存的粒度控制到单个文件。
 
 ###文档
 
