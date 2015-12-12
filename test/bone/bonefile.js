@@ -49,13 +49,6 @@ var plugins = {
 	})
 };
 
-plugins.authorCopyright = bone.wrapper(plugins.author, plugins.copyright),
-plugins.authorCopyrightFixedOption = bone.wrapper(plugins.author({
-	author: 'wyicwx'
-}), plugins.copyright({
-	copyright: 'wyicwx'
-}));
-
 // define a virtual folder 'dist'
 var dist = bone.dest('dist');
 // map src/**/* to dist/
@@ -132,28 +125,16 @@ dev.dest('js')
 		copyright: 'wyicwx'
 	}))
 	.rename('hello_sign_copyright.js');
-// define ~/dev/js/hello.js pass through author-copyright() processor
-dev.dest('js')
-	.src('./hello.js')
-	.act(plugins.authorCopyright({
-		author: 'wyicwx',
-		copyright: 'wyicwx'
-	}))
-	.rename('hello_sign-copyright.js');
+
 // define ~/dev/js/hello.js pass through copyright() processor
 dev.dest('js')
 	.src('./hello.js')
 	.act(plugins.copyright())
 	.rename('hello_copyright_default.js');
-// define ~/dev/js/hello.js pass through author-copyright-fixed-option() processor
-dev.dest('js')
-	.src('./hello.js')
-	.act(plugins.authorCopyrightFixedOption())
-	.rename('hello_sign-copyright-fixed-option.js');
 
 dev.dest('js')
 	.src('./hello.js')
-	.act(plugins.authorCopyright)
+	.act(plugins.author)
 	.rename('hello_sign-noparam.js');
 
 dev.dest('track')

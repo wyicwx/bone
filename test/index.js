@@ -271,6 +271,61 @@ describe('bone.fs', function() {
 				assert.ok(false);
 			}
 		});
+
+		it('setting single defaultAct for fs', function(done) {
+			var fs = FileSystem.getFs({
+				defaultAct: bone.wrapper(function(buffer, encoding, callback) {
+					callback(null, buffer.toString() + '1');
+				})
+			});
+
+			var avild = true;
+
+			var stream = fs.createReadStream('~/src/js/hello.js');
+
+			stream.on('data', function(trunk) {
+				if(trunk.toString() != "alert('hello world!');1") {
+					avild = false;
+				}
+			});
+
+			stream.on('end', function() {
+				if(avild) {
+					done();
+				} else {
+					done(false);
+				}
+			});
+		});
+
+		it('setting multi defaultAct for fs', function(done) {
+			var fs = FileSystem.getFs({
+				defaultAct: [bone.wrapper(function(buffer, encoding, callback) {
+					callback(null, buffer.toString() + '1');
+				}),
+				bone.wrapper(function(buffer, encoding, callback) {
+					callback(null, buffer.toString() + '2');
+				})]
+			});
+
+			var avild = true;
+
+			var stream = fs.createReadStream('~/src/js/hello.js');
+
+			stream.on('data', function(trunk) {
+				if(trunk.toString() != "alert('hello world!');12") {
+					avild = false;
+				}
+			});
+
+			stream.on('end', function() {
+				if(avild) {
+					done();
+				} else {
+					done(false);
+				}
+			});
+		});
 	});
 
 	describe('pathResolve', function() {
@@ -366,7 +421,6 @@ describe('bone.fs', function() {
 				bonefs.rm('~/dist/not/exist');
 				bonefs.createWriteStream('~/dist/not/exist/File.js');
 			});
-
 		});
 
 		it('use focus param to create folder and create write stream', function() {
@@ -522,6 +576,12 @@ describe('bone.fs', function() {
 				assert.ok(true);
 			}
 		});
+
+		it('rm dir without project base will throw a error', function() {
+			assert.throws(function() {
+				bonefs.rm('/tmp');
+			});
+		});
 	});
 
 	describe('refresh', function() {
@@ -583,28 +643,28 @@ describe('bone.helper', function() {
 	 		});
 		});
 
-		it('concat multi plugin to one', function(done) {
-			bonefs.readFile('~/dev/js/hello_sign-copyright.js', function(err, buffer) {
-				var content = buffer.toString();
-				if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
-					done();
-				} else {
-					done(false);
-				}
-			});
-		});
+		// it('concat multi plugin to one', function(done) {
+		// 	bonefs.readFile('~/dev/js/hello_sign-copyright.js', function(err, buffer) {
+		// 		var content = buffer.toString();
+		// 		if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
+		// 			done();
+		// 		} else {
+		// 			done(false);
+		// 		}
+		// 	});
+		// });
 
-		it('concat multi option fixed\'s plugin to one', function(done) {
-			bonefs.readFile('~/dev/js/hello_sign-copyright-fixed-option.js', function(err, buffer) {
-				var content = buffer.toString();
+		// it('concat multi option fixed\'s plugin to one', function(done) {
+		// 	bonefs.readFile('~/dev/js/hello_sign-copyright-fixed-option.js', function(err, buffer) {
+		// 		var content = buffer.toString();
 
-				if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
-					done();
-				} else {
-					done(false);
-				}
-			});
-		});
+		// 		if(~content.search('@author wyicwx') && ~content.search('@copyright wyicwx')) {
+		// 			done();
+		// 		} else {
+		// 			done(false);
+		// 		}
+		// 	});
+		// });
 	});
 
 	describe('autoRefresh', function() {
