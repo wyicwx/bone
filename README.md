@@ -97,8 +97,8 @@ bone.task的exec通过开启子进程，调用系统内其他命令行工具
 
 ###常用服务器
 
-+ [bone-cli-connect](https://github.com/wyicwx/bone-cli-connect) 
-+ [bone-cli-proxy](https://github.com/wyicwx/bone-cli-proxy) 
++ [bone-cli-connect](https://github.com/wyicwx/bone-cli-connect) 支持bone的api的静态服务器
++ [bone-cli-proxy](https://github.com/wyicwx/bone-cli-proxy) 支持bone的api的代理服务器
 
 ###常用处理器
 
@@ -106,4 +106,5 @@ bone.task的exec通过开启子进程，调用系统内其他命令行工具
 + [bone-act-sass](https://github.com/jansesun/bone-act-sass) sass编译器
 + [bone-act-concat](https://github.com/wyicwx/bone-act-concat) 文件合并
 + [bone-act-include](https://github.com/wyicwx/bone-act-include) include功能
-+ [bone-act-uglify](https://github.com/wyicwx/bone-act-uglify) uglify压缩器支持js和css压缩
++ [bone-act-uglify](https://github.com/wyicwx/bone-act-uglify) uglify压缩器
++ [bone-act-cleancss](https://github.com/wyicwx/bone-act-cleancss) css压缩器
