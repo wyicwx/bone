@@ -1,3 +1,6 @@
++ 2015-12-22 v0.1.4
+	+ 解决windows下watch没有清理cache的问题
+	+ 修改pathResolve针对windows解析根目录的问题
 + 2015-12-12 v0.1.2
 	+ FileSystem.getFs增加defaultAct参数，返回的实例在读取文件的接口上默认进行参数指定的处理器处理，增加相应的单元测试
 	+ search增加参数searchAll允许搜索临时文件

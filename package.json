@@ -1,6 +1,6 @@
 {
   "name": "bone",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "web frontend developer toolkit",
   "main": "index.js",
   "scripts": {
