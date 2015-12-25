@@ -17,7 +17,7 @@
     "lodash": "^3.10.1",
     "minimatch": "~0.2.14",
     "mkdirp": "~0.5.0",
-    "through2": "~0.4.1"
+    "through2": "^0.4.2"
   },
   "config": {
     "blanket": {
