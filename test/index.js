@@ -94,7 +94,6 @@ describe('bone.dest', function() {
 	it('act() process source file', function(done) {
 		bonefs.readFile('~/dev/js/hello_sign.js', function(err, buffer) {
 			var content = buffer.toString();
-
 			if(~content.search('@author wyicwx')) {
 				done();
 			} else {
@@ -690,7 +689,7 @@ describe('bone.helper', function() {
 
 			bone.helper.autoRefresh(function() {
 				bone.status.watch = true;
-				fs.writeFileSync(sourcePath, '');
+				fs.writeFileSync(sourcePath, '1');
 				bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
 					var cached = cache.get(filePath);
 

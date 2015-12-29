@@ -5,27 +5,27 @@ var aggre = AKOStream.aggre;
 var bone = require('../../index.js');
 var plugins = {
 	author: bone.wrapper(function(buffer, encoding, callback) {
-		var option = this.option;
-		var author = ['/**', ' * @author ' + (option.author || 'anonymous'), ' */', ''];
+		var options = this.options();
+
+		var author = ['/**', ' * @author ' + (options.author || 'anonymous'), ' */', ''];
 
 		author = new Buffer(author.join('\n'));
-
-		callback(null, Buffer.concat([author, buffer]));
+		callback(null, author+buffer);
 	}),
 	copyright: bone.wrapper(function(buffer, encoding, callback) {
-		var option = this.option.defaults({
+		var options = this.options({
 			copyright: 'anonymous'
 		});
 
-		var copyright = ['/**', ' * @copyright ' + option.copyright, ' */', ''];
+		var copyright = ['/**', ' * @copyright ' + options.copyright, ' */', ''];
 
 		copyright = new Buffer(copyright.join('\n'));
 
-		callback(null, Buffer.concat([copyright, buffer]));
+		callback(null, copyright+buffer);
 	}),
 	concat: bone.wrapper(function(buffer, encoding, callback) {
-		var option = this.option;
-		var files = option.files || [];
+		var options = this.options();
+		var files = options.files || [];
 		var destPath = this.destPath;
 		var fs = this.fs;
 
@@ -39,7 +39,7 @@ var plugins = {
 				streams.push(aggre(fs.createReadStream(f)));
 			});
 		});
-		var chunks = [buffer]
+		var chunks = [new Buffer(buffer)]
 
 		combine(streams).on('data', function(chunk) {
 			chunks.push(chunk);
