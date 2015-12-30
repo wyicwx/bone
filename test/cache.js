@@ -1,7 +1,7 @@
 'use strict';
 var assert = require('assert');
-var cache = require('../lib/cache.js');
 var bone = require('../index.js');
+var cache = require('../lib/cache.js');
 
 bone.status.test = true;
 bone.status.watch = true;
