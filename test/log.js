@@ -9,39 +9,39 @@ var path = require('path');
 bone.status.test = true;
 bone.status.watch = true;
 describe('bone.log', function() {
-	it('show log normal', function() {
-		log('show log normal');
-		if(bone.logInfo.pop().indexOf('show log normal') == -1) {
-			assert.ok(false);
-		}
-	});
+    it('show log normal', function() {
+        log('show log normal');
+        if (bone.logInfo.pop().indexOf('show log normal') == -1) {
+            assert.ok(false);
+        }
+    });
 
-	it('show info log normal', function() {
-		log.info('show info log normal');
-		if(bone.logInfo.pop().indexOf('show info log normal') == -1) {
-			assert.ok(false);
-		}
-	});
+    it('show info log normal', function() {
+        log.info('show info log normal');
+        if (bone.logInfo.pop().indexOf('show info log normal') == -1) {
+            assert.ok(false);
+        }
+    });
 
-	it('show warn log normal', function() {
-		log.warn('show info warn normal');
-		if(bone.logInfo.pop().indexOf('show info warn normal') == -1) {
-			assert.ok(false);
-		}
-	});
+    it('show warn log normal', function() {
+        log.warn('show info warn normal');
+        if (bone.logInfo.pop().indexOf('show info warn normal') == -1) {
+            assert.ok(false);
+        }
+    });
 
-	it('show throw error log in test mode', function() {
-		assert.throws(function() {
-			log.error('show info error normal');
-		});
-	});
+    it('show throw error log in test mode', function() {
+        assert.throws(function() {
+            log.error('show info error normal');
+        });
+    });
 
-	it('show debug log normal', function() {
-		bone.status.debug = true;
-		log.debug('show info debug normal');
-		if(bone.logInfo.pop().indexOf('show info debug normal') == -1) {
-			assert.ok(false);
-		}
-		bone.status.debug = false;
-	});
+    it('show debug log normal', function() {
+        bone.status.debug = true;
+        log.debug('show info debug normal');
+        if (bone.logInfo.pop().indexOf('show info debug normal') == -1) {
+            assert.ok(false);
+        }
+        bone.status.debug = false;
+    });
 });
