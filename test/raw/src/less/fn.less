@@ -1,0 +1,13 @@
+.pre(@style,@value){
+    -webkit-@{style}: @value;
+       -moz-@{style}: @value;
+        -ms-@{style}: @value;
+            @{style}: @value;
+}
+
+.transition(@arg){
+    .pre(transition,@arg);
+}
+.transform(@arg) {
+    .pre(transform, @arg);
+}

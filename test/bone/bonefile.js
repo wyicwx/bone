@@ -3,50 +3,12 @@ var AKOStream = require('akostream');
 var combine = AKOStream.combine;
 var aggre = AKOStream.aggre;
 var bone = require('../../index.js');
+
 var plugins = {
-    author: bone.wrapper(function(buffer, encoding, callback) {
-        var options = this.options();
-
-        var author = ['/**', ' * @author ' + (options.author || 'anonymous'), ' */', ''];
-
-        author = new Buffer(author.join('\n'));
-        callback(null, author + buffer);
-    }),
-    copyright: bone.wrapper(function(buffer, encoding, callback) {
-        var options = this.options({
-            copyright: 'anonymous'
-        });
-
-        var copyright = ['/**', ' * @copyright ' + options.copyright, ' */', ''];
-
-        copyright = new Buffer(copyright.join('\n'));
-
-        callback(null, copyright + buffer);
-    }),
-    concat: bone.wrapper(function(buffer, encoding, callback) {
-        var options = this.options();
-        var files = options.files || [];
-        var destPath = this.destPath;
-        var fs = this.fs;
-
-        if (!Array.isArray(files)) {
-            files = [files];
-        }
-        var streams = [];
-        files.forEach(function(file) {
-            file = fs.pathResolve(file, destPath);
-            fs.search(file).forEach(function(f) {
-                streams.push(aggre(fs.createReadStream(f)));
-            });
-        });
-        var chunks = [new Buffer(buffer)]
-
-        combine(streams).on('data', function(chunk) {
-            chunks.push(chunk);
-        }).on('end', function() {
-            callback(null, Buffer.concat(chunks));
-        });
-    })
+    author: bone.require('../bone/plugins_author.js'),
+    copyright: bone.require('../bone/plugins_copyright.js'),
+    concat: bone.require('bone-act-concat'),
+    less: bone.require('bone-act-less')
 };
 
 // define a virtual folder 'dist'
@@ -99,7 +61,8 @@ bone.dest('temp')
 
 // map dist
 var cdist = bone.dest('cdist');
-cdist.src('~/dist/**/*');
+cdist.src('~/dist/**/*')
+    .act(plugins.less);
 
 // define a virtual folder 'dev' 
 var dev = bone.dest('dev');
