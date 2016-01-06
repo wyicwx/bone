@@ -100,7 +100,7 @@ describe('bone.dest', function() {
     });
 
     it('act() process source file', function(done) {
-        bonefs.readFile('~/dev/js/hello_sign.js', function(err, buffer) {
+        bonefs.readFile('~/dist/plugins/author.js', function(err, buffer) {
             var content = buffer.toString();
             if (~content.search('@author wyicwx')) {
                 done();
@@ -111,7 +111,7 @@ describe('bone.dest', function() {
     });
 
     it('multi act() process source file', function(done) {
-        bonefs.readFile('~/dev/js/hello_sign_copyright.js', function(err, buffer) {
+        bonefs.readFile('~/dist/plugins/author_copyright.js', function(err, buffer) {
             var content = buffer.toString();
 
             if (~content.search('@copyright wyicwx')) {
@@ -140,8 +140,7 @@ describe('bone.dest', function() {
     });
 
     it('act() processor non-params', function(done) {
-        var track = bone.utils.fs.track('~/dev/js/hello_sign-noparam.js');
-        bonefs.readFile('~/dev/js/hello_sign-noparam.js', function(err, buffer) {
+        bonefs.readFile('~/dist/plugins/author_noparam.js', function(err, buffer) {
             var content = buffer.toString();
             if (~content.search('@author anonymous')) {
                 done();
@@ -152,8 +151,8 @@ describe('bone.dest', function() {
     });
 
     it('cwd() change work directory', function() {
-        var cwdret = bonefs.search('~/cwd/all/**/*');
-        var origret = bonefs.search('~/src/**/*');
+        var cwdret = bonefs.search('~/dist/cwd/all/all/**/*');
+        var origret = bonefs.search('~/src/cwd/all/**/*');
 
         if (cwdret.length === origret.length) {
             assert.ok(true);
@@ -162,13 +161,13 @@ describe('bone.dest', function() {
         }
     });
 
-    it('cwd() copy subfolder', function() {
-        if (bonefs.existFile('~/cwd/folder/js/hello.js')) {
-            assert.ok(true);
-        } else {
-            assert.ok(false);
-        }
-    });
+    // it('cwd() copy subfolder', function() {
+    //     if (bonefs.existFile('~/cwd/folder/js/hello.js')) {
+    //         assert.ok(true);
+    //     } else {
+    //         assert.ok(false);
+    //     }
+    // });
 
     it("temp() should be not show in search's result", function() {
         var result = bonefs.search('~/temp/*');
@@ -219,7 +218,7 @@ describe('bone.dest', function() {
                 if(error.message.indexOf('File over references') != -1) {
                     var File = require('../lib/file.js');
                     _.each(File.fileList, function(item) {
-                        if (item.destination == 'overReferences') {
+                        if (item.destination == 'src/overReferences') {
                             File.fileList = _.without(File.fileList, item);
                         }
                     });
@@ -276,7 +275,7 @@ describe('bone.fs', function() {
         });
 
         it('read a file what mapping from virtual file', function() {
-            if (bonefs.existFile('dev/track/hello.js', {
+            if (bonefs.existFile('dist/single/zoo.js', {
                     notFs: true
                 })) {
                 assert.ok(true);
@@ -641,13 +640,13 @@ describe('bone.helper', function() {
 
         it('change file will clean cache', function(done) {
             var cache = require('../lib/cache.js');
-            var filePath = bonefs.pathResolve('~/dev/change/change.js');
-            var sourcePath = bonefs.pathResolve('~/src/js/change.js');
+            var filePath = bonefs.pathResolve('~/dist/change/change.js');
+            var sourcePath = bonefs.pathResolve('~/src/change/change.js');
 
             bone.helper.autoRefresh(function() {
                 bone.status.watch = true;
                 fs.writeFileSync(sourcePath, '1');
-                bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
+                bonefs.readFile(filePath, function(error, buffer) {
                     var cached = cache.get(filePath);
 
                     if (!cache.get(filePath)) {
@@ -663,26 +662,27 @@ describe('bone.helper', function() {
 
                         done();
                         bone.status.watch = false;
-                    }, 400);
+                    }, 600);
                 });
             });
         });
 
-        it('add or delete file will clean cache and refresh file system.', function(done) {
+        it('add or delete file will clean cache and refresh file system', function(done) {
             var cache = require('../lib/cache.js');
-            var addFile = bonefs.pathResolve('~/src/js/add.js');
+            var addFile = bonefs.pathResolve('~/src/change/add.js');
 
             if (fs.existsSync(addFile)) {
                 fs.unlinkSync(addFile);
             }
+
             bone.helper.autoRefresh(function() {
-                bonefs.readFile('~/dev/change/change.js', function(error, buffer) {
-                    var filePath = bonefs.pathResolve('~/dev/change/change.js');
+                bonefs.readFile('~/dist/change/change.js', function(error, buffer) {
+                    var filePath = bonefs.pathResolve('~/dist/change/change.js');
 
                     if (!cache.get(filePath)) {
                         return done(false);
                     }
-                    fs.writeFile(addFile, 'add file', function(err) {
+                    fs.writeFile(addFile, 'add file', function(err) {                        
                         if (err) {
                             return done(false);
                         }
@@ -691,28 +691,26 @@ describe('bone.helper', function() {
                             if (!cache.get(filePath)) {
                                 result = null;
                             }
-                            fs.unlink(addFile, function() {
-                                setTimeout(function() {
-                                    done(result);
-                                }, 400);
-                            });
-                        }, 400);
+                            fs.unlinkSync(addFile);
+
+                            done(result);
+                        }, 600);
                     });
                 });
             });
         });
 
-        it('delete file ', function(done) {
+        it('delete file', function(done) {
             bone.helper.autoRefresh(function(watcher) {
-                var addFile = bonefs.pathResolve('~/src/js/temp.js');
+                var addFile = bonefs.pathResolve('~/src/deleteFile/concat/temp.js');
                 var Data = require('../lib/data.js');
 
                 fs.writeFile(addFile, 'test', function() {
                     setTimeout(function() {
-                        bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesA) {
+                        bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesA) {
                             fs.unlink(addFile, function() {
                                 setTimeout(function() {
-                                    bone.utils.fs.dependentFile('~/dev/dependentFile/concatGlob.js', function(err, dependenciesB) {
+                                    bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesB) {
                                         var diff = _.difference(dependenciesA, dependenciesB);
 
                                         if (diff.length == 1 && diff[0] == addFile) {

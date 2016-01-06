@@ -183,7 +183,7 @@ describe('plugins', function() {
     });
 
     it('options() set default value for some key', function(done) {
-        bonefs.readFile('~/dev/js/hello_copyright_default.js', function(err, buffer) {
+        bonefs.readFile('~/dist/plugins/copyright.js', function(err, buffer) {
             var content = buffer.toString();
 
             if (~content.search('@copyright anonymous')) {

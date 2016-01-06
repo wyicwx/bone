@@ -53,6 +53,10 @@ var singleDir = dist.dest('single');
     singleDir
         .src('~/src/single/foo.js');
 
+    singleDir
+        .src('./foo.js')
+        .rename('zoo.js');
+
     bone.dest('dist/single').src('~/src/single/foo.js').rename('bar.js');
 
 // use src() glob
@@ -118,6 +122,77 @@ var dependencyFileDir = dist.dest('dependencyFile');
         }))
         .rename('dependenc_2.js');
 
+// deleteFile dir
+var deleteFileDir = dist.dest('deleteFile');
+    
+    deleteFileDir
+        .src('~/src/deleteFile/foo.js')
+        .act(plugins.concat({
+            files: [
+                '~/src/deleteFile/concat/*.js'
+            ]
+        }));
+
+// cwd dir
+var cwdDir = dist.dest('cwd');
+
+    cwdDir.dest('all')
+        .cwd('~/src/cwd')
+        .src('./all/*');
+
+// change dir
+var changeDir = dist.dest('change');
+    
+    changeDir
+        .src('~/src/change/change.js');
+
+// plugins dir
+var pluginsDir = dist.dest('plugins');
+
+    pluginsDir 
+        .src('~/src/plugins/foo.js')
+        .act(plugins.author)
+        .rename('author_noparam.js');
+
+    pluginsDir
+        .src('~/src/plugins/foo.js')
+        .act(plugins.copyright())
+        .rename('copyright.js');
+
+    pluginsDir
+        .src('~/src/plugins/foo.js')
+        .act(plugins.author({
+            author: 'wyicwx'
+        }))
+        .act(plugins.copyright({
+            copyright: 'wyicwx'
+        }))
+        .rename('author_copyright.js');
+
+    pluginsDir
+        .src('~/src/plugins/foo.js')
+        .act(plugins.author({
+            author: 'wyicwx'
+        }))
+        .rename('author.js');
+
+// track dir
+var trackDir = dist.dest('track');
+
+    trackDir
+        .src('~/dist/single/zoo.js')
+        .rename('bar.js');
+
+    trackDir
+        .src('~/dist/single/foo.js');
+
+// dev.dest('track')
+//     .src('~/dev/js/*');
+
+// dev.dest('trackRename')
+//     .src('../track/hello.js')
+//     .rename('foo.js');
+
 // define over reference file
 // dist.dest('js')
 //     .src('./hello.js')
@@ -134,47 +209,47 @@ var dependencyFileDir = dist.dest('dependencyFile');
 //     .act(plugins.less);
 
 // define a virtual folder 'dev' 
-var dev = bone.dest('dev');
+// var dev = bone.dest('dev');
 // map ~/src/js/*.js to dev
-dev.dest('js')
-    .src('~/src/js/*.js');
+// dev.dest('js')
+//     .src('~/src/js/*.js');
 // map ~/src/css/css.css to dev/css.css
 // bone.dest('dev').src('~/src/css/css.css');
 // define ~/dev/js/hello.js pass through author() processor
-dev.dest('js')
-    .src('./hello.js')
-    .act(plugins.author({
-        author: 'wyicwx'
-    }))
-    .rename('hello_sign.js');
+// dev.dest('js')
+//     .src('./hello.js')
+//     .act(plugins.author({
+//         author: 'wyicwx'
+//     }))
+//     .rename('hello_sign.js');
 // define ~/dev/js/hello.js pass through author() and copyright() processor
-dev.dest('js')
-    .src('./hello.js')
-    .act(plugins.author({
-        author: 'wyicwx'
-    }))
-    .act(plugins.copyright({
-        copyright: 'wyicwx'
-    }))
-    .rename('hello_sign_copyright.js');
+// dev.dest('js')
+//     .src('./hello.js')
+//     .act(plugins.author({
+//         author: 'wyicwx'
+//     }))
+//     .act(plugins.copyright({
+//         copyright: 'wyicwx'
+//     }))
+//     .rename('hello_sign_copyright.js');
 
 // define ~/dev/js/hello.js pass through copyright() processor
-dev.dest('js')
-    .src('./hello.js')
-    .act(plugins.copyright())
-    .rename('hello_copyright_default.js');
+// dev.dest('js')
+//     .src('./hello.js')
+//     .act(plugins.copyright())
+//     .rename('hello_copyright_default.js');
 
-dev.dest('js')
-    .src('./hello.js')
-    .act(plugins.author)
-    .rename('hello_sign-noparam.js');
+// dev.dest('js')
+//     .src('./hello.js')
+//     .act(plugins.author)
+//     .rename('hello_sign-noparam.js');
 
-dev.dest('track')
-    .src('~/dev/js/*');
+// dev.dest('track')
+//     .src('~/dev/js/*');
 
-dev.dest('trackRename')
-    .src('../track/hello.js')
-    .rename('foo.js');
+// dev.dest('trackRename')
+//     .src('../track/hello.js')
+//     .rename('foo.js');
 
 // dev.dest('dependentFile')
 //     .src('~/dev/js/hello.js')
@@ -196,36 +271,36 @@ dev.dest('trackRename')
 //     }))
 //     .rename('foo.js');
 
-dev.dest('dependentFile')
-    .src('~/dev/js/hello.js')
-    .act(plugins.concat({
-        files: [
-            '~/src/js/*.js'
-        ]
-    }))
-    .rename('concatGlob.js');
+// dev.dest('dependentFile')
+//     .src('~/dev/js/hello.js')
+//     .act(plugins.concat({
+//         files: [
+//             '~/src/js/*.js'
+//         ]
+//     }))
+//     .rename('concatGlob.js');
 
-dev.dest('change')
-    .src('~/src/js/change.js');
+// dev.dest('change')
+//     .src('~/src/js/change.js');
 
-dev.dest('change')
-    .src('~/src/js/added.js');
+// dev.dest('change')
+//     .src('~/src/js/added.js');
 
-bone.dest('cwd/all')
-    .cwd('~/src')
-    .src('./**/*');
+// bone.dest('cwd/all')
+//     .cwd('~/src')
+//     .src('./**/*');
 
-bone.dest('cwd/js')
-    .cwd('~/src')
-    .src('./js/**/*');
+// bone.dest('cwd/js')
+//     .cwd('~/src')
+//     .src('./js/**/*');
 
-bone.dest('cwd/folder')
-    .cwd('~/src')
-    .src('js/hello.js');
+// bone.dest('cwd/folder')
+//     .cwd('~/src')
+//     .src('js/hello.js');
 
 // define a virtual folder 'search' for test search()
 // bone.dest('search')
 //     .src('~/src/**/*');
 
-bone.dest('notExist')
-    .src('./*/notExist.js');
+// bone.dest('notExist')
+//     .src('./*/notExist.js');

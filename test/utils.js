@@ -20,12 +20,12 @@ describe('bone.utils', function() {
     });
 
     it('track a virtual file', function() {
-        var trackFile = bone.utils.fs.track('dev/track/hello.js');
+        var trackFile = bone.utils.fs.track('dist/track/foo.js');
 
         if (trackFile.length == 3) {
-            if (trackFile[0] == bonefs.pathResolve('dev/track/hello.js')) {
-                if (trackFile[1] == bonefs.pathResolve('dev/js/hello.js')) {
-                    if (trackFile[2] == bonefs.pathResolve('src/js/hello.js')) {
+            if (trackFile[0] == bonefs.pathResolve('dist/track/foo.js')) {
+                if (trackFile[1] == bonefs.pathResolve('dist/single/foo.js')) {
+                    if (trackFile[2] == bonefs.pathResolve('src/single/foo.js')) {
                         return assert.ok(true);
                     }
                 }
@@ -36,13 +36,13 @@ describe('bone.utils', function() {
     });
 
     it('track a rename virtual file', function() {
-        var trackFile = bone.utils.fs.track('dev/trackRename/foo.js');
+        var trackFile = bone.utils.fs.track('dist/track/bar.js');
 
         if (trackFile.length == 4) {
-            if (trackFile[0] == bonefs.pathResolve('dev/trackRename/foo.js')) {
-                if (trackFile[1] == bonefs.pathResolve('dev/track/hello.js')) {
-                    if (trackFile[2] == bonefs.pathResolve('dev/js/hello.js')) {
-                        if (trackFile[3] == bonefs.pathResolve('src/js/hello.js')) {
+            if (trackFile[0] == bonefs.pathResolve('dist/track/bar.js')) {
+                if (trackFile[1] == bonefs.pathResolve('dist/single/zoo.js')) {
+                    if (trackFile[2] == bonefs.pathResolve('dist/single/foo.js')) {
+                        if (trackFile[3] == bonefs.pathResolve('src/single/foo.js')) {
                             return assert.ok(true);
                         }
                     }
@@ -110,12 +110,12 @@ describe('bone.utils', function() {
     });
 
     it('map2local virtual file', function(done) {
-        var dirpath = path.join(__dirname, './raw/dist/js');
-        var filepath = path.join(dirpath, 'hello.js');
+        var dirpath = bonefs.pathResolve('~/dist/single');
+        var filepath = bonefs.pathResolve('~/dist/single/foo.js');
 
         bonefs.rm(dirpath);
 
-        bone.utils.fs.map2local('dist/js/hello.js', function(error) {
+        bone.utils.fs.map2local(filepath, function(error) {
             if (fs.existsSync(filepath)) {
                 bonefs.rm(dirpath);
                 done();
