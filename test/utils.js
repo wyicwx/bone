@@ -127,7 +127,7 @@ describe('bone.utils', function() {
     });
 
     it('map2local real file', function(done) {
-        bone.utils.fs.map2local('raw/js/hello.js', function(error) {
+        bone.utils.fs.map2local('dist/single/foo.js', function(error) {
             if (error) {
                 return done(false);
             }
@@ -182,7 +182,7 @@ describe('bone.utils', function() {
     });
 
     it('getByDependent file', function() {
-        var filePath = bonefs.pathResolve('~/src/js/hello.js');
+        var filePath = bonefs.pathResolve('~/src/single/foo.js');
         var files = bone.utils.fs.getByDependentFile(filePath);
 
         if (files.length <= 0) {
