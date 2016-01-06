@@ -6,6 +6,11 @@ var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 var Plugins = require('../lib/plugins.js').Plugins;
+var FileSystem = require('../lib/fs.js');
+var bonefs;
+
+bone.setup('./test/raw');
+bonefs = FileSystem.fs;
 
 function act(buffer, encoding, callback) {
     callback(null, buffer);
@@ -175,5 +180,17 @@ describe('plugins', function() {
         if(!pluginsObject.filter(runtimeJsFile) || !pluginsObject.filter(runtimeCssFile)) {
             assert.ok(false);
         }
+    });
+
+    it('options() set default value for some key', function(done) {
+        bonefs.readFile('~/dev/js/hello_copyright_default.js', function(err, buffer) {
+            var content = buffer.toString();
+
+            if (~content.search('@copyright anonymous')) {
+                done();
+            } else {
+                done(false);
+            }
+        });
     });
 });

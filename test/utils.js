@@ -61,14 +61,14 @@ describe('bone.utils', function() {
     });
 
     it('dependentFile', function(done) {
-        bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(error, dependencies) {
-            var dependentFile = [
-                bonefs.pathResolve('~/src/project/file1.js'),
-                bonefs.pathResolve('~/src/js/hello.js'),
-                bonefs.pathResolve('~/src/css/css.css')
+        bone.utils.fs.dependentFile('dist/dependencyFile/dependency.js', function(error, dependencies) {
+            var dependencyFile = [
+                bonefs.pathResolve('~/src/dependencyFile/foo.js'),
+                bonefs.pathResolve('~/src/dependencyFile/dependency_a.js'),
+                bonefs.pathResolve('~/src/dependencyFile/dependency_b.js')
             ];
 
-            if (ArrayContain(dependentFile, dependencies)) {
+            if(_.intersection(dependencies, dependencyFile).length == dependencyFile.length) {
                 done();
             } else {
                 done(false);
@@ -96,14 +96,14 @@ describe('bone.utils', function() {
                     done(false);
                 }
             }
-
         };
-        bone.utils.fs.dependentFile('dev/dependentFile/hello.js', function(err, dependencies) {
+
+        bone.utils.fs.dependentFile('dist/dependencyFile/dependency.js', function(err, dependencies) {
             map.a = dependencies;
             end();
         });
 
-        bone.utils.fs.dependentFile('dev/dependentFile/foo.js', function(err, dependencies) {
+        bone.utils.fs.dependentFile('dist/dependencyFile/dependenc_2.js', function(err, dependencies) {
             map.b = dependencies;
             end();
         });
@@ -139,7 +139,6 @@ describe('bone.utils', function() {
     it('mapAll2local', function(done) {
         var rmTmp = function() {
             bonefs.rm(path.join(__dirname, './raw/dist'));
-            bonefs.rm(path.join(__dirname, './raw/cdist'));
             bonefs.rm(path.join(__dirname, './raw/cwd'));
             bonefs.rm(path.join(__dirname, './raw/dev'));
             bonefs.rm(path.join(__dirname, './raw/search'));

@@ -7,62 +7,131 @@ var bone = require('../../index.js');
 var plugins = {
     author: bone.require('../bone/plugins_author.js'),
     copyright: bone.require('../bone/plugins_copyright.js'),
+    dependency: bone.require('../bone/dependency.js'),
     concat: bone.require('bone-act-concat'),
     less: bone.require('bone-act-less')
 };
 
 // define a virtual folder 'dist'
 var dist = bone.dest('dist');
-// map src/**/* to dist/
-dist.src('~/src/**/*');
 
-dist.src('~/src/**/*')
-    .rename(function(filename) {
-        return 'rename-' + filename;
-    });
+// rename
+var renameDir = dist.dest('rename');
+
+    renameDir
+        .src('~/src/rename/base.js')
+        .rename('foo.js');
+
+    renameDir
+        .src('~/src/rename/base.js')
+        .rename({
+            ext: '.jsx'
+        });
+
+    renameDir
+        .src('~/src/rename/base.js')
+        .rename({
+            name: 'bar'
+        });
+
+    renameDir
+        .src('~/src/rename/base.js')
+        .rename({
+            name: 'bar',
+            ext: '.jsx'
+        });
+
+    renameDir
+        .src('~/src/rename/base.js')
+        .rename(function() {
+            return 'zoo.js'
+        });
+
 // define single file
-dist.dest('js')
-    .src('~/src/js/hello.js')
-    .rename('main.js');
-// define over reference file
-dist.dest('js')
-    .src('./hello.js')
-    .rename('a.js');
-dist.dest('js')
-    .src('./a.js')
-    .rename('b.js');
-// kind of rename type
-dist.dest('js')
-    .src('~/src/js/hello.js')
-    .rename({
-        ext: '.jsx'
-    });
-dist.dest('js')
-    .src('~/src/js/hello.js')
-    .rename({
-        ext: 'jsfile'
-    });
-dist.dest('js')
-    .src('~/src/js/hello.js')
-    .rename({
-        name: 'renameHello'
-    });
-dist.dest('js')
-    .src('~/src/js/hello.js')
-    .rename({
-        name: 'renameHello',
-        ext: '.jsx'
-    });
+var singleDir = dist.dest('single');
+
+    singleDir
+        .src('~/src/single/foo.js');
+
+    bone.dest('dist/single').src('~/src/single/foo.js').rename('bar.js');
+
+// use src() glob
+var globDir = dist.dest('glob');
+    
+    globDir.src('~/src/glob/**/*');
+
+// duplicate definition
+var duplicateDefinitionDir = dist.dest('duplicateDefinition');
+
+    duplicateDefinitionDir.src('~/src/duplicateDefinition/foo.js');
+
+// over reference
+var overReferencesDir = bone.dest('src/overReferences');
+    
+    overReferencesDir.src('./foo.js');
+
+// all empty file
+var emptyDir = dist.dest('empty');
+
+    emptyDir.src('~/src/empty/*');
 
 // temp dir
-bone.dest('temp')
-    .temp(true)
-    .src('~/src/js/*.js');
+var tempDir = dist.dest('temp');
+
+    tempDir
+        .temp(true)
+        .src('~/src/temp/*.js');
+
+// read dir
+var readDirDir = dist.dest('readDir');
+    
+    readDirDir
+        .src('~/src/readDir/*');
+
+    readDirDir
+        .src('~/src/readDir/*')
+        .rename(function(filename) {
+            return filename + '.jsx';
+        });
+
+// rependencyFile
+var dependencyFileDir = dist.dest('dependencyFile');
+    
+    dependencyFileDir
+        .src('~/src/dependencyFile/foo.js')
+        .act(plugins.concat({
+            files: [
+                '~/src/dependencyFile/dependency_a.js',
+                '~/src/dependencyFile/dependency_b.js'
+            ]
+        }))
+        .rename('dependency.js');
+
+    dependencyFileDir
+        .src('~/src/dependencyFile/foo.js')
+        .act(plugins.concat({
+            files: [
+                '~/src/dependencyFile/dependency_a.js',
+                '~/src/dependencyFile/dependency_b.js',
+                '~/src/dependencyFile/dependency_c.js'
+            ]
+        }))
+        .rename('dependenc_2.js');
+
+// define over reference file
+// dist.dest('js')
+//     .src('./hello.js')
+//     .rename('a.js');
+// dist.dest('js')
+//     .src('./a.js')
+//     .rename('b.js');
+
+
 
 // map dist
-var cdist = bone.dest('cdist');
-cdist.src('~/dist/**/*')
-    .act(plugins.less);
+// var cdist = bone.dest('cdist');
+// cdist.src('~/dist/**/*')
+//     .act(plugins.less);
 
 // define a virtual folder 'dev' 
 var dev = bone.dest('dev');
@@ -70,7 +139,7 @@ var dev = bone.dest('dev');
 dev.dest('js')
     .src('~/src/js/*.js');
 // map ~/src/css/css.css to dev/css.css
-bone.dest('dev').src('~/src/css/css.css');
+// bone.dest('dev').src('~/src/css/css.css');
 // define ~/dev/js/hello.js pass through author() processor
 dev.dest('js')
     .src('./hello.js')
@@ -107,25 +176,25 @@ dev.dest('trackRename')
     .src('../track/hello.js')
     .rename('foo.js');
 
-dev.dest('dependentFile')
-    .src('~/dev/js/hello.js')
-    .act(plugins.concat({
-        files: [
-            '~/src/project/file1.js',
-            '~/dev/css.css'
-        ]
-    }));
+// dev.dest('dependentFile')
+//     .src('~/dev/js/hello.js')
+//     .act(plugins.concat({
+//         files: [
+//             '~/src/project/file1.js',
+//             '~/dev/css.css'
+//         ]
+//     }));
 
-dev.dest('dependentFile')
-    .src('~/dev/js/hello.js')
-    .act(plugins.concat({
-        files: [
-            '~/src/project/file2.js',
-            '~/src/project/file3.js',
-            '~/dev/css.css'
-        ]
-    }))
-    .rename('foo.js');
+// dev.dest('dependentFile')
+//     .src('~/dev/js/hello.js')
+//     .act(plugins.concat({
+//         files: [
+//             '~/src/project/file2.js',
+//             '~/src/project/file3.js',
+//             '~/dev/css.css'
+//         ]
+//     }))
+//     .rename('foo.js');
 
 dev.dest('dependentFile')
     .src('~/dev/js/hello.js')
@@ -155,12 +224,8 @@ bone.dest('cwd/folder')
     .src('js/hello.js');
 
 // define a virtual folder 'search' for test search()
-bone.dest('search')
-    .src('~/src/**/*');
-
-// over reference
-bone.dest('overReferences')
-    .src('./bar.js');
+// bone.dest('search')
+//     .src('~/src/**/*');
 
 bone.dest('notExist')
     .src('./*/notExist.js');
