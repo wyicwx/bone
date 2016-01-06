@@ -136,7 +136,7 @@ var deleteFileDir = dist.dest('deleteFile');
 // cwd dir
 var cwdDir = dist.dest('cwd');
 
-    cwdDir.dest('all')
+    cwdDir
         .cwd('~/src/cwd')
         .src('./all/*');
 

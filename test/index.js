@@ -151,7 +151,7 @@ describe('bone.dest', function() {
     });
 
     it('cwd() change work directory', function() {
-        var cwdret = bonefs.search('~/dist/cwd/all/all/**/*');
+        var cwdret = bonefs.search('~/dist/cwd/all/**/*');
         var origret = bonefs.search('~/src/cwd/all/**/*');
 
         if (cwdret.length === origret.length) {
@@ -198,6 +198,14 @@ describe('bone.dest', function() {
                 .src('~/src/**')
                 .cwd('~/src');
         });
+
+        var File = require('../lib/file.js');
+        _.each(File.fileList, function(item) {
+            if (item.destination == 'cwd/src') {
+                File.fileList = _.without(File.fileList, item);
+            }
+        });
+        bonefs.refresh();
     });
 
     it('throw error define over file', function() {
