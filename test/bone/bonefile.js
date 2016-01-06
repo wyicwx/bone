@@ -25,7 +25,7 @@ var renameDir = dist.dest('rename');
     renameDir
         .src('~/src/rename/base.js')
         .rename({
-            ext: '.jsx'
+            ext: 'jsx'
         });
 
     renameDir

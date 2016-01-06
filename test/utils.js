@@ -136,6 +136,15 @@ describe('bone.utils', function() {
         });
     });
 
+    it('map2local not exist file', function(done) {
+        bone.utils.fs.map2local('dist/notExist/foo.js', function(error) {
+            if(error) {
+                return done();
+            }
+            done(false);
+        });
+    });
+
     it('mapAll2local', function(done) {
         var rmTmp = function() {
             bonefs.rm(path.join(__dirname, './raw/dist'));
