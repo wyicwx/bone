@@ -238,7 +238,7 @@ describe('plugins', function() {
         });
     });
 
-    it('filter success run', function(done) {
+    it('filter is runing correct', function(done) {
         bonefs.readFile('~/dist/less/style.css', function(error, buffer) {
             if(error) {
                 return done(false);

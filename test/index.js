@@ -122,7 +122,7 @@ describe('bone.dest', function() {
         });
     });
 
-    it('call rename() , act() and destroy() before src()  will throw error', function() {
+    it('call rename(), dir(), act() and destroy() before src()  will throw error', function() {
         assert.throws(function() {
             bone.dest('dist')
                 .rename();
@@ -136,6 +136,11 @@ describe('bone.dest', function() {
         assert.throws(function() {
             bone.dest('dist')
                 .destroy();
+        });
+
+        assert.throws(function() {
+            bone.dest('dist')
+                .dir();
         });
     });
 
@@ -157,6 +162,15 @@ describe('bone.dest', function() {
         if (cwdret.length === origret.length) {
             assert.ok(true);
         } else {
+            assert.ok(false);
+        }
+    });
+
+    it('dir() call to change destination\'s subfolder', function() {
+        if(!bonefs.existFile('~/dist/dir/string/foo.js')) {
+            assert.ok(false);
+        }
+        if(!bonefs.existFile('~/dist/dir/function/foo.js')) {
             assert.ok(false);
         }
     });

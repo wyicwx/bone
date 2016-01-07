@@ -223,9 +223,17 @@ var lessDir = dist.dest('less');
         }))
         .rename('notCompile.js')
 
+var dirDir = dist.dest('dir');
 
+    dirDir
+        .src('~/src/dir/foo.js')
+        .dir('string');
 
-
+    dirDir
+        .src('~/src/dir/foo.js')
+        .dir(function(dir, source, destination) {
+            return 'function';
+        });
 
 
 // dev.dest('track')
