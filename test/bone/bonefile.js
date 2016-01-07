@@ -8,6 +8,7 @@ var plugins = {
     author: bone.require('../bone/plugins_author.js'),
     copyright: bone.require('../bone/plugins_copyright.js'),
     dependency: bone.require('../bone/dependency.js'),
+    dependencyArray: bone.require('../bone/dependencyArray.js'),
     concat: bone.require('bone-act-concat'),
     less: bone.require('bone-act-less')
 };
@@ -185,6 +186,17 @@ var pluginsDir = dist.dest('plugins');
         }))
         .rename('author.js');
 
+    pluginsDir
+        .src('~/src/plugins/foo.js')
+        .act(plugins.dependency)
+        .rename('addDependency.js');
+
+    pluginsDir
+        .src('~/src/plugins/foo.js')
+        .act(plugins.dependencyArray)
+        .rename('addDependencyArray.js');
+
+
 // track dir
 var trackDir = dist.dest('track');
 
@@ -194,6 +206,27 @@ var trackDir = dist.dest('track');
 
     trackDir
         .src('~/dist/single/foo.js');
+
+var lessDir = dist.dest('less');
+
+    lessDir
+        .src('~/src/less/style.less')
+        .act(plugins.less)
+        .rename('style.css');
+
+    lessDir
+        .src('~/src/less/style.less')
+        .act(plugins.less({}, {
+            filter: {
+                name: 'less'
+            }
+        }))
+        .rename('notCompile.js')
+
+
+
+
+
 
 // dev.dest('track')
 //     .src('~/dev/js/*');

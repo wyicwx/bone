@@ -169,6 +169,7 @@ describe('plugins', function() {
                 base: {}
             }
         });
+
         if(!pluginsString.filter(runtimeJsFile) || !pluginsString.filter(runtimeCssFile)) {
             assert.ok(false);
         }
@@ -180,6 +181,10 @@ describe('plugins', function() {
         if(!pluginsObject.filter(runtimeJsFile) || !pluginsObject.filter(runtimeCssFile)) {
             assert.ok(false);
         }
+
+        if(pluginsArray.filter(runtimeHtmlFile)) {
+            assert.ok(false);
+        }
     });
 
     it('options() set default value for some key', function(done) {
@@ -187,6 +192,77 @@ describe('plugins', function() {
             var content = buffer.toString();
 
             if (~content.search('@copyright anonymous')) {
+                done();
+            } else {
+                done(false);
+            }
+        });
+    });
+
+    it('addDependency() add dependency array to dependecy list', function(done) {
+        bone.utils.fs.dependentFile('~/dist/plugins/addDependencyArray.js', function(error, dependencies) {
+            if(error) {
+                return done(false);
+            }
+
+            var dependencyFile = [
+                bonefs.pathResolve('~/src/plugins/foo.js'),
+                bonefs.pathResolve('~/src/plugins/dependency_a.js'),
+                bonefs.pathResolve('~/src/plugins/dependency_b.js')
+            ];
+
+            if(_.intersection(dependencies, dependencyFile).length == dependencyFile.length) {
+                done();
+            } else {
+                done(false);
+            }
+        });
+    });
+
+    it('addDependency() add single to dependecy list', function(done) {
+        bone.utils.fs.dependentFile('~/dist/plugins/addDependency.js', function(error, dependencies) {
+            if(error) {
+                return done(false);
+            }
+
+            var dependencyFile = [
+                bonefs.pathResolve('~/src/plugins/foo.js'),
+                bonefs.pathResolve('~/src/plugins/dependency_a.js')
+            ];
+
+            if(_.intersection(dependencies, dependencyFile).length == dependencyFile.length) {
+                done();
+            } else {
+                done(false);
+            }
+        });
+    });
+
+    it('filter success run', function(done) {
+        bonefs.readFile('~/dist/less/style.css', function(error, buffer) {
+            if(error) {
+                return done(false);
+            }
+
+            var content = buffer.toString();
+
+            if(content.indexOf('@import "./fn.less";') != -1) {
+                done(false);
+            } else {
+                done();
+            }
+        });
+    });
+
+    it('filter filter some not in rule', function(done) {
+        bonefs.readFile('~/dist/less/notCompile.js', function(error, buffer) {
+            if(error) {
+                return done(false);
+            }
+
+            var content = buffer.toString();
+
+            if(content.indexOf('@import "./fn.less";') != -1) {
                 done();
             } else {
                 done(false);
