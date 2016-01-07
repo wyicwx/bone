@@ -120,7 +120,16 @@ var dependencyFileDir = dist.dest('dependencyFile');
                 '~/src/dependencyFile/dependency_c.js'
             ]
         }))
-        .rename('dependenc_2.js');
+        .rename('dependency_2.js');
+
+    dependencyFileDir
+        .src('./dependency.js')
+        .act(plugins.concat({
+            files: [
+                '~/src/dependencyFile/dependency_c.js'
+            ]
+        }))
+        .rename('dependency_3.js');
 
 // deleteFile dir
 var deleteFileDir = dist.dest('deleteFile');

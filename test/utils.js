@@ -103,9 +103,26 @@ describe('bone.utils', function() {
             end();
         });
 
-        bone.utils.fs.dependentFile('dist/dependencyFile/dependenc_2.js', function(err, dependencies) {
+        bone.utils.fs.dependentFile('dist/dependencyFile/dependency_2.js', function(err, dependencies) {
             map.b = dependencies;
             end();
+        });
+    });
+
+    it('dependentFile virtual file what source is virtual file', function(done) {
+        bone.utils.fs.dependentFile('dist/dependencyFile/dependency_3.js', function(error, dependencies) {
+            var dependencyFile = [
+                bonefs.pathResolve('~/src/dependencyFile/foo.js'),
+                bonefs.pathResolve('~/src/dependencyFile/dependency_a.js'),
+                bonefs.pathResolve('~/src/dependencyFile/dependency_b.js'),
+                bonefs.pathResolve('~/src/dependencyFile/dependency_c.js')
+            ];
+
+            if(_.intersection(dependencies, dependencyFile).length == dependencyFile.length) {
+                done();
+            } else {
+                done(false);
+            }
         });
     });
 
