@@ -162,6 +162,24 @@ describe('bone.utils', function() {
         });
     });
 
+    it('mapAll2local in act throw error', function(done) {
+        bone.utils.fs.mapAll2local(function(error) {
+            var File = require('../lib/file.js');
+
+            _.each(File.fileList, function(item) {
+                if (item.destination == 'plugins' && item.renameFn == 'error.js') {
+                    File.fileList = _.without(File.fileList, item);
+                }
+            });
+            bonefs.refresh();
+            if(error) {
+                done();
+            } else {
+                done(false);
+            }
+        });
+    });
+
     it('mapAll2local', function(done) {
         var rmTmp = function() {
             bonefs.rm(path.join(__dirname, './raw/dist'));

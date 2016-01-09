@@ -9,8 +9,9 @@ var plugins = {
     copyright: bone.require('../bone/plugins_copyright.js'),
     dependency: bone.require('../bone/dependency.js'),
     dependencyArray: bone.require('../bone/dependency_array.js'),
+    error: bone.require('../bone/callback_error.js'),
     concat: bone.require('bone-act-concat'),
-    less: bone.require('bone-act-less')
+    less: bone.require('bone-act-less'),
 };
 
 // define a virtual folder 'dist'
@@ -157,7 +158,7 @@ var changeDir = dist.dest('change');
         .src('~/src/change/change.js');
 
 // plugins dir
-var pluginsDir = dist.dest('plugins');
+var pluginsDir = dist.dest('plugins').cwd('~/src/plugins');
 
     pluginsDir 
         .src('~/src/plugins/foo.js')
@@ -196,6 +197,10 @@ var pluginsDir = dist.dest('plugins');
         .act(plugins.dependencyArray)
         .rename('addDependencyArray.js');
 
+    pluginsDir
+        .src('./foo.js')
+        .act(plugins.error)
+        .rename('error.js');
 
 // track dir
 var trackDir = dist.dest('track');

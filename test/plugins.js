@@ -269,4 +269,14 @@ describe('plugins', function() {
             }
         });
     });
+
+    it('callback error ', function(done) {
+        bonefs.readFile('dist/plugins/error.js', function(error, buffer) {
+            if(error) {
+                done();
+            } else {
+                done(false);
+            }
+        });
+    });
 });
