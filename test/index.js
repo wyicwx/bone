@@ -175,14 +175,6 @@ describe('bone.dest', function() {
         }
     });
 
-    // it('cwd() copy subfolder', function() {
-    //     if (bonefs.existFile('~/cwd/folder/js/hello.js')) {
-    //         assert.ok(true);
-    //     } else {
-    //         assert.ok(false);
-    //     }
-    // });
-
     it("temp() should be not show in search's result", function() {
         var result = bonefs.search('~/temp/*');
         if (result.length) {
@@ -252,6 +244,34 @@ describe('bone.dest', function() {
                 done(false);
             }
         });
+    });
+
+    it('src() set a path what file no exists should show warning log', function() {
+        var dist = bone.dest('dist')
+            .dest('notExists')
+            .cwd('~/src');
+
+        // glob
+        dist.src('notExists/**/*');
+        bonefs.refresh();
+        if(bone.logInfo.pop().indexOf('Not exists:') == -1) {
+            assert.ok(false);
+        }
+
+        // definite path
+        dist.src('notExists/foo.js');
+        bonefs.refresh();
+        if(bone.logInfo.pop().indexOf('Not exists:') == -1) {
+            assert.ok(false);
+        }
+
+        var File = require('../lib/file.js');
+        _.each(File.fileList, function(item) {
+            if (item.destination == 'notExists') {
+                File.fileList = _.without(File.fileList, item);
+            }
+        });
+        bonefs.refresh();
     });
 });
 

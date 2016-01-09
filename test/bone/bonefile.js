@@ -8,7 +8,7 @@ var plugins = {
     author: bone.require('../bone/plugins_author.js'),
     copyright: bone.require('../bone/plugins_copyright.js'),
     dependency: bone.require('../bone/dependency.js'),
-    dependencyArray: bone.require('../bone/dependencyArray.js'),
+    dependencyArray: bone.require('../bone/dependency_array.js'),
     concat: bone.require('bone-act-concat'),
     less: bone.require('bone-act-less')
 };
@@ -148,7 +148,7 @@ var cwdDir = dist.dest('cwd');
 
     cwdDir
         .cwd('~/src/cwd')
-        .src('./all/*');
+        .src('./**/*');
 
 // change dir
 var changeDir = dist.dest('change');
