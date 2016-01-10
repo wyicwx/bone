@@ -1,3 +1,7 @@
++ 2016-01-10 v0.2.0
+    + 重构流读取模块、act处理模块，代码结构更加清晰，使用新的加载act方式`bone.require`
+    + act的runtime通过cacheable函数声明该文件是否可以被缓存
+    + act的runtime增加addDependency函数来显示声明所依赖的文件
 + 2015-12-22 v0.1.4
 	+ 解决windows下watch没有清理cache的问题
 	+ 修改pathResolve针对windows解析根目录的问题
