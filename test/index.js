@@ -734,109 +734,100 @@ describe('bone.fs', function() {
     });
 });
 
-describe('bone.helper', function() {
-    describe('autoRefresh', function() {
-        it('run away', function() {
-            assert.doesNotThrow(function() {
-                bone.helper.autoRefresh(function(watcher) {
-                    if (!watcher) {
-                        throw new Error();
-                    }
-                });
-                bone.helper.autoRefresh(function(watcher) {
-                    if (!watcher) {
-                        throw new Error();
-                    }
-                });
-            });
+describe('bone.watch', function() {
+
+    it('run away', function() {
+        assert.doesNotThrow(function() {
+            var watcher = bone.watch();
+            
+            bone.watch();
         });
+    });
 
-        it('change file will clean cache', function(done) {
-            var cache = require('../lib/cache.js');
-            var filePath = bonefs.pathResolve('~/dist/change/change.js');
-            var sourcePath = bonefs.pathResolve('~/src/change/change.js');
+    it('change file will clean cache', function(done) {
+        var cache = require('../lib/cache.js');
+        var filePath = bonefs.pathResolve('~/dist/change/change.js');
+        var sourcePath = bonefs.pathResolve('~/src/change/change.js');
 
-            bone.helper.autoRefresh(function() {
-                bone.status.watch = true;
-                fs.writeFileSync(sourcePath, '1');
-                bonefs.readFile(filePath, function(error, buffer) {
-                    var cached = cache.get(filePath);
+        bone.watch();
 
-                    if (!cache.get(filePath)) {
-                        return done(false);
-                    }
+        fs.writeFileSync(sourcePath, '1');
+        bonefs.readFile(filePath, function(error, buffer) {
+            var cached = cache.get(filePath);
 
-                    fs.writeFileSync(sourcePath, 'change file');
-
-                    setTimeout(function() {
-                        if (cache.get(filePath)) {
-                            return done(false);
-                        }
-
-                        done();
-                        bone.status.watch = false;
-                    }, 600);
-                });
-            });
-        });
-
-        it('add or delete file will clean cache and refresh file system', function(done) {
-            var cache = require('../lib/cache.js');
-            var addFile = bonefs.pathResolve('~/src/change/add.js');
-
-            if (fs.existsSync(addFile)) {
-                fs.unlinkSync(addFile);
+            if (!cache.get(filePath)) {
+                return done(false);
             }
 
-            bone.helper.autoRefresh(function() {
-                bonefs.readFile('~/dist/change/change.js', function(error, buffer) {
-                    var filePath = bonefs.pathResolve('~/dist/change/change.js');
+            fs.writeFileSync(sourcePath, 'change file');
 
+            setTimeout(function() {
+                if (cache.get(filePath)) {
+                    return done(false);
+                }
+
+                done();
+                bone.status.watch = false;
+            }, 600);
+        });
+    });
+
+    it('add or delete file will clean cache and refresh file system', function(done) {
+        var cache = require('../lib/cache.js');
+        var addFile = bonefs.pathResolve('~/src/change/add.js');
+
+        if (fs.existsSync(addFile)) {
+            fs.unlinkSync(addFile);
+        }
+
+        bone.watch();
+
+        bonefs.readFile('~/dist/change/change.js', function(error, buffer) {
+            var filePath = bonefs.pathResolve('~/dist/change/change.js');
+
+            if (!cache.get(filePath)) {
+                return done(false);
+            }
+            fs.writeFile(addFile, 'add file', function(err) {                        
+                if (err) {
+                    return done(false);
+                }
+                setTimeout(function() {
+                    var result = false;
                     if (!cache.get(filePath)) {
-                        return done(false);
+                        result = null;
                     }
-                    fs.writeFile(addFile, 'add file', function(err) {                        
-                        if (err) {
-                            return done(false);
-                        }
-                        setTimeout(function() {
-                            var result = false;
-                            if (!cache.get(filePath)) {
-                                result = null;
-                            }
-                            fs.unlinkSync(addFile);
+                    fs.unlinkSync(addFile);
 
-                            done(result);
-                        }, 600);
-                    });
-                });
+                    done(result);
+                }, 600);
             });
         });
+    });
 
-        it('delete file', function(done) {
-            bone.helper.autoRefresh(function(watcher) {
-                var addFile = bonefs.pathResolve('~/src/deleteFile/concat/temp.js');
+    it('delete file', function(done) {
+        bone.watch();
 
-                fs.writeFile(addFile, 'test', function() {
-                    setTimeout(function() {
-                        bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesA) {
-                            fs.unlink(addFile, function() {
-                                setTimeout(function() {
-                                    bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesB) {
-                                        var diff = _.difference(dependenciesA, dependenciesB);
+        var addFile = bonefs.pathResolve('~/src/deleteFile/concat/temp.js');
 
-                                        if (diff.length == 1 && diff[0] == addFile) {
-                                            done();
-                                        } else {
-                                            done(false);
-                                        }
-                                    });
-                                }, 400);
+        fs.writeFile(addFile, 'test', function() {
+            setTimeout(function() {
+                bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesA) {
+                    fs.unlink(addFile, function() {
+                        setTimeout(function() {
+                            bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesB) {
+                                var diff = _.difference(dependenciesA, dependenciesB);
+
+                                if (diff.length == 1 && diff[0] == addFile) {
+                                    done();
+                                } else {
+                                    done(false);
+                                }
                             });
-                        });
-                    }, 400);
+                        }, 400);
+                    });
                 });
-            });
+            }, 400);
         });
     });
 });

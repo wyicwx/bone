@@ -188,7 +188,7 @@ describe('bone.utils', function() {
             bonefs.rm(path.join(__dirname, './raw/search'));
         };
 
-        bone.helper.autoRefreshStop();
+        bone.watch.pause();
 
         rmTmp();
         bonefs.refresh();
@@ -209,6 +209,7 @@ describe('bone.utils', function() {
             });
 
             rmTmp();
+            bone.watch.resume();
             done();
         });
     });
