@@ -1,7 +1,7 @@
 {
   "name": "bone",
-  "version": "0.2.1",
-  "description": "web frontend developer toolkit",
+  "version": "0.3.0",
+  "description": "web frontend develop toolkit",
   "main": "index.js",
   "scripts": {
     "test": "make",
