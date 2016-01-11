@@ -1,14 +1,15 @@
 'use strict';
-var assert = require('assert'),
-    bone = require('../index.js'),
-    path = require('path'),
-    glob = require('glob'),
-    Stream = require('stream').Stream,
-    _ = require('lodash'),
-    fs = require('fs'),
-    os = require('os'),
-    FileSystem = require('../lib/fs.js'),
-    bonefs;
+var assert = require('assert');
+var bone = require('../index.js');
+var path = require('path');
+var glob = require('glob');
+var Stream = require('stream').Stream;
+var _ = require('lodash');
+var fs = require('fs');
+var os = require('os');
+var FileSystem = require('../lib/fs.js');
+var Data = require('../lib/data.js');
+var bonefs;
 
 bone.setup('./test/raw');
 bonefs = FileSystem.fs;
@@ -46,6 +47,24 @@ describe('bone.dest', function() {
         } else {
             assert.ok(false);
         }
+    });
+
+    it('dest() pass string parameter only', function() {
+        assert.throws(function() {
+            bone.dest({});
+        });
+
+        assert.throws(function() {
+            bone.dest(true);
+        });
+
+        assert.throws(function() {
+            bone.dest(1);
+        });
+
+        assert.throws(function() {
+            bone.dest(function() {});
+        });
     });
 
     it('src() pass string or string array parameter only', function() {
@@ -176,6 +195,28 @@ describe('bone.dest', function() {
         }
     });
 
+    it('cwd() pass string parameter only', function() {
+        assert.throws(function() {
+            bone.dest('dist/cwd')
+                .cwd({});
+        });
+
+        assert.throws(function() {
+            bone.dest('dist/cwd')
+                .cwd(function() {});
+        });
+
+        assert.throws(function() {
+            bone.dest('dist/cwd')
+                .cwd(true);
+        });
+
+        assert.throws(function() {
+            bone.dest('dist/cwd')
+                .cwd(1);
+        });
+    });
+
     it('dir() call to change destination\'s subfolder', function() {
         if(!bonefs.existFile('~/dist/dir/string/foo.js')) {
             assert.ok(false);
@@ -288,14 +329,14 @@ describe('bone.dest', function() {
         // glob
         var globNotExists = dist.src('notExists/**/*');
         bonefs.refresh();
-        if(bone.logInfo.pop().indexOf('Not exists:') == -1) {
+        if(Data.logInfo.pop().indexOf('Not exists:') == -1) {
             assert.ok(false);
         }
 
         // definite path
         var fooNotExists = dist.src('notExists/foo.js');
         bonefs.refresh();
-        if(bone.logInfo.pop().indexOf('Not exists:') == -1) {
+        if(Data.logInfo.pop().indexOf('Not exists:') == -1) {
             assert.ok(false);
         }
 
@@ -775,7 +816,6 @@ describe('bone.helper', function() {
         it('delete file', function(done) {
             bone.helper.autoRefresh(function(watcher) {
                 var addFile = bonefs.pathResolve('~/src/deleteFile/concat/temp.js');
-                var Data = require('../lib/data.js');
 
                 fs.writeFile(addFile, 'test', function() {
                     setTimeout(function() {
