@@ -163,7 +163,7 @@ var pluginsDir = dist.dest('plugins').cwd('~/src/plugins');
     pluginsDir 
         .src('~/src/plugins/foo.js')
         .act(plugins.author)
-        .rename('author_noparam.js');
+        .rename('author_not_parameter.js');
 
     pluginsDir
         .src('~/src/plugins/foo.js')
@@ -239,6 +239,10 @@ var dirDir = dist.dest('dir');
         .dir(function(dir, source, destination) {
             return 'function';
         });
+
+    dirDir
+        .src('~/src/dir/**/*.js')
+        .dir('');
 
 
 // dev.dest('track')

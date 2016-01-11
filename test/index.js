@@ -99,6 +99,16 @@ describe('bone.dest', function() {
         }
     });
 
+    it('rename() pass string, function and object parameter only!', function() {
+        var define = bone.dest('dist/rename').src('~/src/rename/base.js');
+
+        assert.throws(function() {
+            define.rename(1);
+        });
+
+        define.destroy();
+    });
+
     it('act() process source file', function(done) {
         bonefs.readFile('~/dist/plugins/author.js', function(err, buffer) {
             var content = buffer.toString();
@@ -122,7 +132,7 @@ describe('bone.dest', function() {
         });
     });
 
-    it('call rename(), dir(), act() and destroy() before src()  will throw error', function() {
+    it('call rename(), dir(), act() and destroy() before src() will throw error', function() {
         assert.throws(function() {
             bone.dest('dist')
                 .rename();
@@ -144,8 +154,8 @@ describe('bone.dest', function() {
         });
     });
 
-    it('act() processor non-params', function(done) {
-        bonefs.readFile('~/dist/plugins/author_noparam.js', function(err, buffer) {
+    it('act() processor without parameter', function(done) {
+        bonefs.readFile('~/dist/plugins/author_not_parameter.js', function(err, buffer) {
             var content = buffer.toString();
             if (~content.search('@author anonymous')) {
                 done();
@@ -175,6 +185,35 @@ describe('bone.dest', function() {
         }
     });
 
+    it('dir() call function with empty string', function() {
+        if(!bonefs.existFile('~/dist/dir/foo.js')) {
+            assert.ok(false);
+        }
+        if(!bonefs.existFile('~/dist/dir/bar.js')) {
+            assert.ok(false);
+        }
+    });
+
+    it('dir() pass string or function parameter only', function() {
+        assert.throws(function() {
+            bone.dest('dist/dir/parameter')
+                .src('~/src/dir/foo.js')
+                .dir({});
+        });
+
+        assert.throws(function() {
+            bone.dest('dist/dir/parameter')
+                .src('~/src/dir/glob/bar.js')
+                .dir(false);
+        });
+
+        assert.throws(function() {
+            bone.dest('dist/dir/parameter')
+                .src('~/src/dir/glob/zoo.js')
+                .dir(1);
+        });
+    });
+
     it("temp() should be not show in search's result", function() {
         var result = bonefs.search('~/temp/*');
         if (result.length) {
@@ -199,18 +238,13 @@ describe('bone.dest', function() {
     });
 
     it('throw error when call cwd() after src()!', function() {
+        var define = bone.dest('cwd/src').src('~/src/**');
+
         assert.throws(function() {
-            bone.dest('cwd/src')
-                .src('~/src/**')
-                .cwd('~/src');
+            define.cwd('~/src');
         });
 
-        var File = require('../lib/file.js');
-        _.each(File.fileList, function(item) {
-            if (item.destination == 'cwd/src') {
-                File.fileList = _.without(File.fileList, item);
-            }
-        });
+        define.destroy();
         bonefs.refresh();
     });
 
@@ -252,25 +286,21 @@ describe('bone.dest', function() {
             .cwd('~/src');
 
         // glob
-        dist.src('notExists/**/*');
+        var globNotExists = dist.src('notExists/**/*');
         bonefs.refresh();
         if(bone.logInfo.pop().indexOf('Not exists:') == -1) {
             assert.ok(false);
         }
 
         // definite path
-        dist.src('notExists/foo.js');
+        var fooNotExists = dist.src('notExists/foo.js');
         bonefs.refresh();
         if(bone.logInfo.pop().indexOf('Not exists:') == -1) {
             assert.ok(false);
         }
 
-        var File = require('../lib/file.js');
-        _.each(File.fileList, function(item) {
-            if (item.destination == 'notExists') {
-                File.fileList = _.without(File.fileList, item);
-            }
-        });
+        globNotExists.destroy();
+        fooNotExists.destroy();
         bonefs.refresh();
     });
 });
@@ -478,7 +508,7 @@ describe('bone.fs', function() {
             });
         });
 
-        it('use focus param to create folder and create write stream', function() {
+        it('use focus parameter to create folder and create write stream', function() {
             var dir = '~/dist/not/exist';
             var file = path.join(dir, '/file.js');
 
