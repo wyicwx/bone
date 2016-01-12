@@ -28,18 +28,6 @@ bone.cli(connect({
 	livereload: true
 }));
 
-bone.task('sprite', {
-	cli: require('bone-css-sprite'),
-	params: {
-		src: '~/src/icons/*.png',
-		out: '~/src/images/',
-		name: 'icon_sprite',
-		style: '~/src/sprite/icon.less',
-		processor: 'less',
-		orientation: 'binary-tree'
-	}
-});
-
 bone.task('release', {
 	name: 'build',
 	params: {
