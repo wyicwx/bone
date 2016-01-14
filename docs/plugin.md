@@ -102,30 +102,3 @@ scope.option.defaults = function(obj) {
 **source**：指向处理器正在处理的源文件的路径
 
 **argvs**：处理函数的参数
-
-###合并处理器
-
-`bone.wrapper`可以传递多个处理器将其合并成一个，方便调用
-
-```js
-var multiProcessor = bone.wrapper(processA, processB, processC);
-
-bone.dest('dist')
-	.src('~/main.js')
-	.act(multiProcessor);
-```
-
-也可以先固化参数后合并
-
-```js
-var multiProcessor = bone.wrapper(processA({type: 'a'}), processB({type: 'b'}), processC({type: 'c'}));
-```
-
-合并处理器的调用和正常处理器的调用相同
-```js
-bone.dest('dist')
-	.src('~/main.js')
-	.act(multiProcessor({}));
-```
-
-合并后的处理使用同一个参数对象来传递参数，若合并前已经将参数固化的话，固化的参数优先级为最高
