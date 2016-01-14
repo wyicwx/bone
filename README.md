@@ -17,8 +17,8 @@
 ```js
 var bone = require('bone');
 var connect = require('bone-cli-connect');
-var less = require('bone-act-less');
-var concat = require('bone-act-concat');
+var less = bone.require('bone-act-less');
+var concat = bone.require('bone-act-concat');
 
 // 定义生成文件夹dist，用来存放最终的文件
 var dist = bone.dest('dist');
