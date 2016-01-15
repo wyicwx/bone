@@ -1,4 +1,6 @@
 # Bone 
+
+[![Join the chat at https://gitter.im/wyicwx/bone](https://badges.gitter.im/wyicwx/bone.svg)](https://gitter.im/wyicwx/bone?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 > web前端开发工具
 
 <!-- <img src="/bone.png" alt="bone" width="50%"/> -->
