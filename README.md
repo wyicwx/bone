@@ -1,12 +1,12 @@
 # Bone 
 
-[![Join the chat at https://gitter.im/wyicwx/bone](https://badges.gitter.im/wyicwx/bone.svg)](https://gitter.im/wyicwx/bone?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > web前端开发工具
 
 <!-- <img src="/bone.png" alt="bone" width="50%"/> -->
 
 [![NPM version](https://img.shields.io/npm/v/bone.svg?style=flat)](https://npmjs.org/package/bone) [![NPM version](https://img.shields.io/npm/dm/bone.svg?style=flat)](https://npmjs.org/package/bone) [![travis](https://api.travis-ci.org/wyicwx/bone.png)](https://travis-ci.org/wyicwx/bone) 
-[![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master)
+[![Coverage Status](https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master)](https://coveralls.io/r/wyicwx/bone?branch=master) [![Join the chat at https://gitter.im/wyicwx/bone](https://badges.gitter.im/wyicwx/bone.svg)](https://gitter.im/wyicwx/bone?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ###核心概念
 
