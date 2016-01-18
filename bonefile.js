@@ -1,36 +1,31 @@
 var path = require('path');
 var bone = require('bone');
-var less = require('bone-less');
-var concat = require('bone-concat');
-var connect = require('bone-connect');
+var less = bone.require('bone-act-less');
+var concat = bone.require('bone-act-concat');
+var include = bone.require('bone-act-include');
+var connect = require('bone-cli-connect');
 
-var dist = bone.dest('dist');
+bone.dest('dist')
+    .src('~/src/**/!(*.html)')
+    .act(include)
+    .act(less({
+        ieCompat: false
+    }))
+    .rename(function(fileName) {
+        if (path.extname(fileName) == '.less') {
+            return fileName.replace(/\.less$/, '.css');
+        } else {
+            return fileName;
+        }
+    });
 
-// copy from src folder
-dist.src('~/src/**/*');
+bone.dest('')
+	.src('~/src/*.html');
 
-// compile less to css
-dist.dest('css')
-	.src('~/src/less/*')
-	.act(concat({
-		files: '~/src/sprite/icon.less'
-	}))
-	.act(less)
-	.rename(function(filename) {
-		return path.basename(filename, '.less') + '.css';
-	});
-
-
-bone.project('dist', '~/dist/**/*');
 
 bone.cli(connect({
 	base: '~/',
 	livereload: true
 }));
 
-bone.task('release', {
-	name: 'build',
-	params: {
-		p: 'dist'
-	}
-});
+bone.cli(require('bone-cli-build')());

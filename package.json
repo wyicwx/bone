@@ -16,9 +16,10 @@
   "homepage": "https://github.com/wyicwx/bone",
   "devDependencies": {
     "bone": "^0.3.0",
-    "bone-concat": "0.0.7",
-    "bone-connect": "0.0.26",
-    "bone-css-sprite": "0.0.2",
-    "bone-less": "0.0.4"
+    "bone-act-concat": "^0.3.1",
+    "bone-act-include": "^0.2.0",
+    "bone-act-less": "^0.3.0",
+    "bone-cli-build": "^0.2.0",
+    "bone-cli-connect": "^0.3.0"
   }
 }
