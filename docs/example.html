@@ -67,20 +67,38 @@
                     </ul>
                 </nav>
                 <div id="content" class="col-md-9">
-                    <h1>Bone</h1>
+                    <h1>常用示例</h1>
 
-<blockquote><p>web前端开发工具</p></blockquote>
+<p><code></code>`js</p>
 
-<p><!-- <img src="/bone.png" alt="bone" width="50%"/> --></p>
+<p>var bone = require('bone');
+var connect = require('bone-cli-connect');
+var less = bone.require('bone-act-less');
+var include = bone.require('bone-act-include');
+var path = require('path');</p>
 
-<p><a href="https://npmjs.org/package/bone"><img alt="NPM version" src="https://img.shields.io/npm/v/bone.svg?style=flat"></a> <a href="https://npmjs.org/package/bone"><img alt="NPM version" src="https://img.shields.io/npm/dm/bone.svg?style=flat"></a> <a href="https://travis-ci.org/wyicwx/bone"><img alt="travis" src="https://api.travis-ci.org/wyicwx/bone.png"></a> 
-<a href="https://coveralls.io/r/wyicwx/bone?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/wyicwx/bone/badge.png?branch=master"></a> <a href="https://gitter.im/wyicwx/bone?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/wyicwx/bone" src="https://badges.gitter.im/wyicwx/bone.svg"></a></p>
+<p>bone.dest('dist')
+    .src('~/src/**/*')
+    .act(include)
+    .act(less({
+        ieCompat: false
+    }))
+    .rename(function(fileName) {
+        if (path.extname(fileName) == '.less') {
+            return fileName.replace(/.less$/, '.css');
+        } else {
+            return fileName;
+        }
+    });</p>
 
-<h3>核心概念</h3>
+<p>bone.cli(require('bone-cli-build')());</p>
 
-<p>　　这个模块是Bone的核心功能，为了让使用者更容易读懂Bone的配置文件，核心模块提供了一种类似操作系统里文件系统的概念，我称它为虚拟文件系统，即将一个虚拟的文件地址映射到一个真实存在的文件地址上，同时可以标注虚拟文件是由何种方式对源文件处理（注意这里不对真实文件做任何处理，源文件是指对真实文件的在内容上的拷贝），对源文件的处理模块我称它为<a href="https://github.com/wyicwx/bone/blob/master/docs/plugin.md">处理器</a>，通过下面的示例你可以对Bone的虚拟文件系统有一个初步的了解。</p>
+<p>bone.cli(connect({
+    base: "./dist",
+    livereload: true
+}));</p>
 
-<h3>示例</h3>
+<p><code></code>`</p>
                 </div>
             </div>
         </div>

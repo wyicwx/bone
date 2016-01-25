@@ -12,34 +12,43 @@
     <body>
         <div class="container-fluid">
             <div id="main" class="row">
-                <nav id="navigation" class="col-md-2">
+                <nav id="navigation" class="col-md-3">
                     <h1>
                         Bone
                     </h1>
                     <div>
-                        view on github
+                        <a href="https://github.com/wyicwx/bone" class="gh-ico">
+                            <i class="fa fa-github"></i> Star
+                        </a>
+                        <a href="https://github.com/wyicwx/bone" class="gh-ico">
+                            <i class="fa fa-github"></i> Fork
+                        </a>
+
+                        <a href="https://github.com/wyicwx/bone/issues" class="gh-ico">
+                            <i class="fa fa-github"></i> Issues
+                        </a>
                     </div>
                     <h2>
                         使用入门
                     </h2>
                     <ul>
                         <li>
-                            <a href="./introduction.html">引言</a>
+                            <a href="./introduction.html">介绍</a>
                         </li>
                         <li>
-                            <a href="./get_started.html">从这里开始</a>
+                            <a href="./get_started.html">新手上路</a>
                         </li>
                         <li>
-                            <a href="./api.html">API</a>
+                            <a href="./api.html">常用API</a>
                         </li>
                         <li>
-                            <a href="./">CLI</a>
+                            <a href="./cli.html">命令行CLI</a>
                         </li>
                         <li>
                             <a href="./plugins.html">处理器</a>
                         </li>
                         <li>
-                            <a href="./examples.html">实例</a>
+                            <a href="./example.html">bonefile.js示例</a>
                         </li>
                     </ul>
                     <h2>
@@ -57,7 +66,7 @@
                         </li>
                     </ul>
                 </nav>
-                <div id="content" class="col-md-10">
+                <div id="content" class="col-md-9">
                     <h3>核心概念</h3>
 
 <p>　　这个模块是Bone的核心功能，为了让使用者更容易读懂Bone的配置文件，核心模块提供了一种类似操作系统里文件系统的概念，我称它为虚拟文件系统，即将一个虚拟的文件地址映射到一个真实存在的文件地址上，同时可以标注虚拟文件是由何种方式对源文件处理（注意这里不对真实文件做任何处理，源文件是指对真实文件的在内容上的拷贝），对源文件的处理模块我称它为<a href="https://github.com/wyicwx/bone/blob/master/docs/plugin.md">处理器</a>，通过下面的示例你可以对Bone的虚拟文件系统有一个初步的了解。</p>

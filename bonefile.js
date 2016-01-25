@@ -25,9 +25,9 @@ dist.dest('css')
 
 dist.src('./assets/?(fontawesome|fonts|bootstrap)/**/*');
 
-var docs = bone.dest('docs').cwd('~/src/docs');
-
-    docs.src('./*.md')
+bone.dest('docs')
+    .cwd('~/src/docs')
+    .src('./*.md')
         .act(markdown)
         .act(bone.wrapper(function(buffer, encoding, callback) {
             var result = [new Buffer('<layout src="../layouts/layout.html">'), buffer, new Buffer('</layout>')];
