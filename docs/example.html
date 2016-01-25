@@ -17,14 +17,14 @@
                         Bone
                     </h1>
                     <div>
-                        <a href="https://github.com/wyicwx/bone" class="gh-ico">
+                        <a href="https://github.com/wyicwx/bone" class="gh-ico" target="_blank">
                             <i class="fa fa-github"></i> Star
                         </a>
-                        <a href="https://github.com/wyicwx/bone" class="gh-ico">
+                        <a href="https://github.com/wyicwx/bone" class="gh-ico" target="_blank">
                             <i class="fa fa-github"></i> Fork
                         </a>
 
-                        <a href="https://github.com/wyicwx/bone/issues" class="gh-ico">
+                        <a href="https://github.com/wyicwx/bone/issues" class="gh-ico" target="_blank">
                             <i class="fa fa-github"></i> Issues
                         </a>
                     </div>
@@ -52,6 +52,14 @@
                         </li>
                     </ul>
                     <h2>
+                        高手进阶
+                    </h2>
+                    <ul>
+                        <li>
+                            <a href="./">调用Grunt、Gulp</a>
+                        </li>
+                    </ul>
+                    <h2>
                         开发
                     </h2>
                     <ul>
@@ -67,38 +75,35 @@
                     </ul>
                 </nav>
                 <div id="content" class="col-md-9">
-                    <h1>常用示例</h1>
+                    <h1 id="-">常用示例</h1>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
+<span class="hljs-keyword">var</span> connect = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
+<span class="hljs-keyword">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
+<span class="hljs-keyword">var</span> <span class="hljs-keyword">include</span> = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-include'</span>);
+<span class="hljs-keyword">var</span> path = <span class="hljs-keyword">require</span>(<span class="hljs-string">'path'</span>);
 
-<p><code></code>`js</p>
-
-<p>var bone = require('bone');
-var connect = require('bone-cli-connect');
-var less = bone.require('bone-act-less');
-var include = bone.require('bone-act-include');
-var path = require('path');</p>
-
-<p>bone.dest('dist')
-    .src('~/src/**/*')
-    .act(include)
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/**/*'</span>)
+    .act(<span class="hljs-keyword">include</span>)
     .act(less({
-        ieCompat: false
+        ieCompat: <span class="hljs-keyword">false</span>
     }))
-    .rename(function(fileName) {
-        if (path.extname(fileName) == '.less') {
-            return fileName.replace(/.less$/, '.css');
-        } else {
-            return fileName;
+    .rename(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fileName)</span> </span>{
+        <span class="hljs-keyword">if</span> (path.extname(fileName) == <span class="hljs-string">'.less'</span>) {
+            <span class="hljs-keyword">return</span> fileName.replace(/\.less$/, <span class="hljs-string">'.css'</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> fileName;
         }
-    });</p>
+    });
 
-<p>bone.cli(require('bone-cli-build')());</p>
+bone.cli(<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-build'</span>)());
 
-<p>bone.cli(connect({
-    base: "./dist",
-    livereload: true
-}));</p>
+bone.cli(connect({
+    base: <span class="hljs-string">"./dist"</span>,
+    livereload: <span class="hljs-keyword">true</span>
+}));
+</code></pre>
 
-<p><code></code>`</p>
                 </div>
             </div>
         </div>

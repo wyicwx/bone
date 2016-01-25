@@ -1,7 +1,6 @@
 # 常用示例
 
 ```js
-
 var bone = require('bone');
 var connect = require('bone-cli-connect');
 var less = bone.require('bone-act-less');

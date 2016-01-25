@@ -6,13 +6,18 @@ var include = bone.require('bone-act-include');
 var htmllayout = bone.require('bone-act-htmllayout');
 var connect = require('bone-cli-connect');
 
-var Markdown = require('markdown').markdown;
+var marked = require('marked');
+marked.setOptions({
+  highlight: function (code) {
+    return require('highlight.js').highlightAuto(code).value;
+  }
+});
 var markdown = bone.wrapper(function(buffer, encoding, callback) {
     var md = buffer.toString();
 
     this.cacheable();
 
-    callback(null, Markdown.toHTML(md));
+    callback(null, marked(md));
 });
 
 
