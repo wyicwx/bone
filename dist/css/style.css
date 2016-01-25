@@ -361,16 +361,33 @@ td,
 th {
   padding: 0;
 }
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 #main {
-  display: -webkit-box;
-  display: box;
+  background: #f7f7f9;
+  overflow: hidden;
 }
 #navigation {
-  width: 100px;
+  border-right: 1px solid #eee;
+}
+#navigation h2 {
+  font-size: 14px;
+  padding: 8px 0 8px 4px;
+  border-bottom: 1px solid #dcdcdc;
+}
+#navigation li {
+  padding: 0 0 8px 4px;
+}
+#navigation li a {
+  display: block;
 }
 #content {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -ms-box-flex: 1;
-  box-flex: 1;
+  background: white;
+  color: black;
+  margin-bottom: -999px;
+  padding-bottom: 999px;
 }
