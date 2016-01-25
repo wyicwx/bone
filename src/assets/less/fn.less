@@ -1,0 +1,76 @@
+/**
+ * less common function
+ * @author: wyicwx@gmail.com
+ * @github: https://github.com/wyicwx
+ */
+.ctx_width() {
+    width: 960px;
+    margin: auto;
+}
+.display_inline_block() {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+.ie6_png_bg(@img) {
+    _background-image: none;
+    _filter: ~'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="@{img}",sizingMethod="crop");'
+}
+.min_height(@height) {
+    min-height: ~'@{height}px';
+    _height: ~'@{height}px';
+}
+.max_height(@height) {
+    max-height: ~'@{height}px';
+    _height: ~'expression(this.width > @{height} ? "@{height}px" : "auto")';
+}
+.min_width(@width) {
+    min-width: ~'@{width}px';
+    _width:~'expression((document.documentElement.clientWidth||document.body.clientWidth)> @{width} ? "@{width}px":"auto")';
+}
+.opacity(@alpha) {
+    opacity: @alpha;
+    @iealpha: @alpha*100;
+    filter:alpha(opacity=@iealpha);  
+}
+// css3 prefix
+.pre(@style, @value){
+    -webkit-@{style}: @value;
+       -moz-@{style}: @value;
+        -ms-@{style}: @value;
+            @{style}: @value;
+}
+.border_radius(@radius) {
+    .pre(border-radius, @radius);
+}
+.box_shadow(@value) {
+    .pre(box-shadow, @value);
+}
+.box_sizing(@value) {
+    .pre(box-sizing, @value);
+}
+.transition(@arg){
+    .pre(transition,@arg);
+}
+.transform(@arg) {
+    .pre(transform, @arg);
+}
+.text_shadow(@arg) {
+    .pre(text-shadow, @arg);
+}
+.transform_origin(@arg) {
+    .pre(transform-origin, @arg);
+}
+.text_shadow(@arg) {
+    .pre(text-shadow, @arg);
+}
+.animation(@arg) {
+    .pre(animation, @arg);
+}
+.db() {
+    display: ~"-webkit-box";
+    display: box;
+}
+.db_flex(@flex) {
+    .pre(box-flex, @flex);
+}
