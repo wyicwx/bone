@@ -361,6 +361,10 @@ td,
 th {
   padding: 0;
 }
+@font-face {
+  font-family: 'PWYummyDonuts';
+  src: url('../fonts/PWYummyDonuts.ttf');
+}
 ul,
 li {
   list-style: none;
@@ -373,6 +377,10 @@ li {
 }
 #navigation {
   border-right: 1px solid #eee;
+}
+#navigation h1 {
+  font-family: "PWYummyDonuts";
+  font-size: 36px;
 }
 #navigation h2 {
   font-size: 14px;

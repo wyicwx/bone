@@ -23,7 +23,7 @@ dist.dest('css')
     .act(less)
     .rename('style.css');
 
-dist.src('./assets/?(fontawesome|bootstrap)/**/*');
+dist.src('./assets/?(fontawesome|fonts|bootstrap)/**/*');
 
 var docs = bone.dest('docs').cwd('~/src/docs');
 
