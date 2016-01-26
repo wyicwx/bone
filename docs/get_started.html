@@ -77,34 +77,42 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-">新手上路</h1>
-<h4 id="1-bone-cli-">1.安装bone-cli模块</h4>
-<pre><code class="lang-nohighlight">$ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> bone-cli
+<h3 id="-">环境</h3>
+<ul>
+<li>安装<a href="https://nodejs.org">node</a>环境，Bone要求node版本为0.12及以上</li>
+<li><a href="https://www.npmjs.com/">npm</a>包管理</li>
+</ul>
+<p><em>注：linux/mac系统安装需要root权限</em></p>
+<h3 id="1-bone-cli-">1.安装bone-cli模块</h3>
+<p>在终端/cmd命令中输入</p>
+<pre><code class="lang-nohighlight">$ sudo <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> bone-cli
 </code></pre>
-<p>使用<code>--global</code>参数讲<code>bone-cli</code>模块安装到npm全局模块中，全局命令中<code>bone</code>命令可用</p>
+<p>使用<code>--global</code>参数将<code>bone-cli</code>模块安装到npm全局模块中，<code>bone</code>作为全局命令行工具在任何路径下可调用</p>
+<p><em>注：<code>--global</code>参数请阅读 <a href="https://docs.npmjs.com/getting-started/installing-npm-packages-globally">install npm packages globally</a> 文档</em></p>
 <p>通过终端或cmd命令行输入<code>bone</code>命令即可调用bone</p>
 <pre><code class="lang-bash">$ bone
 
 > Fatal Error: unable <span class="hljs-keyword">to</span> find bonefile.js <span class="hljs-built_in">file</span>.
 </code></pre>
 <p>由于当前文件夹下没有<code>bonefile.js</code>的配置文件，所以<code>bone</code>命令会抛出一个致命错误，没关系我们一步一步来：）</p>
-<h4 id="2-npm-bone-">2.通过npm安装bone到你的项目中</h4>
-<pre><code class="lang-bash">$ npm install --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span> bone
+<h3 id="2-npm-bone-">2.通过npm安装bone到你的项目中</h3>
+<pre><code class="lang-bash">$ npm <span class="hljs-keyword">install</span> bone
 </code></pre>
 <p><code>bone</code>是核心模块，<code>bone-cli</code>模块会调用本地的<code>bone</code>模块</p>
-<p><code>--save-dev</code>参数</p>
-<h4 id="2-bonefile-js-">2.创建<code>bonefile.js</code></h4>
+<p><em>注:使用<code>--save</code>或<code>--save-dev</code>参数将模块信息记录到<code>package.json</code>里，具体信息请阅读 <a href="https://docs.npmjs.com/getting-started/using-a-package.json">npm using a package.json</a> 文档</em></p>
+<h3 id="2-bonefile-js-">2.创建<code>bonefile.js</code></h3>
 <pre><code class="lang-shell"><span class="hljs-variable">$ </span>touch bonefile.js
 </code></pre>
 <p>打开并编辑bonefile.js文件</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
 </code></pre>
-<h4 id="3-dest-">3.通过<code>dest()</code>定义你的虚拟文件夹</h4>
+<h3 id="3-dest-">3.通过<code>dest()</code>定义你的虚拟文件夹</h3>
 <pre><code class="lang-javascript">var bone = require(<span class="hljs-string">'bone'</span>)<span class="hljs-comment">;</span>
 
 bone.dest(<span class="hljs-string">'dist'</span>)
     .src(<span class="hljs-string">'~/src/**/*'</span>)<span class="hljs-comment">;</span>
 </code></pre>
-<h4 id="4-">4.设置你的虚拟根目录</h4>
+<h3 id="4-">4.设置你的虚拟根目录</h3>
 <pre><code class="lang-javascript">var bone = require(<span class="hljs-string">'bone'</span>)<span class="hljs-comment">;</span>
 
 bone.dest(<span class="hljs-string">'dist'</span>)
@@ -112,13 +120,13 @@ bone.dest(<span class="hljs-string">'dist'</span>)
 
 bone.setup(<span class="hljs-string">'./'</span>)<span class="hljs-comment">;</span>
 </code></pre>
-<h4 id="5-bone-bone-build-">5.调用bone内置命令<code>bone build</code>生成文件</h4>
+<h3 id="5-bone-bone-build-">5.调用bone内置命令<code>bone build</code>生成文件</h3>
 <pre><code class="lang-shell">$ <span class="hljs-keyword">bone </span><span class="hljs-keyword">build</span>
 </code></pre>
 <p><strong>注</strong>:main.js文件在src文件夹下，通过bone映射到了dist/main.js</p>
 <p>bone.fs的API请查看<a href="https://github.com/wyicwx/bone/blob/master/docs/api.md">API</a>文档获取相关说明</p>
 <p>关于<code>bone.dest()</code>如何<a href="https://github.com/wyicwx/bone/blob/master/docs/file.md">定义一个文件</a></p>
-<h4 id="-">其他</h4>
+<h3 id="-">其他</h3>
 <ul>
 <li>命令行工具请参考<a href="https://github.com/wyicwx/bone-cli">bone-cli</a>模块</li>
 <li>如何使用并开发自定义<a href="https://github.com/wyicwx/bone/blob/master/docs/plugin.md">处理器</a></li>
