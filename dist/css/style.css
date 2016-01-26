@@ -361,82 +361,6 @@ td,
 th {
   padding: 0;
 }
-@font-face {
-  font-family: 'PWYummyDonuts';
-  src: url('../fonts/PWYummyDonuts.ttf');
-}
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-#main {
-  background: #f7f7f9;
-  overflow: hidden;
-}
-#navigation {
-  border-right: 1px solid #eee;
-}
-#navigation h1 {
-  font-family: "PWYummyDonuts";
-  font-size: 48px;
-  margin: 0;
-  margin-bottom: 10px;
-  margin-top: 20px;
-}
-#navigation h2 {
-  font-size: 16px;
-  padding: 8px 0 8px 4px;
-  border-bottom: 1px solid #dcdcdc;
-}
-#navigation li {
-  padding: 0 0 8px 4px;
-}
-#navigation li a {
-  display: block;
-}
-#navigation .gh-ico {
-  background-color: #eee;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fcfcfc), color-stop(100%, #eee));
-  background-image: -webkit-linear-gradient(top, #fcfcfc 0, #eee 100%);
-  background-image: -moz-linear-gradient(top, #fcfcfc 0, #eee 100%);
-  background-image: -ms-linear-gradient(top, #fcfcfc 0, #eee 100%);
-  background-image: -o-linear-gradient(top, #fcfcfc 0, #eee 100%);
-  background-image: linear-gradient(to bottom, #fcfcfc 0, #eee 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#eeeeee', GradientType=0);
-  background-repeat: no-repeat;
-  border: 1px solid #d5d5d5;
-  padding: 2px 5px 2px 4px;
-  color: #333;
-  text-decoration: none;
-  text-shadow: 0 1px 0 #fff;
-  white-space: nowrap;
-  cursor: pointer;
-  border-radius: 3px;
-  margin-right: 10px;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 700;
-}
-#navigation .gh-ico:hover {
-  text-decoration: none;
-  background-color: #ddd;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eee), color-stop(100%, #ddd));
-  background-image: -webkit-linear-gradient(top, #eee 0, #ddd 100%);
-  background-image: -moz-linear-gradient(top, #eee 0, #ddd 100%);
-  background-image: -ms-linear-gradient(top, #eee 0, #ddd 100%);
-  background-image: -o-linear-gradient(top, #eee 0, #ddd 100%);
-  background-image: linear-gradient(to bottom, #eee 0, #ddd 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType=0);
-  border-color: #ccc;
-}
-#content {
-  background: white;
-  color: black;
-  margin-bottom: -999px;
-  padding-bottom: 999px;
-}
 /* Base16 Atelier Sulphurpool Dark - Theme */
 /* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/sulphurpool) */
 /* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
@@ -495,5 +419,92 @@ li {
   font-style: italic;
 }
 .hljs-strong {
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'PWYummyDonuts';
+  src: url('../fonts/PWYummyDonuts.ttf');
+}
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#main {
+  background: #f7f7f9;
+  overflow: hidden;
+}
+#navigation h1 {
+  font-family: "PWYummyDonuts";
+  font-size: 48px;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+#navigation h2 {
+  font-size: 16px;
+  padding: 8px 0 8px 4px;
+  border-bottom: 1px solid #dcdcdc;
+}
+#navigation li {
+  padding: 0 0 8px 4px;
+}
+#navigation li a {
+  display: block;
+}
+#navigation .gh-ico {
+  background-color: #eee;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fcfcfc), color-stop(100%, #eee));
+  background-image: -webkit-linear-gradient(top, #fcfcfc 0, #eee 100%);
+  background-image: -moz-linear-gradient(top, #fcfcfc 0, #eee 100%);
+  background-image: -ms-linear-gradient(top, #fcfcfc 0, #eee 100%);
+  background-image: -o-linear-gradient(top, #fcfcfc 0, #eee 100%);
+  background-image: linear-gradient(to bottom, #fcfcfc 0, #eee 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#eeeeee', GradientType=0);
+  background-repeat: no-repeat;
+  border: 1px solid #d5d5d5;
+  padding: 2px 5px 2px 4px;
+  color: #333;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-right: 10px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+#navigation .gh-ico:hover {
+  text-decoration: none;
+  background-color: #ddd;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eee), color-stop(100%, #ddd));
+  background-image: -webkit-linear-gradient(top, #eee 0, #ddd 100%);
+  background-image: -moz-linear-gradient(top, #eee 0, #ddd 100%);
+  background-image: -ms-linear-gradient(top, #eee 0, #ddd 100%);
+  background-image: -o-linear-gradient(top, #eee 0, #ddd 100%);
+  background-image: linear-gradient(to bottom, #eee 0, #ddd 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType=0);
+  border-color: #ccc;
+}
+#content {
+  -webkit-box-shadow: -1px 0 5px #eee;
+  -moz-box-shadow: -1px 0 5px #eee;
+  -ms-box-shadow: -1px 0 5px #eee;
+  box-shadow: -1px 0 5px #eee;
+  border-left: 1px solid #eee;
+  background: white;
+  color: black;
+  margin-bottom: -999px;
+  padding-bottom: 999px;
+  padding-top: 15px;
+}
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 16px;
   font-weight: bold;
 }

@@ -1,7 +1,7 @@
 # bone-cli
 > Bone的命令行工具
 
-###安装
+### 安装
 通过npm安装，这是全局模块，安装后可以在命令行中使用`bone`命令
 
 ```sh
@@ -12,7 +12,7 @@ $ npm install -g bone-cli
 
 bone-cli会载入你项目目录下的[bone](https://github.com/wyicwx/bone)模块，并拓展bone对象的方法
 
-###开始
+### 开始
 
 你需要在你的项目的根目录下创建`bonefile.js`文件，bone-cli会自动载入这个文件
 ```js
@@ -26,7 +26,7 @@ var bone = require('bone');
 $ bone --help
 ```
 
-###定义任务流
+### 定义任务流
 
 通过`bone.task()`定义任务流，用来将多个需要执行的命令连成一个任务流
 
@@ -43,7 +43,7 @@ bone.task('release', 'rm -rf ./dist/*', {
 $ bone release
 ```
 
-###添加自己的命令
+### 添加自己的命令
 
 通过bone-cli加载bone，会给bone对象添加`bone.cli()`函数，参数接受传入一个函数，该函数接受两个参数，一个是command函数，执行后会返回一个commander对象，另一个参数是bone
 
@@ -66,7 +66,7 @@ bone.cli(function(command, bone, fs) {
 ```
 通过`bone custom --help`查看自定义命令的帮助
 
-###改变自定义命令的行为
+### 改变自定义命令的行为
 
 ```js
 var connect = require('bone-cli-connect');
@@ -81,7 +81,7 @@ bone.cli(connect(), {
 `act`参数传递处理器，处理器会改变该命令行的fs api的行为，所有读取的文件最后都会通过该处理器处理
 
 
-###可用模块
+### 可用模块
 
 + [bone-build](https://github.com/wyicwx/bone-build) 增加build命令支持
 + [bone-cli-connect](https://github.com/wyicwx/bone-cli-connect) 支持bone的api的静态服务器

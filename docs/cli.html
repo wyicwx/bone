@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>Bone</title>
+        <title>Bone documents</title>
         <link rel="stylesheet" type="text/css" href="../dist/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="../dist/fontawesome/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="../dist/css/style.css">
@@ -33,7 +33,7 @@
                     </h2>
                     <ul>
                         <li>
-                            <a href="./introduction.html">介绍</a>
+                            <a href="./introduction.html">Bone介绍</a>
                         </li>
                         <li>
                             <a href="./get_started.html">新手上路</a>
@@ -75,17 +75,18 @@
                     </ul>
                 </nav>
                 <div id="content" class="col-md-9">
-                    <h1 id="bone-cli">bone-cli</h1>
+                    <div class="markdown-body">
+                        <h1 id="bone-cli">bone-cli</h1>
 <blockquote>
 <p>Bone的命令行工具</p>
 </blockquote>
-<p>###安装
-通过npm安装，这是全局模块，安装后可以在命令行中使用<code>bone</code>命令</p>
+<h3 id="-">安装</h3>
+<p>通过npm安装，这是全局模块，安装后可以在命令行中使用<code>bone</code>命令</p>
 <pre><code class="lang-sh">$ npm <span class="hljs-keyword">install</span> -<span class="hljs-keyword">g</span> bone-cli
 </code></pre>
 <p><strong>注</strong>：安装到全局需要使用sudo提权</p>
 <p>bone-cli会载入你项目目录下的<a href="https://github.com/wyicwx/bone">bone</a>模块，并拓展bone对象的方法</p>
-<p>###开始</p>
+<h3 id="-">开始</h3>
 <p>你需要在你的项目的根目录下创建<code>bonefile.js</code>文件，bone-cli会自动载入这个文件</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
 </code></pre>
@@ -93,7 +94,7 @@
 <p>通过bone命令查看相应帮助</p>
 <pre><code class="lang-sh">$ bone <span class="hljs-comment">--help</span>
 </code></pre>
-<p>###定义任务流</p>
+<h3 id="-">定义任务流</h3>
 <p>通过<code>bone.task()</code>定义任务流，用来将多个需要执行的命令连成一个任务流</p>
 <pre><code class="lang-js"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.task</span>(<span class="hljs-string">'release'</span>, <span class="hljs-string">'rm -rf ./dist/*'</span>, {
     <span class="hljs-attribute">exec</span>: <span class="hljs-string">'name'</span>,
@@ -103,7 +104,7 @@
 <p>上面的配置代码定义了一个release任务流，任务流执行的命令不仅限于Bone自身的命令和任务名，也可以是系统的命令</p>
 <pre><code class="lang-sh">$ bone <span class="hljs-built_in">release</span>
 </code></pre>
-<p>###添加自己的命令</p>
+<h3 id="-">添加自己的命令</h3>
 <p>通过bone-cli加载bone，会给bone对象添加<code>bone.cli()</code>函数，参数接受传入一个函数，该函数接受两个参数，一个是command函数，执行后会返回一个commander对象，另一个参数是bone</p>
 <p><strong>注</strong>：commander对象(commander对象是<a href="https://github.com/tj/commander.js">Commander</a>的一个实例)</p>
 <p>在bonefile.js文件或者独立的模块里内调用<code>bone.cli()</code>来定义自己的命令</p>
@@ -120,7 +121,7 @@ bone.cli(<span class="hljs-function"><span class="hljs-keyword">function</span>(
 });
 </code></pre>
 <p>通过<code>bone custom --help</code>查看自定义命令的帮助</p>
-<p>###改变自定义命令的行为</p>
+<h3 id="-">改变自定义命令的行为</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
 <span class="hljs-keyword">var</span> uglify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-act-uglify'</span>);
 
@@ -129,13 +130,14 @@ bone.cli(connect(), {
 });
 </code></pre>
 <p><code>act</code>参数传递处理器，处理器会改变该命令行的fs api的行为，所有读取的文件最后都会通过该处理器处理</p>
-<p>###可用模块</p>
+<h3 id="-">可用模块</h3>
 <ul>
 <li><a href="https://github.com/wyicwx/bone-build">bone-build</a> 增加build命令支持</li>
 <li><a href="https://github.com/wyicwx/bone-cli-connect">bone-cli-connect</a> 支持bone的api的静态服务器</li>
 <li><a href="https://github.com/wyicwx/bone-cli-proxy">bone-cli-proxy</a> 支持bone的api的代理服务器</li>
 </ul>
 
+                    </div>
                 </div>
             </div>
         </div>
