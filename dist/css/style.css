@@ -361,64 +361,66 @@ td,
 th {
   padding: 0;
 }
-/* Base16 Atelier Sulphurpool Dark - Theme */
-/* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/sulphurpool) */
-/* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
-/* Atelier-Sulphurpool Comment */
-.hljs-comment,
-.hljs-quote {
+.lang-javascript {
+  /* Base16 Atelier Sulphurpool Dark - Theme */
+  /* by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/sulphurpool) */
+  /* Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16) */
+  /* Atelier-Sulphurpool Comment */
+  /* Atelier-Sulphurpool Red */
+  /* Atelier-Sulphurpool Orange */
+  /* Atelier-Sulphurpool Green */
+  /* Atelier-Sulphurpool Blue */
+  /* Atelier-Sulphurpool Purple */
+}
+.lang-javascript .hljs-comment,
+.lang-javascript .hljs-quote {
   color: #898ea4;
 }
-/* Atelier-Sulphurpool Red */
-.hljs-variable,
-.hljs-template-variable,
-.hljs-attribute,
-.hljs-tag,
-.hljs-name,
-.hljs-regexp,
-.hljs-link,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class {
+.lang-javascript .hljs-variable,
+.lang-javascript .hljs-template-variable,
+.lang-javascript .hljs-attribute,
+.lang-javascript .hljs-tag,
+.lang-javascript .hljs-name,
+.lang-javascript .hljs-regexp,
+.lang-javascript .hljs-link,
+.lang-javascript .hljs-name,
+.lang-javascript .hljs-selector-id,
+.lang-javascript .hljs-selector-class {
   color: #c94922;
 }
-/* Atelier-Sulphurpool Orange */
-.hljs-number,
-.hljs-meta,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-literal,
-.hljs-type,
-.hljs-params {
+.lang-javascript .hljs-number,
+.lang-javascript .hljs-meta,
+.lang-javascript .hljs-built_in,
+.lang-javascript .hljs-builtin-name,
+.lang-javascript .hljs-literal,
+.lang-javascript .hljs-type,
+.lang-javascript .hljs-params {
   color: #c76b29;
 }
-/* Atelier-Sulphurpool Green */
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet {
+.lang-javascript .hljs-string,
+.lang-javascript .hljs-symbol,
+.lang-javascript .hljs-bullet {
   color: #ac9739;
 }
-/* Atelier-Sulphurpool Blue */
-.hljs-title,
-.hljs-section {
+.lang-javascript .hljs-title,
+.lang-javascript .hljs-section {
   color: #3d8fd1;
 }
-/* Atelier-Sulphurpool Purple */
-.hljs-keyword,
-.hljs-selector-tag {
+.lang-javascript .hljs-keyword,
+.lang-javascript .hljs-selector-tag {
   color: #6679cc;
 }
-.hljs {
+.lang-javascript .hljs {
   display: block;
   overflow-x: auto;
   background: #202746;
   color: #979db4;
   padding: 0.5em;
 }
-.hljs-emphasis {
+.lang-javascript .hljs-emphasis {
   font-style: italic;
 }
-.hljs-strong {
+.lang-javascript .hljs-strong {
   font-weight: bold;
 }
 @font-face {
@@ -501,4 +503,10 @@ th {
   border-bottom: 1px solid #eee;
   margin-bottom: 16px;
   font-weight: bold;
+}
+.markdown-body em {
+  font-weight: bold;
+}
+.markdown-body h3 {
+  margin-bottom: 15px;
 }
