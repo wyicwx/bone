@@ -1,19 +1,21 @@
 # 常用示例
 
-```js
-var bone = require('bone');
-var connect = require('bone-cli-connect');
-var less = bone.require('bone-act-less');
-var include = bone.require('bone-act-include');
-var path = require('path');
+这是个简单的项目的配置
 
+```javascript
+var bone = require('bone'); 
+// less处理器
+var less = bone.require('bone-act-less');
+// 定义文件夹dist
 bone.dest('dist')
-    .src('~/src/**/*')
-    .act(include)
+    .cwd('~/src')
+    .src('./**/*')
     .act(less({
         ieCompat: false
     }))
     .rename(function(fileName) {
+        var path = require('path');
+
         if (path.extname(fileName) == '.less') {
             return fileName.replace(/\.less$/, '.css');
         } else {
@@ -21,8 +23,14 @@ bone.dest('dist')
         }
     });
 
-bone.cli(require('bone-cli-build')());
+// build
+var build = require('bone-cli-build');
+// 加载build命令
+bone.cli(build());
 
+// connect本地静态文件服务器
+var connect = require('bone-cli-connect');
+// 加载connect命令
 bone.cli(connect({
     base: "./dist",
     livereload: true

@@ -76,12 +76,53 @@
                 </nav>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
-                        <h1 id="bone-">Bone介绍</h1>
-<h4 id="bone-">Bone是什么？</h4>
-<p>Bone是一个web前端开发工具，</p>
-<h4 id="-">核心概念</h4>
-<p>　　这个模块是Bone的核心功能，为了让使用者更容易读懂Bone的配置文件，核心模块提供了一种类似操作系统里文件系统的概念，我称它为虚拟文件系统，即将一个虚拟的文件地址映射到一个真实存在的文件地址上，同时可以标注虚拟文件是由何种方式对源文件处理（注意这里不对真实文件做任何处理，源文件是指对真实文件的在内容上的拷贝），对源文件的处理模块我称它为<a href="http://localhost:8000/docs/plugins.html">处理器</a>，通过下面的示例你可以对Bone的虚拟文件系统有一个初步的了解。</p>
-<h4 id="-">构建工具？开发工具？</h4>
+                        <h1 id="-">新手上路</h1>
+<h4 id="1-bone-cli-">1.安装bone-cli模块</h4>
+<pre><code class="lang-nohighlight">$ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> bone-cli
+</code></pre>
+<p>使用<code>--global</code>参数讲<code>bone-cli</code>模块安装到npm全局模块中，全局命令中<code>bone</code>命令可用</p>
+<p>通过终端或cmd命令行输入<code>bone</code>命令即可调用bone</p>
+<pre><code class="lang-bash">$ bone
+
+> Fatal Error: unable <span class="hljs-keyword">to</span> find bonefile.js <span class="hljs-built_in">file</span>.
+</code></pre>
+<p>由于当前文件夹下没有<code>bonefile.js</code>的配置文件，所以<code>bone</code>命令会抛出一个致命错误，没关系我们一步一步来：）</p>
+<h4 id="2-npm-bone-">2.通过npm安装bone到你的项目中</h4>
+<pre><code class="lang-bash">$ npm install --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span> bone
+</code></pre>
+<p><code>bone</code>是核心模块，<code>bone-cli</code>模块会调用本地的<code>bone</code>模块</p>
+<p><code>--save-dev</code>参数</p>
+<h4 id="2-bonefile-js-">2.创建<code>bonefile.js</code></h4>
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>touch bonefile.js
+</code></pre>
+<p>打开并编辑bonefile.js文件</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+</code></pre>
+<h4 id="3-dest-">3.通过<code>dest()</code>定义你的虚拟文件夹</h4>
+<pre><code class="lang-javascript">var bone = require(<span class="hljs-string">'bone'</span>)<span class="hljs-comment">;</span>
+
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/**/*'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<h4 id="4-">4.设置你的虚拟根目录</h4>
+<pre><code class="lang-javascript">var bone = require(<span class="hljs-string">'bone'</span>)<span class="hljs-comment">;</span>
+
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/**/*'</span>)<span class="hljs-comment">;</span>
+
+bone.setup(<span class="hljs-string">'./'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<h4 id="5-bone-bone-build-">5.调用bone内置命令<code>bone build</code>生成文件</h4>
+<pre><code class="lang-shell">$ <span class="hljs-keyword">bone </span><span class="hljs-keyword">build</span>
+</code></pre>
+<p><strong>注</strong>:main.js文件在src文件夹下，通过bone映射到了dist/main.js</p>
+<p>bone.fs的API请查看<a href="https://github.com/wyicwx/bone/blob/master/docs/api.md">API</a>文档获取相关说明</p>
+<p>关于<code>bone.dest()</code>如何<a href="https://github.com/wyicwx/bone/blob/master/docs/file.md">定义一个文件</a></p>
+<h4 id="-">其他</h4>
+<ul>
+<li>命令行工具请参考<a href="https://github.com/wyicwx/bone-cli">bone-cli</a>模块</li>
+<li>如何使用并开发自定义<a href="https://github.com/wyicwx/bone/blob/master/docs/plugin.md">处理器</a></li>
+</ul>
 
                     </div>
                 </div>

@@ -77,31 +77,38 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-">常用示例</h1>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
-<span class="hljs-keyword">var</span> connect = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
-<span class="hljs-keyword">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
-<span class="hljs-keyword">var</span> <span class="hljs-keyword">include</span> = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-include'</span>);
-<span class="hljs-keyword">var</span> path = <span class="hljs-keyword">require</span>(<span class="hljs-string">'path'</span>);
-
+<p>这是个简单的项目的配置</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>); 
+<span class="hljs-comment">// less处理器</span>
+<span class="hljs-keyword">var</span> less = bone.require(<span class="hljs-string">'bone-act-less'</span>);
+<span class="hljs-comment">// 定义文件夹dist</span>
 bone.dest(<span class="hljs-string">'dist'</span>)
-    .src(<span class="hljs-string">'~/src/**/*'</span>)
-    .act(<span class="hljs-keyword">include</span>)
+    .cwd(<span class="hljs-string">'~/src'</span>)
+    .src(<span class="hljs-string">'./**/*'</span>)
     .act(less({
-        ieCompat: <span class="hljs-keyword">false</span>
+        ieCompat: <span class="hljs-literal">false</span>
     }))
-    .rename(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fileName)</span> </span>{
+    .rename(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fileName</span>) </span>{
+        <span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
         <span class="hljs-keyword">if</span> (path.extname(fileName) == <span class="hljs-string">'.less'</span>) {
-            <span class="hljs-keyword">return</span> fileName.replace(/\.less$/, <span class="hljs-string">'.css'</span>);
+            <span class="hljs-keyword">return</span> fileName.replace(<span class="hljs-regexp">/\.less$/</span>, <span class="hljs-string">'.css'</span>);
         } <span class="hljs-keyword">else</span> {
             <span class="hljs-keyword">return</span> fileName;
         }
     });
 
-bone.cli(<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-build'</span>)());
+<span class="hljs-comment">// build</span>
+<span class="hljs-keyword">var</span> build = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-build'</span>);
+<span class="hljs-comment">// 加载build命令</span>
+bone.cli(build());
 
+<span class="hljs-comment">// connect本地静态文件服务器</span>
+<span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
+<span class="hljs-comment">// 加载connect命令</span>
 bone.cli(connect({
     base: <span class="hljs-string">"./dist"</span>,
-    livereload: <span class="hljs-keyword">true</span>
+    livereload: <span class="hljs-literal">true</span>
 }));
 </code></pre>
 
