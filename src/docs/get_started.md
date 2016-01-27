@@ -10,19 +10,19 @@
 
 在终端/cmd命令中输入
 
-```nohighlight
-$ sudo npm install --global bone-cli
+```shell
+$ npm install --global bone-cli
 ```
 
 使用`--global`参数将`bone-cli`模块安装到npm全局模块中，`bone`作为全局命令行工具在任何路径下可调用
 
-*注：linux/mac系统安装需要root权限，windows系统不需要sudo*
+*注：linux/mac系统安装需要root权限，使用`sudo`提权*
 
 `--global`参数请参阅 [install npm packages globally](https://docs.npmjs.com/getting-started/installing-npm-packages-globally) 文档
 
 安装成功后通过终端或cmd命令行输入`bone`命令即可调用bone
 
-```bash
+```shell
 $ bone
 > Fatal Error: unable to find bonefile.js file.
 ```
@@ -33,7 +33,7 @@ $ bone
 
 切换到项目所在根目录下执行npm命令
 
-```bash
+```shell
 $ npm install bone
 ```
 
@@ -41,7 +41,7 @@ $ npm install bone
 
 使用`--save`或`--save-dev`参数会将模块信息记录到`package.json`，具体信息请阅读 [npm using a package.json](https://docs.npmjs.com/getting-started/using-a-package.json) 文档
 
-```bash
+```shell
 $ npm install bone --save-dev
 ```
 
@@ -51,7 +51,7 @@ $ npm install bone --save-dev
 
 linux/mac执行以下命令创建`bonefile.js`文件
 
-```bash
+```shell
 $ touch bonefile.js
 ```
 
@@ -74,7 +74,7 @@ bone.dest('dist')
 
 [bone-act-less]() 是bone的处理器模块，作用是在文件映射过程中对.less文件进行编译
 
-```bash
+```shell
 $ npm install bone-act-less --save-dev
 ```
 
@@ -96,7 +96,7 @@ bone.dest('dist')
 
 [bone-cli-build](https://github.com/wyicwx/bone-cli-build) 是bone的cli模块，作用是将虚拟文件系统内文件生成到本地文件系统
 
-```bash
+```shell
 $ npm install bone-cli-build --save-dev
 ```
 
@@ -116,9 +116,25 @@ bone.cli(build());
 
 关于cli模块的更多信息请参阅 [命令行CLI](./cli.html)
 
-### 7. 调用bone内置命令`bone build`生成文件
+### 7. 调用bone命令查看
 ```shell
-$ bone build
+$ bone
+
+> Usage: bone [options] [command]
+
+  Commands:
+
+    build [options] 
+       build all file
+    
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
+
 ```
 
+执行`bone-cli-build`模块的命令`bone build`，将所有虚拟文件系统内的文件生成到本地文件系统
 
+至此我们配置了一个简单的项目，包含了cli模块和less文件处理模块

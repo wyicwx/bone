@@ -12,7 +12,7 @@
     <body>
         <div class="container-fluid">
             <div id="main" class="row">
-                <nav id="navigation" class="col-md-3">
+                <div id="navigation" class="col-md-3">
                     <h1>
                         Bone
                     </h1>
@@ -27,56 +27,76 @@
                         <a href="https://github.com/wyicwx/bone/issues" class="gh-ico" target="_blank">
                             <i class="fa fa-github"></i> Issues
                         </a>
+                        <div class="navbar-toggle collapsed">
+                            <i class="fa fa-align-justify "></i>
+                        </div>
                     </div>
-                    <h2>
-                        使用入门
-                    </h2>
-                    <ul>
-                        <li>
-                            <a href="./introduction.html">Bone介绍</a>
-                        </li>
-                        <li>
-                            <a href="./get_started.html">新手上路</a>
-                        </li>
-                        <li>
-                            <a href="./api.html">常用API</a>
-                        </li>
-                        <li>
-                            <a href="./plugins.html">处理器</a>
-                        </li>
-                        <li>
-                            <a href="./cli.html">命令行CLI</a>
-                        </li>
-                        <li>
-                            <a href="./server.html">开发服务器</a>
-                        </li>
-                        <li>
-                            <a href="./example.html">bonefile.js示例</a>
-                        </li>
-                    </ul>
-                    <h2>
-                        高手进阶
-                    </h2>
-                    <ul>
-                        <li>
-                            <a href="./">调用Grunt、Gulp</a>
-                        </li>
-                    </ul>
-                    <h2>
-                        开发
-                    </h2>
-                    <ul>
-                        <li>
-                            <a href="./plugins_dev.html">处理器开发</a>
-                        </li>
-                        <li>
-                            <a href="./cli_dev.html">cli开发</a>
-                        </li>
-                        <li>
-                            <a href="./inner_api.html">内建API</a>
-                        </li>
-                    </ul>
-                </nav>
+                    <nav class="collapse navbar-collapse">
+                        <h2>
+                            使用入门
+                        </h2>
+                        <ul>
+                            <li>
+                                <a href="./introduction.html">Bone介绍</a>
+                            </li>
+                            <li>
+                                <a href="./get_started.html">新手上路</a>
+                            </li>
+                            <li>
+                                <a href="./api.html">常用API</a>
+                            </li>
+                            <li>
+                                <a href="./plugins.html">处理器</a>
+                            </li>
+                            <li>
+                                <a href="./cli.html">命令行CLI</a>
+                            </li>
+                            <li>
+                                <a href="./server.html">开发服务器</a>
+                            </li>
+                            <li>
+                                <a href="./example.html">bonefile.js示例</a>
+                            </li>
+                        </ul>
+                        <h2>
+                            高手进阶
+                        </h2>
+                        <ul>
+                            <li>
+                                <a href="./">调用Grunt、Gulp</a>
+                            </li>
+                        </ul>
+                        <h2>
+                            开发
+                        </h2>
+                        <ul>
+                            <li>
+                                <a href="./plugins_dev.html">处理器开发</a>
+                            </li>
+                            <li>
+                                <a href="./cli_dev.html">cli开发</a>
+                            </li>
+                            <li>
+                                <a href="./inner_api.html">内建API</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <script type="text/javascript">
+                    (function() {
+                        var toggle = document.querySelector('.navbar-toggle');
+                        var navbar = document.querySelector('.navbar-collapse');
+                        toggle.addEventListener('click', function() {
+                            if(toggle.className.indexOf('collapsed') != -1) {
+                                navbar.classList.add('in');
+                                toggle.classList.remove('collapsed');
+                            } else {
+                                navbar.classList.remove('in');
+                                toggle.classList.add('collapsed');
+                            }
+                        });
+                    })();
+                    </script>
+                </div>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-">新手上路</h1>
@@ -87,28 +107,28 @@
 </ul>
 <h3 id="1-bone-cli-">1. 安装bone-cli模块</h3>
 <p>在终端/cmd命令中输入</p>
-<pre><code class="lang-nohighlight">$ sudo <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> bone-cli
+<pre><code class="lang-shell">$ <span class="hljs-built_in">npm</span> install --<span class="hljs-built_in">global</span> bone-cli
 </code></pre>
 <p>使用<code>--global</code>参数将<code>bone-cli</code>模块安装到npm全局模块中，<code>bone</code>作为全局命令行工具在任何路径下可调用</p>
-<p><em>注：linux/mac系统安装需要root权限，windows系统不需要sudo</em></p>
+<p><em>注：linux/mac系统安装需要root权限，使用<code>sudo</code>提权</em></p>
 <p><code>--global</code>参数请参阅 <a href="https://docs.npmjs.com/getting-started/installing-npm-packages-globally">install npm packages globally</a> 文档</p>
 <p>安装成功后通过终端或cmd命令行输入<code>bone</code>命令即可调用bone</p>
-<pre><code class="lang-bash">$ bone
+<pre><code class="lang-shell">$ bone
 > Fatal Error: unable <span class="hljs-keyword">to</span> find bonefile.js <span class="hljs-built_in">file</span>.
 </code></pre>
 <p>由于当前文件夹下没有<code>bonefile.js</code>的配置文件，所以<code>bone</code>命令会抛出一个致命错误，没关系我们一步一步来：）</p>
 <h3 id="2-bone-">2. 安装bone到你的项目中</h3>
 <p>切换到项目所在根目录下执行npm命令</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-keyword">install</span> bone
+<pre><code class="lang-shell">$ npm <span class="hljs-keyword">install</span> bone
 </code></pre>
 <p><code>bone</code>是核心模块，<code>bone-cli</code>模块会调用本地的<code>bone</code>模块</p>
 <p>使用<code>--save</code>或<code>--save-dev</code>参数会将模块信息记录到<code>package.json</code>，具体信息请阅读 <a href="https://docs.npmjs.com/getting-started/using-a-package.json">npm using a package.json</a> 文档</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-keyword">install </span><span class="hljs-keyword">bone </span>--save-dev
+<pre><code class="lang-shell">$ npm <span class="hljs-keyword">install </span><span class="hljs-keyword">bone </span>--save-dev
 </code></pre>
 <h3 id="3-">3. 创建配置文件</h3>
 <p>在项目根目录下创建配置文件<code>bonefile.js</code>，<code>bone-cli</code>模块读取本地文件夹下的<code>bonefile.js</code>文件，根据文件内容对Bone进行配置</p>
 <p>linux/mac执行以下命令创建<code>bonefile.js</code>文件</p>
-<pre><code class="lang-bash"><span class="hljs-variable">$ </span>touch bonefile.js
+<pre><code class="lang-shell"><span class="hljs-variable">$ </span>touch bonefile.js
 </code></pre>
 <h3 id="4-">4. 编写配置文件</h3>
 <pre><code class="lang-javascript">var bone = require(<span class="hljs-string">'bone'</span>)<span class="hljs-comment">;</span>
@@ -121,7 +141,7 @@ bone.dest(<span class="hljs-string">'dist'</span>)
 <p>关于<code>bonefile.js</code>更多示例请参阅 <a href="./example.html">bonefile.js示例</a></p>
 <h3 id="5-">5. 安装处理器模块</h3>
 <p><a href="">bone-act-less</a> 是bone的处理器模块，作用是在文件映射过程中对.less文件进行编译</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-keyword">install</span> bone-act-<span class="hljs-keyword">less</span> <span class="hljs-comment">--save-dev</span>
+<pre><code class="lang-shell">$ npm <span class="hljs-keyword">install</span> bone-act-<span class="hljs-keyword">less</span> <span class="hljs-comment">--save-dev</span>
 </code></pre>
 <p>修改<code>bonefile.js</code>文件，通过<code>act</code>函数对对映射文件增加处理器</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
@@ -135,7 +155,7 @@ bone.dest(<span class="hljs-string">'dist'</span>)
 <p>关于<code>act</code>函数和<code>处理器</code>模块的更多信息请参阅 <a href="./plugins.html">处理器</a></p>
 <h3 id="6-cli-">6. 安装cli模块</h3>
 <p><a href="https://github.com/wyicwx/bone-cli-build">bone-cli-build</a> 是bone的cli模块，作用是将虚拟文件系统内文件生成到本地文件系统</p>
-<pre><code class="lang-bash">$ npm <span class="hljs-keyword">install</span> bone-cli-<span class="hljs-keyword">build</span> <span class="hljs-comment">--save-dev</span>
+<pre><code class="lang-shell">$ npm <span class="hljs-keyword">install</span> bone-cli-<span class="hljs-keyword">build</span> <span class="hljs-comment">--save-dev</span>
 </code></pre>
 <p>修改<code>bonefile.js</code>文件，通过<code>bone.cli</code>函数加载<code>bone-cli-build</code>模块</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
@@ -149,9 +169,24 @@ bone.dest(<span class="hljs-string">'dist'</span>)
 bone.cli(build());
 </code></pre>
 <p>关于cli模块的更多信息请参阅 <a href="./cli.html">命令行CLI</a></p>
-<h3 id="7-bone-bone-build-">7. 调用bone内置命令<code>bone build</code>生成文件</h3>
-<pre><code class="lang-shell">$ <span class="hljs-keyword">bone </span><span class="hljs-keyword">build</span>
+<h3 id="7-bone-">7. 调用bone命令查看</h3>
+<pre><code class="lang-shell">$ bone
+
+> Usage: bone [options] [<span class="hljs-keyword">command</span>]
+
+  Commands:
+
+    build [options] 
+       build all <span class="hljs-built_in">file</span>
+
+
+  Options:
+
+    -h, <span class="hljs-comment">--help     output usage information</span>
+    -V, <span class="hljs-comment">--version  output the version number</span>
 </code></pre>
+<p>执行<code>bone-cli-build</code>模块的命令<code>bone build</code>，将所有虚拟文件系统内的文件生成到本地文件系统</p>
+<p>至此我们配置了一个简单的项目，包含了cli模块和less文件处理模块</p>
 
                     </div>
                 </div>

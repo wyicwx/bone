@@ -12,7 +12,7 @@
     <body>
         <div class="container-fluid">
             <div id="main" class="row">
-                <nav id="navigation" class="col-md-3">
+                <div id="navigation" class="col-md-3">
                     <h1>
                         Bone
                     </h1>
@@ -27,56 +27,76 @@
                         <a href="https://github.com/wyicwx/bone/issues" class="gh-ico" target="_blank">
                             <i class="fa fa-github"></i> Issues
                         </a>
+                        <div class="navbar-toggle collapsed">
+                            <i class="fa fa-align-justify "></i>
+                        </div>
                     </div>
-                    <h2>
-                        使用入门
-                    </h2>
-                    <ul>
-                        <li>
-                            <a href="./introduction.html">Bone介绍</a>
-                        </li>
-                        <li>
-                            <a href="./get_started.html">新手上路</a>
-                        </li>
-                        <li>
-                            <a href="./api.html">常用API</a>
-                        </li>
-                        <li>
-                            <a href="./plugins.html">处理器</a>
-                        </li>
-                        <li>
-                            <a href="./cli.html">命令行CLI</a>
-                        </li>
-                        <li>
-                            <a href="./server.html">开发服务器</a>
-                        </li>
-                        <li>
-                            <a href="./example.html">bonefile.js示例</a>
-                        </li>
-                    </ul>
-                    <h2>
-                        高手进阶
-                    </h2>
-                    <ul>
-                        <li>
-                            <a href="./">调用Grunt、Gulp</a>
-                        </li>
-                    </ul>
-                    <h2>
-                        开发
-                    </h2>
-                    <ul>
-                        <li>
-                            <a href="./plugins_dev.html">处理器开发</a>
-                        </li>
-                        <li>
-                            <a href="./cli_dev.html">cli开发</a>
-                        </li>
-                        <li>
-                            <a href="./inner_api.html">内建API</a>
-                        </li>
-                    </ul>
-                </nav>
+                    <nav class="collapse navbar-collapse">
+                        <h2>
+                            使用入门
+                        </h2>
+                        <ul>
+                            <li>
+                                <a href="./introduction.html">Bone介绍</a>
+                            </li>
+                            <li>
+                                <a href="./get_started.html">新手上路</a>
+                            </li>
+                            <li>
+                                <a href="./api.html">常用API</a>
+                            </li>
+                            <li>
+                                <a href="./plugins.html">处理器</a>
+                            </li>
+                            <li>
+                                <a href="./cli.html">命令行CLI</a>
+                            </li>
+                            <li>
+                                <a href="./server.html">开发服务器</a>
+                            </li>
+                            <li>
+                                <a href="./example.html">bonefile.js示例</a>
+                            </li>
+                        </ul>
+                        <h2>
+                            高手进阶
+                        </h2>
+                        <ul>
+                            <li>
+                                <a href="./">调用Grunt、Gulp</a>
+                            </li>
+                        </ul>
+                        <h2>
+                            开发
+                        </h2>
+                        <ul>
+                            <li>
+                                <a href="./plugins_dev.html">处理器开发</a>
+                            </li>
+                            <li>
+                                <a href="./cli_dev.html">cli开发</a>
+                            </li>
+                            <li>
+                                <a href="./inner_api.html">内建API</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <script type="text/javascript">
+                    (function() {
+                        var toggle = document.querySelector('.navbar-toggle');
+                        var navbar = document.querySelector('.navbar-collapse');
+                        toggle.addEventListener('click', function() {
+                            if(toggle.className.indexOf('collapsed') != -1) {
+                                navbar.classList.add('in');
+                                toggle.classList.remove('collapsed');
+                            } else {
+                                navbar.classList.remove('in');
+                                toggle.classList.add('collapsed');
+                            }
+                        });
+                    })();
+                    </script>
+                </div>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="bone-cli">bone-cli</h1>
