@@ -18,7 +18,7 @@ $ sudo npm install --global bone-cli
 
 *注：linux/mac系统安装需要root权限，windows系统不需要sudo*
 
-`--global`参数请阅读 [install npm packages globally](https://docs.npmjs.com/getting-started/installing-npm-packages-globally) 文档
+`--global`参数请参阅 [install npm packages globally](https://docs.npmjs.com/getting-started/installing-npm-packages-globally) 文档
 
 安装成功后通过终端或cmd命令行输入`bone`命令即可调用bone
 
@@ -29,9 +29,9 @@ $ bone
 
 由于当前文件夹下没有`bonefile.js`的配置文件，所以`bone`命令会抛出一个致命错误，没关系我们一步一步来：）
 
-### 2. 通过npm安装bone到你的项目中
+### 2. 安装bone到你的项目中
 
-在项目根目录下执行npm命令
+切换到项目所在根目录下执行npm命令
 
 ```bash
 $ npm install bone
@@ -39,13 +39,23 @@ $ npm install bone
 
 `bone`是核心模块，`bone-cli`模块会调用本地的`bone`模块
 
-*注:使用`--save`或`--save-dev`参数将模块信息记录到`package.json`里，具体信息请阅读 [npm using a package.json](https://docs.npmjs.com/getting-started/using-a-package.json) 文档*
+使用`--save`或`--save-dev`参数会将模块信息记录到`package.json`，具体信息请阅读 [npm using a package.json](https://docs.npmjs.com/getting-started/using-a-package.json) 文档
 
-### 3. 创建`bonefile.js`
+```bash
+$ npm install bone --save-dev
+```
 
-在项目根目录下创建文件`bonefile.js`，`bone-cli`模块读取本地文件夹下的`bonefile.js`文件，根据文件内容对Bone进行配置
+### 3. 创建配置文件
 
-### 4. 通过`dest()`定义你的虚拟文件夹
+在项目根目录下创建配置文件`bonefile.js`，`bone-cli`模块读取本地文件夹下的`bonefile.js`文件，根据文件内容对Bone进行配置
+
+linux/mac执行以下命令创建`bonefile.js`文件
+
+```bash
+$ touch bonefile.js
+```
+
+### 4. 编写配置文件
 
 ```javascript
 var bone = require('bone');
@@ -54,26 +64,61 @@ bone.dest('dist')
     .src('~/src/**/*');
 ```
 
-关于`dest()`、`src()`的API信息请参阅[常用API](./api.html);
+配置将项目根目录下src内文件和文件夹都映射到项目根目录的dist文件夹下
 
-### 5. 安装`bone-cli-build`
+关于`dest()`、`src()`的API信息请参阅 [常用API](./api.html)
+
+关于`bonefile.js`更多示例请参阅 [bonefile.js示例](./example.html)
+
+### 5. 安装处理器模块
+
+[bone-act-less]() 是bone的处理器模块，作用是在文件映射过程中对.less文件进行编译
+
+```bash
+$ npm install bone-act-less --save-dev
+```
+
+修改`bonefile.js`文件，通过`act`函数对对映射文件增加处理器
 
 ```javascript
 var bone = require('bone');
+// 使用bone.require加载
+var less = bone.require('bone');
+
+bone.dest('dist')
+    .src('~/src/**/*')
+    .act(less);
+```
+
+关于`act`函数和`处理器`模块的更多信息请参阅 [处理器](./plugins.html)
+
+### 6. 安装cli模块
+
+[bone-cli-build](https://github.com/wyicwx/bone-cli-build) 是bone的cli模块，作用是将虚拟文件系统内文件生成到本地文件系统
+
+```bash
+$ npm install bone-cli-build --save-dev
+```
+
+修改`bonefile.js`文件，通过`bone.cli`函数加载`bone-cli-build`模块
+
+```javascript
+var bone = require('bone');
+var less = bone.require('bone');
 var build = require('bone-cli-build');
 
 bone.dest('dist')
-    .src('~/src/**/*');
+    .src('~/src/**/*')
+    .act(less);
 
 bone.cli(build());
 ```
-### 6. 调用bone内置命令`bone build`生成文件
+
+关于cli模块的更多信息请参阅 [命令行CLI](./cli.html)
+
+### 7. 调用bone内置命令`bone build`生成文件
 ```shell
 $ bone build
 ```
-**注**:main.js文件在src文件夹下，通过bone映射到了dist/main.js
 
-### 其他
 
-+ 命令行工具请参考[bone-cli](https://github.com/wyicwx/bone-cli)模块
-+ 如何使用并开发自定义[处理器](https://github.com/wyicwx/bone/blob/master/docs/plugin.md)
