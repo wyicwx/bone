@@ -8,7 +8,7 @@
 
 ### 1. 安装bone-cli模块
 
-在终端/cmd命令中输入
+在终端/cmd命令行中输入
 
 ```shell
 $ npm install --global bone-cli

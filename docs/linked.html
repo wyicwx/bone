@@ -99,33 +99,7 @@
                 </div>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
-                        <h1 id="-">处理器</h1>
-<p>处理器是针对文件映射过程中对文件内容进行修改的处理单元，以<code>bone-act-less</code>作为例子</p>
-<pre><code class="lang-shell">$ npm <span class="hljs-keyword">install</span> bone-act-<span class="hljs-keyword">less</span> <span class="hljs-comment">--save-dev</span>
-</code></pre>
-<p>和<code>node.js</code>中加载模块的方式不同，<code>bonefile.js</code>里使用<code>bone.require</code>函数加载处理器模块</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
-<span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
-</code></pre>
-<p>在映射过程中添加处理器</p>
-<pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
-<span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
-
-bone.dest(<span class="hljs-string">'dist'</span>)
-    .src(<span class="hljs-string">'~/src/less/style.less'</span>)
-    .act(less);
-</code></pre>
-<h1 id="-">常用处理器</h1>
-<ul>
-<li><a href="https://github.com/wyicwx/bone-act-less">bone-act-less</a> less编译器</li>
-<li><a href="https://github.com/jansesun/bone-act-sass">bone-act-sass</a> sass编译器</li>
-<li><a href="https://github.com/wyicwx/bone-act-concat">bone-act-concat</a> 文件合并</li>
-<li><a href="https://github.com/wyicwx/bone-act-include">bone-act-include</a> include功能</li>
-<li><a href="https://github.com/wyicwx/bone-act-htmllayout">bone-act-htmllayout</a> 为html文件提供layout功能</li>
-<li><a href="https://github.com/wyicwx/bone-act-babel">bone-act-babel</a> babel</li>
-<li><a href="https://github.com/wyicwx/bone-act-uglify">bone-act-uglify</a> uglify压缩器</li>
-<li><a href="https://github.com/wyicwx/bone-act-cleancss">bone-act-cleancss</a> css压缩器</li>
-</ul>
+                        <p>coming soon.</p>
 
                     </div>
                 </div>
