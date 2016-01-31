@@ -100,16 +100,207 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-api">常用API</h1>
+<p>在Bone的虚拟文件系统中，<code>bone.dest()</code>函数是所有的文件定义的入口</p>
+<p><code>bone.dest()</code>返回一个file对象，该对象用来描述文件的状态，下面是file对象的api列表</p>
 <ul>
-<li><a href="#dest">dest()</a></li>
-<li><a href="#src">src()</a></li>
-<li><a href="#cwd">cwd()</a></li>
-<li><a href="#dir">dir()</a></li>
-<li><a href="#rename">rename()</a></li>
-<li><a href="#act">act()</a></li>
-<li><a href="#temp">temp()</a></li>
+<li><a href="#dest">dest()</a> 定义虚拟文件夹</li>
+<li><a href="#src">src()</a> 指定映射源文件</li>
+<li><a href="#cwd">cwd()</a> 修改cwd</li>
+<li><a href="#dir">dir()</a> 指定文件所在的文件夹</li>
+<li><a href="#rename">rename()</a> 修改虚拟文件名称</li>
+<li><a href="#act">act()</a> 指定处理器处理</li>
+<li><a href="#temp">temp()</a> 临时文件标识</li>
 </ul>
+<p><em>注：file对象的api允许链式调用</em></p>
 <h4 id="dest">dest</h4>
+<p>参数类型： <code>String</code></p>
+<p><code>bone.dest()</code>函数返回一个file对象，并将参数传递给file对象的<code>dest()</code>函数</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> dist = bone.dest(<span class="hljs-string">'dist'</span>);
+</code></pre>
+<p>通过<code>dest()</code>定义一个虚拟文件夹，假设项目根目录所在文件夹为<code>/work/project/</code>，则我们通过上面的代码定义了<code>/work/project/dist</code>的文件夹</p>
+<p><em>注：项目根目录是bonefile.js文件所在的文件夹</em></p>
+<p>再次调用<code>dest()</code>则是定义该虚拟文件夹下的子虚拟文件夹</p>
+<pre><code class="lang-javascript">var dist = bone.dest(<span class="hljs-string">'dist'</span>)<span class="hljs-comment">;</span>
+    dist.dest(<span class="hljs-string">'subfolder'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>通过上面的代码我们定义了另外一个文件夹<code>/work/project/dist/subfolder</code></p>
+<p>对于多层文件夹路径我们也可以直接一次性定义</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> subfollder = bone.dest(<span class="hljs-string">'dist/subfolder'</span>);
+</code></pre>
+<p>当然这些定义的虚拟文件夹在你的文件系统里并不存在，仅仅是保存在内存里的配置而已</p>
+<h4 id="src">src</h4>
+<p>参数类型：<code>StringArray</code>、<code>String</code></p>
+<p><code>src()</code>函数指定将哪些源文件映射到当前虚拟文件夹下</p>
+<p>可以指定单一文件</p>
+<pre><code class="lang-javascript">var dist = bone.dest(<span class="hljs-string">'dist'</span>)<span class="hljs-comment">;</span>
+dist.src(<span class="hljs-string">'~/src/main.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>可以使用glob语法，glob语法请参阅 <a href="https://github.com/isaacs/node-glob">node-glob</a></p>
+<pre><code class="lang-javascript">dist.src(<span class="hljs-string">'~/src/*.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// 使用数组指定多个文件</span>
+dist.src([
+    <span class="hljs-string">'~/src/main.js'</span>,
+    <span class="hljs-string">'~/src/lib/jquery.js'</span>,
+    <span class="hljs-string">'~/src/page/*.js'</span>
+])<span class="hljs-comment">;</span>
+</code></pre>
+<p>假设我们的目录结构是这样的</p>
+<pre><code class="lang-fs">┬root
+└┬ src
+ ├── main.js
+ ├─┬ <span class="hljs-class"><span class="hljs-keyword">lib</span></span>
+ │ ├── undescore.js
+ │ ├── jquery.js
+ │ └── backbone.js
+ └─┬ page
+   ├── index.js
+   └── detail.js
+</code></pre>
+<p>通过上面的代码我们定义了一个dist文件夹，于是我们的目录结构变成这样</p>
+<pre><code class="lang-fs">┬root
+├┬dist (虚拟文件夹和虚拟文件)
+│├── main<span class="hljs-selector-class">.js</span>
+│├── jquery<span class="hljs-selector-class">.js</span>
+│├── index<span class="hljs-selector-class">.js</span>
+│└── detail<span class="hljs-selector-class">.js</span>
+│
+└┬ src
+ ├── main<span class="hljs-selector-class">.js</span>
+ ├─┬ lib
+ │ ├── undescore<span class="hljs-selector-class">.js</span>
+ │ ├── jquery<span class="hljs-selector-class">.js</span>
+ │ └── backbone<span class="hljs-selector-class">.js</span>
+ └─┬ page
+   ├── index<span class="hljs-selector-class">.js</span>
+   └── detail.js
+</code></pre>
+<p><em>注：<code>~</code>符号表示项目根目录</em></p>
+<p><code>src()</code>函数中的相对路径符号<code>./</code>、<code>../</code>是相对于所在的虚拟文件夹路径，下面这两种写法相同</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'../src/main.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/src/main.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>请注意避免定义一个无限递归映射文件，假设在本地文件系统中有这样一个文件<code>src/main.js</code>，下面的是错误的定义代码</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'src'</span>)
+    .src(<span class="hljs-string">'./main.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p><code>src()</code>函数不仅支持映射本地文件还支持虚拟文件的映射，上面的代码对于bone来说，是在src下定义了<code>main.js</code>文件，这个文件映射自<code>src/main.js</code>文件也就是其自身，从而导致无限递归映射，请避免这样的定义</p>
+<h4 id="cwd">cwd</h4>
+<p>参数类型：<code>String</code></p>
+<p><code>cwd()</code>函数必须在<code>src()</code>函数之前调用。该函数用来改变<code>src()</code>相对的所在文件夹路径</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .cwd(<span class="hljs-string">'~/src'</span>)
+    .src(<span class="hljs-string">'./main.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>上面的代码改变了<code>src('./main.js')</code>的相对路径，src最终指定的是<code>~/src/main.js</code></p>
+<h4 id="dir">dir</h4>
+<p>参数类型：<code>String</code>、<code>Function</code></p>
+<p><code>dir()</code>函数必须在<code>src()</code>函数调用之后调用。该函数用来设置映射文件所在的文件夹</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/main.js'</span>)
+    .dir(<span class="hljs-string">'subfloder'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>上面的代码配置了一个虚拟文件<code>dist/subfloder/main.js</code></p>
+<p><code>dir()</code>函数和<code>dest()</code>函数相同，都是定义虚拟文件夹，不同的是<code>dir()</code>函数可以根据映射文件来生成，通过传递函数参数来动态设置文件夹</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// 项目根目录 /work/project</span>
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/main.js'</span>)
+    .dir(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(dir, src, dest)</span> </span>{
+        <span class="hljs-comment">// dir = '';</span>
+        <span class="hljs-comment">// src = '/work/project/src/main.js'</span>
+        <span class="hljs-comment">// dest = '/work/project/dist/main.js'</span>
+
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'subfloder'</span>;
+    });
+</code></pre>
+<p>如果<code>src()</code>使用glob语法匹配，则dir默认值为glob匹配的文件夹</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// 项目根目录 /work/project</span>
+<span class="hljs-comment">// 文件树</span>
+<span class="hljs-comment">// ┬root</span>
+<span class="hljs-comment">// └┬ src</span>
+<span class="hljs-comment">//  └─┬ page</span>
+<span class="hljs-comment">//    ├── index.js</span>
+<span class="hljs-comment">//    └── detail.js</span>
+
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/**/*'</span>)
+    .dir(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(dir, src, dest)</span> </span>{ <span class="hljs-comment">// 对于glob匹配到的文件都会遍历访问`dir()`函数，我们取一个文件为例子</span>
+        <span class="hljs-comment">// dir = 'page'</span>
+        <span class="hljs-comment">// src = '/work/project/src/page/index.js'</span>
+        <span class="hljs-comment">// dest = '/work/project/dist/index.js'</span>
+
+        <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>; <span class="hljs-comment">// 通过返回空字符串将默认的'page'文件夹取消</span>
+    });
+</code></pre>
+<h4 id="rename">rename</h4>
+<p>参数类型：<code>String</code>、<code>Function</code>、<code>Object</code></p>
+<p><code>rename()</code>函数必须在<code>src()</code>函数调用之后调用。该函数用来修改映射后文件的名称</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/main.js'</span>)
+    .rename(<span class="hljs-string">'main.rename.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>通过上面的代码我们配置了一个文件<code>dist/main.rename.js</code>映射源文件为<code>src/main.js</code></p>
+<p>也支持传递参数对象，下面是使用对象作为参数，name和ext可以同时传递也可以只传递一个</p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
+    <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/main.js'</span>)
+    <span class="hljs-selector-class">.rename</span>({
+        <span class="hljs-attribute">name</span>: <span class="hljs-string">'main.rename'</span>,
+        <span class="hljs-attribute">ext</span>: <span class="hljs-string">'.js'</span>
+    });
+</code></pre>
+<p>对于<code>src()</code>使用glob语法匹配的多个文件，请避免使用<code>String</code>和<code>Object</code>类型，多个文件使用同一名称会造成重复定义文件的错误，多个文件请使用<code>Function</code>类型来动态重命名</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// 项目根目录 /work/project</span>
+<span class="hljs-comment">// 文件树</span>
+<span class="hljs-comment">// ┬root</span>
+<span class="hljs-comment">// └┬ src</span>
+<span class="hljs-comment">//  └─┬ page</span>
+<span class="hljs-comment">//    ├── index.js</span>
+<span class="hljs-comment">//    └── detail.js</span>
+
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/**/*'</span>)
+    .rename(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fileName, filePath, fileInfo)</span> </span>{
+        <span class="hljs-comment">// fileName = 'index.js'</span>
+        <span class="hljs-comment">// filePath = '/work/project/src/page/index.js'</span>
+        <span class="hljs-comment">// fileInfo = { </span>
+        <span class="hljs-comment">//    root: '/',</span>
+        <span class="hljs-comment">//    dir: '/work/project/src/page',</span>
+        <span class="hljs-comment">//    base: 'index.js',</span>
+        <span class="hljs-comment">//    ext: '.js',</span>
+        <span class="hljs-comment">//    name: 'index' </span>
+        <span class="hljs-comment">//  }</span>
+
+        <span class="hljs-keyword">return</span> fileInfo.name + <span class="hljs-string">'rename.js'</span>;
+    });
+</code></pre>
+<h4 id="act">act</h4>
+<p>参数类型: <code>Plugins</code></p>
+<p><code>act()</code>函数必须在<code>src()</code>函数调用之后调用。该函数用来设置文件映射过程中需要进行修改的处理器</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
+<span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
+
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/less/style.less'</span>)
+    .act(less);
+</code></pre>
+<p>上面代码使用了<code>bone-act-less</code>处理器对less文件进行编译处理</p>
+<p>处理器相关的介绍请参阅<a href="./plugins.html">处理器</a></p>
+<h4 id="temp">temp</h4>
+<p>参数类型： <code>Boolean</code></p>
+<p><code>temp()</code>函数用来标志该文件或文件夹是否临时文件，临时文件不会生成到本地文件系统中</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// 标识为临时文件夹</span>
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .dest(<span class="hljs-string">'temp'</span>)
+    .temp(<span class="hljs-literal">true</span>);
+
+<span class="hljs-comment">// 标识为临时文件</span>
+bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/temp.js'</span>)
+    .temp(<span class="hljs-literal">true</span>);
+</code></pre>
 
                     </div>
                 </div>
