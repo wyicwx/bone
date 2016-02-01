@@ -429,7 +429,6 @@ th {
 }
 #main {
   background: #f7f7f9;
-  overflow: hidden;
 }
 #navigation {
   padding-bottom: 15px;
@@ -501,8 +500,6 @@ th {
   border-left: 1px solid #eee;
   background: white;
   color: black;
-  margin-bottom: -999px;
-  padding-bottom: 999px;
   padding-top: 15px;
 }
 .markdown-body h1 {

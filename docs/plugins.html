@@ -100,20 +100,62 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-">处理器</h1>
-<p>处理器是针对文件映射过程中对文件内容进行修改的处理单元，以<code>bone-act-less</code>作为例子</p>
+<p>处理器是针对文件映射过程中对文件内容进行修改的处理单元</p>
+<h4 id="-">安装处理器</h4>
+<p>以<code>bone-act-less</code>作为例子</p>
 <pre><code class="lang-shell">$ npm <span class="hljs-keyword">install</span> bone-act-<span class="hljs-keyword">less</span> <span class="hljs-comment">--save-dev</span>
 </code></pre>
+<h4 id="-">使用处理器</h4>
 <p>和<code>node.js</code>中加载模块的方式不同，<code>bonefile.js</code>里使用<code>bone.require</code>函数加载处理器模块</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
 <span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
 </code></pre>
-<p>在映射过程中添加处理器</p>
+<p>使用<code>act()</code>函数加载处理器，<code>act()</code>函数第一个参数传递给处理器</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
 <span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
 
 bone.dest(<span class="hljs-string">'dist'</span>)
     .src(<span class="hljs-string">'~/src/less/style.less'</span>)
     .act(less);
+</code></pre>
+<h4 id="-">过滤器</h4>
+<p>部分处理器模块会自带过滤器，只处理对应的文件</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/main.js'</span>)
+    .act(less); <span class="hljs-comment">// less处理器只处理.less后缀的文件</span>
+</code></pre>
+<p>通过传递filter参数来修改过滤器</p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
+    <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/css/style.css'</span>)
+    <span class="hljs-selector-class">.act</span>(less({}, {
+        <span class="hljs-attribute">filter</span>: {
+            <span class="hljs-attribute">ext</span>: [<span class="hljs-string">'.css'</span>]
+        }
+    }));
+
+`<span class="hljs-selector-tag">filter</span>`参数也可以传递函数，下面是所有可以传递的数据结构
+
+```<span class="hljs-selector-tag">javascript</span>
+<span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
+    <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/css/style.css'</span>)
+    <span class="hljs-selector-class">.act</span>(less({}, {
+        <span class="hljs-attribute">filter</span>: {
+            <span class="hljs-attribute">ext</span>: [<span class="hljs-string">'.css'</span>], <span class="hljs-comment">// 优先判断后缀</span>
+            <span class="hljs-attribute">name</span>: <span class="hljs-string">'style'</span>,
+            <span class="hljs-attribute">base</span>: <span class="hljs-string">'style.css'</span>
+        }
+    }));
+
+<span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
+    <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/css/style.css'</span>)
+    <span class="hljs-selector-class">.act</span>(less({}, {
+        <span class="hljs-attribute">filter</span>: function(fileInfo) {
+            <span class="hljs-comment">// fileInfo = {</span>
+            <span class="hljs-comment">//     </span>
+            <span class="hljs-comment">// }</span>
+            return true;
+        }
+    }));
 </code></pre>
 <h1 id="-">常用处理器</h1>
 <ul>
