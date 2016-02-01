@@ -50,6 +50,7 @@ bone.dest('dist')
             ext: ['.css']
         }
     }));
+```
 
 `filter`参数也可以传递函数，下面是所有可以传递的数据结构
 
@@ -67,10 +68,26 @@ bone.dest('dist')
 bone.dest('dist')
     .src('~/src/css/style.css')
     .act(less({}, {
-        filter: function(fileInfo) {
-            // fileInfo = {
-            //     
-            // }
+        filter: function(fileInfo) { 
+            //  fileInfo = {
+            //      source: '/work/project/src/css/style.css',
+            //      sourceParsed: {
+            //          root: '/',
+            //          dir: '/work/project/src/css',
+            //          base: 'style.css',
+            //          ext: '.css',
+            //          name: 'style' 
+            //      },
+            //      destination: '/work/project/dist/style.css',
+            //      destinationParsed: {
+            //          root: '/',
+            //          dir: '/work/project/dist',
+            //          base: 'style.css',
+            //          ext: '.css',
+            //          name: 'style'
+            //      }
+            //  }
+
             return true;
         }
     }));

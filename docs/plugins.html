@@ -132,11 +132,9 @@ bone.dest(<span class="hljs-string">'dist'</span>)
             <span class="hljs-attribute">ext</span>: [<span class="hljs-string">'.css'</span>]
         }
     }));
-
-`<span class="hljs-selector-tag">filter</span>`参数也可以传递函数，下面是所有可以传递的数据结构
-
-```<span class="hljs-selector-tag">javascript</span>
-<span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
+</code></pre>
+<p><code>filter</code>参数也可以传递函数，下面是所有可以传递的数据结构</p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
     <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/css/style.css'</span>)
     <span class="hljs-selector-class">.act</span>(less({}, {
         <span class="hljs-attribute">filter</span>: {
@@ -149,10 +147,26 @@ bone.dest(<span class="hljs-string">'dist'</span>)
 <span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
     <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/css/style.css'</span>)
     <span class="hljs-selector-class">.act</span>(less({}, {
-        <span class="hljs-attribute">filter</span>: function(fileInfo) {
-            <span class="hljs-comment">// fileInfo = {</span>
-            <span class="hljs-comment">//     </span>
-            <span class="hljs-comment">// }</span>
+        <span class="hljs-attribute">filter</span>: function(fileInfo) { 
+            <span class="hljs-comment">//  fileInfo = {</span>
+            <span class="hljs-comment">//      source: '/work/project/src/css/style.css',</span>
+            <span class="hljs-comment">//      sourceParsed: {</span>
+            <span class="hljs-comment">//          root: '/',</span>
+            <span class="hljs-comment">//          dir: '/work/project/src/css',</span>
+            <span class="hljs-comment">//          base: 'style.css',</span>
+            <span class="hljs-comment">//          ext: '.css',</span>
+            <span class="hljs-comment">//          name: 'style' </span>
+            <span class="hljs-comment">//      },</span>
+            <span class="hljs-comment">//      destination: '/work/project/dist/style.css',</span>
+            <span class="hljs-comment">//      destinationParsed: {</span>
+            <span class="hljs-comment">//          root: '/',</span>
+            <span class="hljs-comment">//          dir: '/work/project/dist',</span>
+            <span class="hljs-comment">//          base: 'style.css',</span>
+            <span class="hljs-comment">//          ext: '.css',</span>
+            <span class="hljs-comment">//          name: 'style'</span>
+            <span class="hljs-comment">//      }</span>
+            <span class="hljs-comment">//  }</span>
+
             return true;
         }
     }));
