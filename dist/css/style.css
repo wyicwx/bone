@@ -441,6 +441,10 @@ th {
   margin-bottom: 10px;
   margin-top: 20px;
 }
+#navigation h1 a {
+  color: black;
+  text-decoration: none;
+}
 #navigation h2 {
   font-size: 16px;
   padding: 8px 0 8px 4px;

@@ -14,7 +14,7 @@
             <div id="main" class="row">
                 <div id="navigation" class="col-md-3">
                     <h1>
-                        Bone
+                        <a href="./introduction.html">Bone</a>
                     </h1>
                     <div>
                         <a href="https://github.com/wyicwx/bone" class="gh-ico" target="_blank">
@@ -100,22 +100,26 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-cli">命令行CLI</h1>
-<p><a href="https://github.com/wyicwx/bone-cli">bone-cli</a> 模块是命令行的辅助模块</p>
-<p>没有集成在bone内部，需要单独安装，</p>
+<p><a href="https://github.com/wyicwx/bone-cli">bone-cli</a> 模块是bone的命令行的辅助模块，通过命令行来对bone进行操作，该模块没有集成在bone内部，需要单独安装</p>
 <h3 id="-">安装</h3>
 <p>通过npm安装，这是全局模块，安装后可以在命令行中使用<code>bone</code>命令</p>
-<pre><code class="lang-sh">$ npm <span class="hljs-keyword">install</span> -<span class="hljs-keyword">g</span> bone-cli
+<pre><code class="lang-sh">$ sudo npm <span class="hljs-keyword">install</span> -<span class="hljs-keyword">g</span> bone-cli
 </code></pre>
 <p><strong>注</strong>：安装到全局需要使用sudo提权</p>
 <p>bone-cli会载入你项目目录下的<a href="https://github.com/wyicwx/bone">bone</a>模块，并拓展bone对象的方法</p>
-<h3 id="-">开始</h3>
-<p>你需要在你的项目的根目录下创建<code>bonefile.js</code>文件，bone-cli会自动载入这个文件</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+<h3 id="bonefile-js-">bonefile.js文件</h3>
+<p><code>bonefile.js</code>是配置文件，该文件放在项目根目录下，<code>bone-cli</code>自动查找并载入这个文件并使用<code>bonefile.js</code>所在的文件夹路径初始化bone</p>
+<p>创建<code>bonefile.js</code>后可以通过bone命令查看相应帮助</p>
+<pre><code class="lang-shell">$ bone --<span class="hljs-keyword">help</span>
+>
+  Usage: bone [options]
+
+  Options:
+
+    -<span class="hljs-keyword">h</span>, --<span class="hljs-keyword">help</span>     output usage information
+    -V, --<span class="hljs-keyword">version</span>  output the <span class="hljs-keyword">version</span> number
 </code></pre>
-<p><strong>注意</strong>：bonefile.js不需要调用<code>bone.setup()</code>来设置bone根目录，bone-cli会使用bonefile.js所在的文件夹路径初始化bone</p>
-<p>通过bone命令查看相应帮助</p>
-<pre><code class="lang-sh">$ bone <span class="hljs-comment">--help</span>
-</code></pre>
+<h3 id="-">加载命令行</h3>
 <h3 id="-">定义任务流</h3>
 <p>通过<code>bone.task()</code>定义任务流，用来将多个需要执行的命令连成一个任务流</p>
 <pre><code class="lang-js"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.task</span>(<span class="hljs-string">'release'</span>, <span class="hljs-string">'rm -rf ./dist/*'</span>, {
@@ -143,7 +147,7 @@ bone.cli(<span class="hljs-function"><span class="hljs-keyword">function</span>(
 });
 </code></pre>
 <p>通过<code>bone custom --help</code>查看自定义命令的帮助</p>
-<h3 id="-">改变自定义命令的行为</h3>
+<h3 id="-">修改</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
 <span class="hljs-keyword">var</span> uglify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-act-uglify'</span>);
 
@@ -152,7 +156,7 @@ bone.cli(connect(), {
 });
 </code></pre>
 <p><code>act</code>参数传递处理器，处理器会改变该命令行的fs api的行为，所有读取的文件最后都会通过该处理器处理</p>
-<h3 id="-">可用模块</h3>
+<h1 id="-">可用模块</h1>
 <ul>
 <li><a href="https://github.com/wyicwx/bone-build">bone-build</a> 增加build命令支持</li>
 <li><a href="https://github.com/wyicwx/bone-cli-connect">bone-cli-connect</a> 支持bone的api的静态服务器</li>

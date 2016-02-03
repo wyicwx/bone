@@ -1,33 +1,35 @@
 # 命令行CLI
 
-[bone-cli](https://github.com/wyicwx/bone-cli) 模块是命令行的辅助模块
-
-没有集成在bone内部，需要单独安装，
+[bone-cli](https://github.com/wyicwx/bone-cli) 模块是bone的命令行的辅助模块，通过命令行来对bone进行操作，该模块没有集成在bone内部，需要单独安装
 
 ### 安装
 通过npm安装，这是全局模块，安装后可以在命令行中使用`bone`命令
 
 ```sh
-$ npm install -g bone-cli
+$ sudo npm install -g bone-cli
 ```
 
 **注**：安装到全局需要使用sudo提权
 
 bone-cli会载入你项目目录下的[bone](https://github.com/wyicwx/bone)模块，并拓展bone对象的方法
 
-### 开始
+### bonefile.js文件
 
-你需要在你的项目的根目录下创建`bonefile.js`文件，bone-cli会自动载入这个文件
-```js
-var bone = require('bone');
-```
-**注意**：bonefile.js不需要调用`bone.setup()`来设置bone根目录，bone-cli会使用bonefile.js所在的文件夹路径初始化bone
+`bonefile.js`是配置文件，该文件放在项目根目录下，`bone-cli`自动查找并载入这个文件并使用`bonefile.js`所在的文件夹路径初始化bone
 
-
-通过bone命令查看相应帮助
-```sh
+创建`bonefile.js`后可以通过bone命令查看相应帮助
+```shell
 $ bone --help
+>
+  Usage: bone [options]
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
 ```
+
+### 加载命令行
 
 ### 定义任务流
 
@@ -69,7 +71,7 @@ bone.cli(function(command, bone, fs) {
 ```
 通过`bone custom --help`查看自定义命令的帮助
 
-### 改变自定义命令的行为
+### 修改
 
 ```js
 var connect = require('bone-cli-connect');
@@ -84,7 +86,7 @@ bone.cli(connect(), {
 `act`参数传递处理器，处理器会改变该命令行的fs api的行为，所有读取的文件最后都会通过该处理器处理
 
 
-### 可用模块
+# 可用模块
 
 + [bone-build](https://github.com/wyicwx/bone-build) 增加build命令支持
 + [bone-cli-connect](https://github.com/wyicwx/bone-cli-connect) 支持bone的api的静态服务器
