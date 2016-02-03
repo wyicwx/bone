@@ -110,21 +110,31 @@
 <pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
 <span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
 </code></pre>
-<p>使用<code>act()</code>函数加载处理器，<code>act()</code>函数第一个参数传递给处理器</p>
+<p>使用<code>act()</code>函数加载处理器，<code>act()</code>函数可以多次调用来添加多个处理器，处理器的执行顺序和<code>act()</code>函数的调用顺序一致</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>);
 <span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
+<span class="hljs-built_in">var</span> cleancss = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-cleancss'</span>);
 
 bone.dest(<span class="hljs-string">'dist'</span>)
     .src(<span class="hljs-string">'~/src/less/style.less'</span>)
-    .act(less);
+    .act(less)
+    .act(cleancss);
+</code></pre>
+<h4 id="-">传递参数给处理器</h4>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
+    <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/less/style.less'</span>)
+    <span class="hljs-selector-class">.act</span>(less({
+        <span class="hljs-attribute">ieCompat</span>: false
+    }));
 </code></pre>
 <h4 id="-">过滤器</h4>
-<p>部分处理器模块会自带过滤器，只处理对应的文件</p>
+<p>bone在调用处理器之前会经过过滤器筛选，过滤器通过判断文件的路径信息来决定是否使用该处理器</p>
+<p>一般处理器模块内部设置了缺省的过滤器参数，处理器模块可以选择仅处理哪些类型的文件，以<code>bone-act-less</code>为例</p>
 <pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
     .src(<span class="hljs-string">'~/src/main.js'</span>)
     .act(less); <span class="hljs-comment">// less处理器只处理.less后缀的文件</span>
 </code></pre>
-<p>通过传递filter参数来修改过滤器</p>
+<p>若想自定义处理过滤内容可以通过传递filter参数来修改，自定义的过滤器参数会覆盖缺省的参数</p>
 <pre><code class="lang-javascript"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.dest</span>(<span class="hljs-string">'dist'</span>)
     <span class="hljs-selector-class">.src</span>(<span class="hljs-string">'~/src/css/style.css'</span>)
     <span class="hljs-selector-class">.act</span>(less({}, {
@@ -171,6 +181,19 @@ bone.dest(<span class="hljs-string">'dist'</span>)
         }
     }));
 </code></pre>
+<h4 id="-">自定义简易的处理器</h4>
+<p>若想快速定义一个简易的处理器可以通过<code>bone.wrapper</code>函数</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/css/style.css'</span>)
+    .act(bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+        <span class="hljs-keyword">callback</span>(<span class="hljs-literal">null</span>, buffer);
+    }, {
+        filter: {
+            ext: <span class="hljs-string">'.css'</span>
+        }
+    }));
+</code></pre>
+<p>处理器开发相关的文档请参阅<a href="./plugins_dev.html">处理器开发</a></p>
 <h1 id="-">常用处理器</h1>
 <ul>
 <li><a href="https://github.com/wyicwx/bone-act-less">bone-act-less</a> less编译器</li>

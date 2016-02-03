@@ -1,5 +1,8 @@
-# bone-cli
-> Bone的命令行工具
+# 命令行CLI
+
+[bone-cli](https://github.com/wyicwx/bone-cli) 模块是命令行的辅助模块
+
+没有集成在bone内部，需要单独安装，
 
 ### 安装
 通过npm安装，这是全局模块，安装后可以在命令行中使用`bone`命令
