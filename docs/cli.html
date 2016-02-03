@@ -109,7 +109,7 @@
 <p>bone-cli会载入你项目目录下的<a href="https://github.com/wyicwx/bone">bone</a>模块，并拓展bone对象的方法</p>
 <h3 id="bonefile-js-">bonefile.js文件</h3>
 <p><code>bonefile.js</code>是配置文件，该文件放在项目根目录下，<code>bone-cli</code>自动查找并载入这个文件并使用<code>bonefile.js</code>所在的文件夹路径初始化bone</p>
-<p>创建<code>bonefile.js</code>后可以通过bone命令查看相应帮助</p>
+<p>创建<code>bonefile.js</code>后可以通过bone命令查看相应帮助，<code>bonefile.js</code>内容可以参阅 <a href="./example.html">bonefile.js示例</a></p>
 <pre><code class="lang-shell">$ bone --<span class="hljs-keyword">help</span>
 >
   Usage: bone [options]
@@ -119,7 +119,31 @@
     -<span class="hljs-keyword">h</span>, --<span class="hljs-keyword">help</span>     output usage information
     -V, --<span class="hljs-keyword">version</span>  output the <span class="hljs-keyword">version</span> number
 </code></pre>
-<h3 id="-">加载命令行</h3>
+<h3 id="-cli-">加载cli模块</h3>
+<p>通过<code>bone-cli</code>加载<code>bone</code>，会给<code>bone</code>对象添加<code>bone.cli()</code>函数，该函数用来扩展<code>bone</code>的命令</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+<span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
+
+bone.cli(connect());
+</code></pre>
+<p>通过上面的代码我们载入了<code>connect</code>cli模块，再次执行<code>bone</code>命令可以看到<code>connect</code>模块已经加载到<code>bone</code>命令上了</p>
+<pre><code class="lang-shell">$ bone
+> 
+  Usage: bone [options] [<span class="hljs-keyword">command</span>]
+
+  Commands:
+
+    connect [options] 
+       Start <span class="hljs-keyword">a</span> connect web server.
+
+  Options:
+
+    -h, <span class="hljs-comment">--help     output usage information</span>
+    -V, <span class="hljs-comment">--version  output the version number</span>
+</code></pre>
+<p>通过执行<code>bone connect</code>可以调用<code>connect</code>模块</p>
+<pre><code class="lang-shell">$ bone <span class="hljs-built_in">connect</span>
+</code></pre>
 <h3 id="-">定义任务流</h3>
 <p>通过<code>bone.task()</code>定义任务流，用来将多个需要执行的命令连成一个任务流</p>
 <pre><code class="lang-js"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.task</span>(<span class="hljs-string">'release'</span>, <span class="hljs-string">'rm -rf ./dist/*'</span>, {
@@ -130,10 +154,9 @@
 <p>上面的配置代码定义了一个release任务流，任务流执行的命令不仅限于Bone自身的命令和任务名，也可以是系统的命令</p>
 <pre><code class="lang-sh">$ bone <span class="hljs-built_in">release</span>
 </code></pre>
-<h3 id="-">添加自己的命令</h3>
-<p>通过bone-cli加载bone，会给bone对象添加<code>bone.cli()</code>函数，参数接受传入一个函数，该函数接受两个参数，一个是command函数，执行后会返回一个commander对象，另一个参数是bone</p>
+<h3 id="-">自定义命令</h3>
+<p><code>bone.cli()</code>函数的参数接受传入一个函数，该函数接受三个参数，一个是command函数，执行后会返回一个commander对象，第二个参数是bone对象，第三个参数是bone的fs对象</p>
 <p><strong>注</strong>：commander对象(commander对象是<a href="https://github.com/tj/commander.js">Commander</a>的一个实例)</p>
-<p>在bonefile.js文件或者独立的模块里内调用<code>bone.cli()</code>来定义自己的命令</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
 
 bone.cli(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">command, bone, fs</span>) </span>{

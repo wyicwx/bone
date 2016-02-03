@@ -17,7 +17,8 @@ bone-cli会载入你项目目录下的[bone](https://github.com/wyicwx/bone)模�
 
 `bonefile.js`是配置文件，该文件放在项目根目录下，`bone-cli`自动查找并载入这个文件并使用`bonefile.js`所在的文件夹路径初始化bone
 
-创建`bonefile.js`后可以通过bone命令查看相应帮助
+创建`bonefile.js`后可以通过bone命令查看相应帮助，`bonefile.js`内容可以参阅 [bonefile.js示例](./example.html)
+
 ```shell
 $ bone --help
 >
@@ -29,7 +30,39 @@ $ bone --help
     -V, --version  output the version number
 ```
 
-### 加载命令行
+### 加载cli模块
+
+通过`bone-cli`加载`bone`，会给`bone`对象添加`bone.cli()`函数，该函数用来扩展`bone`的命令
+
+```javascript
+var bone = require('bone');
+var connect = require('bone-cli-connect');
+
+bone.cli(connect());
+```
+通过上面的代码我们载入了`connect`cli模块，再次执行`bone`命令可以看到`connect`模块已经加载到`bone`命令上了
+
+```shell
+$ bone
+> 
+  Usage: bone [options] [command]
+
+  Commands:
+
+    connect [options] 
+       Start a connect web server.
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
+```
+
+通过执行`bone connect`可以调用`connect`模块
+
+```shell
+$ bone connect
+```
 
 ### 定义任务流
 
@@ -48,13 +81,11 @@ bone.task('release', 'rm -rf ./dist/*', {
 $ bone release
 ```
 
-### 添加自己的命令
+### 自定义命令
 
-通过bone-cli加载bone，会给bone对象添加`bone.cli()`函数，参数接受传入一个函数，该函数接受两个参数，一个是command函数，执行后会返回一个commander对象，另一个参数是bone
+`bone.cli()`函数的参数接受传入一个函数，该函数接受三个参数，一个是command函数，执行后会返回一个commander对象，第二个参数是bone对象，第三个参数是bone的fs对象
 
 **注**：commander对象(commander对象是[Commander](https://github.com/tj/commander.js)的一个实例)
-
-在bonefile.js文件或者独立的模块里内调用`bone.cli()`来定义自己的命令
 
 ```js
 var bone = require('bone');
