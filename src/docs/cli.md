@@ -102,14 +102,16 @@ bone.cli(function(command, bone, fs) {
 ```
 通过`bone custom --help`查看自定义命令的帮助
 
-### 修改
+### 追加act
+
+对于cli内使用[内建api](./inner_api.html)来读取的文件，`bone.cli`提供一个参数来追加act，追加的act会影响整个cli内使用[内建api](./inner_api.html)读取文件的行为
 
 ```js
 var connect = require('bone-cli-connect');
 var uglify = require('bone-act-uglify');
 
 bone.cli(connect(), {
-    act: uglify
+    act: uglify // connect内读取的文件都会追加uglify的act
 });
 
 ```

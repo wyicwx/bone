@@ -99,7 +99,49 @@
                 </div>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
-                        <p>coming soon.</p>
+                        <h1 id="-">开发服务器</h1>
+<h3 id="-">静态资源服务器</h3>
+<p>静态资源服务器适合静态页面或者单页面应用开发，服务器在本地机器上开启不依赖后端服务器 </p>
+<p><code>bone-cli-connect</code>模块提供一个简易的静态服务器，该模块使用<a href="./inner_api.html">内建api</a>来读取文件，因此可以使用bone的特性</p>
+<p>通过npm安装在本地项目中</p>
+<pre><code class="lang-sh">$ npm <span class="hljs-keyword">install</span> bone-cli-<span class="hljs-keyword">connect</span> <span class="hljs-comment">--save-dev</span>
+</code></pre>
+<p>在<code>bonefile.js</code>文件里通过<code>bone.cli</code>函数载入bone-cli-connect模块</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+<span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
+
+bone.cli(connect({
+    base: <span class="hljs-string">'./dist'</span>
+}));
+</code></pre>
+<p>通过命令<code>bone connect</code>启动静态服务器</p>
+<h4 id="-">可选参数</h4>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> connect = require(<span class="hljs-string">'bone-cli-connect'</span>);
+<span class="hljs-keyword">var</span> options = {
+    port: <span class="hljs-number">8000</span>,
+    host: <span class="hljs-string">'127.0.0.1'</span>,
+    <span class="hljs-keyword">base</span>: <span class="hljs-string">'./'</span>,
+    livereload: <span class="hljs-keyword">false</span>   
+};
+bone.cli(connect(options));
+</code></pre>
+<h5 id="port">port</h5>
+<p>指定监听的端口号
+默认值为：8000</p>
+<h5 id="host">host</h5>
+<p>指定监听的ip
+默认值为：0.0.0.0</p>
+<h5 id="base">base</h5>
+<p>指定根目录地址
+默认值为：bonefile.js所在文件夹路径</p>
+<h5 id="livereload">livereload</h5>
+<p>启用<a href="https://github.com/intesso/connect-livereload">livereload</a>功能
+默认值为：false</p>
+<p><strong>注</strong>：也支持修改参数</p>
+<pre><code class="lang-sh">$ <span class="hljs-keyword">bone </span>connect --port <span class="hljs-number">8080</span> --<span class="hljs-keyword">base </span>./dist
+</code></pre>
+<h3 id="-">代理服务器</h3>
+<p><code>bone-cli-proxy</code>模块提供强大的代理服务器</p>
 
                     </div>
                 </div>

@@ -170,12 +170,13 @@ bone.cli(<span class="hljs-function"><span class="hljs-keyword">function</span>(
 });
 </code></pre>
 <p>通过<code>bone custom --help</code>查看自定义命令的帮助</p>
-<h3 id="-">修改</h3>
+<h3 id="-act">追加act</h3>
+<p>对于cli内使用<a href="./inner_api.html">内建api</a>来读取的文件，<code>bone.cli</code>提供一个参数来追加act，追加的act会影响整个cli内使用<a href="./inner_api.html">内建api</a>读取文件的行为</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
 <span class="hljs-keyword">var</span> uglify = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-act-uglify'</span>);
 
 bone.cli(connect(), {
-    act: uglify
+    act: uglify <span class="hljs-comment">// connect内读取的文件都会追加uglify的act</span>
 });
 </code></pre>
 <p><code>act</code>参数传递处理器，处理器会改变该命令行的fs api的行为，所有读取的文件最后都会通过该处理器处理</p>
