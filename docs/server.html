@@ -27,6 +27,9 @@
                         <a href="https://github.com/wyicwx/bone/issues" class="gh-ico" target="_blank">
                             <i class="fa fa-github"></i> Issues
                         </a>
+                        <div style="font-size: 12px;color: #999;text-shadow: 1px 1px 1px #FFFFFF;margin-bottom: -10px;margin-top: 10px;">
+                        更新日期:2016-02-16
+                        </div>
                         <div class="navbar-toggle collapsed">
                             <i class="fa fa-align-justify "></i>
                         </div>
@@ -141,7 +144,54 @@ bone.cli(connect(options));
 <pre><code class="lang-sh">$ <span class="hljs-keyword">bone </span>connect --port <span class="hljs-number">8080</span> --<span class="hljs-keyword">base </span>./dist
 </code></pre>
 <h3 id="-">代理服务器</h3>
-<p><code>bone-cli-proxy</code>模块提供强大的代理服务器</p>
+<p>代理服务器提供类似fiddler的AutoreSponder功能</p>
+<p><code>bone-cli-proxy</code>模块提供强大的代理服务器，该模块使用<a href="./inner_api.html">内建api</a>来读取文件，因此可以使用bone的特性</p>
+<h3 id="-">安装及使用</h3>
+<p>通过npm安装</p>
+<pre><code class="lang-sh">$ npm install bone-<span class="hljs-keyword">cli</span>-proxy
+</code></pre>
+<p>安装后在<code>bonefile.js</code>文件内通过<code>bone.cli()</code>加载</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+<span class="hljs-keyword">var</span> proxy = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-proxy'</span>);
+
+bone.cli(proxy());
+</code></pre>
+<h3 id="-">参数</h3>
+<p><strong>port</strong></p>
+<p>type: <code>number</code> default: 8080</p>
+<p>代理服务器的启用端口</p>
+<p><strong>enableReplace</strong></p>
+<p>type: <code>boolean</code> default: true</p>
+<p>启用代理替换</p>
+<p><strong>replaceRules</strong></p>
+<p>type: <code>array</code> default: []</p>
+<p>代理过程中替换文件规则，参数为二维数组，第一个值为正则，第二个值为被替换的文件</p>
+<pre><code class="lang-js">var proxy = require(<span class="hljs-string">'bone-cli-proxy'</span>);
+bone.cli(proxy{
+    replaceRules: [
+        [/www\.qq\.com\/([^.]*)/, <span class="hljs-string">'~/dist/qq/{$1}'</span>]
+        [/www\.baidu\.com\/([^.]*)/, <span class="hljs-string">'~/dist/baidu/{$1}'</span>]
+    ]
+});
+</code></pre>
+<p><strong>enableLog</strong></p>
+<p>type: <code>boolean</code> default: false</p>
+<p>启用http访问log</p>
+<p><strong>visitLog</strong></p>
+<p>type: <code>string</code>、<code>stream</code> default: '~/bone-cli-proxy/visit.log'</p>
+<p>访问log写入目的地，可以传入一个可写流</p>
+<p><strong>enableResponseLog</strong></p>
+<p>type: <code>boolean</code> default: false</p>
+<p>启用http返回log</p>
+<p><strong>responseLog</strong></p>
+<p>type: <code>string</code>、<code>stream</code> default: '~/bone-cli-proxy/response.log'</p>
+<p>返回log写入目的地，可传入一个可写流</p>
+<p><strong>pac</strong></p>
+<p>type: <code>string</code>、<code>boolean</code> default: false</p>
+<p>支持用pac方式的代理，可以填入一个网址或者true，参数为true时只匹配replaceRules内的规则</p>
+<p><strong>pacEncoding</strong></p>
+<p>type: <code>string</code> default: 'gbk'</p>
+<p>pac文件编码</p>
 
                     </div>
                 </div>
