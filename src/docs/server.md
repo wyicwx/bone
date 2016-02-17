@@ -39,10 +39,12 @@ bone.cli(connect(options));
 
 ##### port
 指定监听的端口号
+
 默认值为：8000
 
 ##### host
 指定监听的ip
+
 默认值为：0.0.0.0
 
 ##### base

@@ -66,7 +66,7 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="./linked.html">调用Grunt、Gulp</a>
+                                <a href="./linked.html">任务流</a>
                             </li>
                         </ul>
                         <h2>
@@ -102,17 +102,20 @@
                 </div>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
-                        <h1 id="-">常用示例</h1>
-<p>这是个简单的项目的配置</p>
+                        <h1 id="-">简易示例</h1>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>); 
 <span class="hljs-comment">// less处理器</span>
 <span class="hljs-keyword">var</span> less = bone.require(<span class="hljs-string">'bone-act-less'</span>);
 <span class="hljs-comment">// 定义文件夹dist</span>
-bone.dest(<span class="hljs-string">'dist'</span>)
-    .cwd(<span class="hljs-string">'~/src'</span>)
-    .src(<span class="hljs-string">'./**/*'</span>)
+bone.dest(<span class="hljs-string">"dist"</span>)
+    .cwd(<span class="hljs-string">"~/src"</span>)
+    .src(<span class="hljs-string">"./**/*"</span>)
     .act(less({
         ieCompat: <span class="hljs-literal">false</span>
+    }, {
+        filter: {
+            ext: <span class="hljs-string">".less"</span>
+        }
     }))
     .rename(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fileName</span>) </span>{
         <span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);

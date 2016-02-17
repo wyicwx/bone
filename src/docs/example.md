@@ -1,17 +1,19 @@
-# 常用示例
-
-这是个简单的项目的配置
+# 简易示例
 
 ```javascript
 var bone = require('bone'); 
 // less处理器
 var less = bone.require('bone-act-less');
 // 定义文件夹dist
-bone.dest('dist')
-    .cwd('~/src')
-    .src('./**/*')
+bone.dest("dist")
+    .cwd("~/src")
+    .src("./**/*")
     .act(less({
         ieCompat: false
+    }, {
+        filter: {
+            ext: ".less"
+        }
     }))
     .rename(function(fileName) {
         var path = require('path');

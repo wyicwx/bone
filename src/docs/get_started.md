@@ -3,7 +3,7 @@
 
 ### 环境
 
-+ 安装 [node.js](https://nodejs.org) 环境，要求node版本为0.12及以上
++ 安装 [node.js](https://nodejs.org) 环境，要求node版本为0.12及以上（支持v4.0）
 + [npm](https://www.npmjs.com/) 包管理
 
 ### 1. 安装bone-cli模块

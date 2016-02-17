@@ -66,7 +66,7 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="./linked.html">调用Grunt、Gulp</a>
+                                <a href="./linked.html">任务流</a>
                             </li>
                         </ul>
                         <h2>
@@ -102,7 +102,33 @@
                 </div>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
-                        <p>coming soon.</p>
+                        <h1 id="-">调用任务流</h1>
+<p>bone的任务流和<code>Grunt</code>、<code>Gulp</code>的任务流概念是相同的，通过定义一个个的基本的任务单元，再串联起来调用，唯一的区别的是bone的任务流提供调用系统命令的能力。</p>
+<p>一个项目往往会有各种各样的辅助脚本，如开发调试、优化压缩、打包部署、在线debug等，不同的脚本可能使用不同的语言实现，也有不同的调用方式，bone提供了一种比较开放的方式能将所有的脚本整合在一起。</p>
+<p><code>bone-cli</code>模块提供了<code>bone.task</code>函数实现任务流来处理事物，先看看一个例子</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">"bone"</span>);
+
+bone.task(<span class="hljs-string">"step1"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// do something</span>
+});
+</code></pre>
+<p>一个基本的任务单元由两部分组成，任务名称和处理单元，处理单元可以是字符串、对象、函数，上面的代码中的<code>step1</code>任务对应的处理单元是函数。</p>
+<p>要执行这个任务，通过<code>bone 任务名</code>的方式执行这个任务</p>
+<pre><code class="lang-sh">$ <span class="hljs-keyword">bone </span>step1
+</code></pre>
+<p>有了一个基本的任务step1，我们继续定义其他的任务，并将任务</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+
+bone.task(<span class="hljs-string">"step1"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// do something</span>
+});
+
+bone.task(<span class="hljs-string">"step2"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// do something</span>
+});
+
+bone.task(<span class="hljs-string">"task"</span>, <span class="hljs-string">"step1"</span>, <span class="hljs-string">"step2"</span>);
+</code></pre>
 
                     </div>
                 </div>
