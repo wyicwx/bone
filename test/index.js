@@ -116,6 +116,10 @@ describe('bone.dest', function() {
         if(!bonefs.existFile('~/dist/rename/zoo.js')) {
             assert.ok(false);
         }
+
+        if(!bonefs.existFile('~/dist/rename/base.transport')) {
+            assert.ok(false);
+        }
     });
 
     it('rename() pass string, function and object parameter only!', function() {

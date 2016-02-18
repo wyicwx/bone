@@ -49,6 +49,14 @@ var renameDir = dist.dest('rename');
             return 'zoo.js'
         });
 
+    renameDir
+        .src('~/src/rename/base.js')
+        .rename({
+            extTransport: {
+                '.js': '.transport'
+            }
+        });
+
 // define single file
 var singleDir = dist.dest('single');
 
