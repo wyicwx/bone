@@ -245,6 +245,20 @@ bone.dest('dist')
     });
 ```
 
+对于批量修改文件后缀可以使用`extTransport`
+
+```javascript
+bone.dest('dist')
+    .src('~/src/**/*')
+    .rename({
+        extTransport: {
+            '.less': '.css'
+        }
+    });
+```
+
+*注：若设置了`ext`参数，则`extTransport`参数无效*
+
 #### act
 
 参数类型: `Plugins`

@@ -279,6 +279,16 @@ bone.dest(<span class="hljs-string">'dist'</span>)
         <span class="hljs-keyword">return</span> fileInfo.name + <span class="hljs-string">'rename.js'</span>;
     });
 </code></pre>
+<p>对于批量修改文件后缀可以使用<code>extTransport</code></p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/src/**/*'</span>)
+    .<span class="hljs-keyword">rename</span>({
+        extTransport: {
+            <span class="hljs-string">'.less'</span>: <span class="hljs-string">'.css'</span>
+        }
+    });
+</code></pre>
+<p><em>注：若设置了<code>ext</code>参数，则<code>extTransport</code>参数无效</em></p>
 <h4 id="act">act</h4>
 <p>参数类型: <code>Plugins</code></p>
 <p><code>act()</code>函数必须在<code>src()</code>函数调用之后调用。该函数用来设置文件映射过程中需要进行修改的处理器</p>
