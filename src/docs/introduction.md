@@ -3,7 +3,9 @@ Bone介绍
 
 ### Bone是什么？
 
-太麻烦了，不写了，以后再写
+coming soon.
+
+
 <!-- Bone是一套web前端开发工具，提供了一套机制来对静态文件进行处理，使静态文件有了动态编程语言的特性：使用include语法包含其他文件，使用layout功能来复用html，甚至可以进行源代码编译等等，只要你能想到的都可以做到。
 
 对于前端开发者来说html、css、js都是静态文件，一般做法上我们使用第三方脚本来对静态文件进行处理，类似 [grunt](https://github.com/gruntjs/grunt)、[gulp](https://github.com/gulpjs/gulp) 这类任务流工具，
