@@ -16,13 +16,9 @@ bone.dest("dist")
             ext: ".less"
         }
     }))
-    .rename(function(fileName) {
-        var path = require('path');
-
-        if (path.extname(fileName) == '.less') {
-            return fileName.replace(/\.less$/, '.css');
-        } else {
-            return fileName;
+    .rename({
+        extTransport: {
+            ".less": ".css"
         }
     });
 
@@ -38,9 +34,15 @@ bone.cli(connect({
     base: "./dist",
     livereload: true
 }));
-
 ```
+这个示例依赖下面这些依赖，使用npm单独安装
 
-+ [bone-act-less]()
-+ [bone-cli-build]
-+ [bone-cli-connect]
++ [bone-act-less](https://github.com/wyicwx/bone-act-less)
++ [bone-cli-build](https://github.com/wyicwx/bone-cli-build)
++ [bone-cli-connect](https://github.com/wyicwx/bone-cli-connect)
+
+配置文件里，bone模块需要单独引用
+
+```javascript
+var bone = require('bone');
+```

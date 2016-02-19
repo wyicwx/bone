@@ -104,8 +104,8 @@
                     <div class="markdown-body">
                         <h1 id="-">简易示例</h1>
 <p>这里提供了一个<code>bonefile.js</code>文件的示例</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>); 
-<span class="hljs-keyword">var</span> less = bone.require(<span class="hljs-string">'bone-act-less'</span>);
+<pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>); 
+<span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
 
 bone.dest(<span class="hljs-string">"dist"</span>)
     .cwd(<span class="hljs-string">"~/src"</span>)
@@ -117,34 +117,34 @@ bone.dest(<span class="hljs-string">"dist"</span>)
             ext: <span class="hljs-string">".less"</span>
         }
     }))
-    .rename(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fileName</span>) </span>{
-        <span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
-
-        <span class="hljs-keyword">if</span> (path.extname(fileName) == <span class="hljs-string">'.less'</span>) {
-            <span class="hljs-keyword">return</span> fileName.replace(<span class="hljs-regexp">/\.less$/</span>, <span class="hljs-string">'.css'</span>);
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-keyword">return</span> fileName;
+    .rename({
+        extTransport: {
+            <span class="hljs-string">".less"</span>: <span class="hljs-string">".css"</span>
         }
     });
 
 <span class="hljs-comment">// build</span>
-<span class="hljs-keyword">var</span> build = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-build'</span>);
+<span class="hljs-built_in">var</span> build = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-build'</span>);
 <span class="hljs-comment">// 加载build命令</span>
 bone.cli(build());
 
 <span class="hljs-comment">// connect本地静态文件服务器</span>
-<span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
+<span class="hljs-built_in">var</span> connect = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
 <span class="hljs-comment">// 加载connect命令</span>
 bone.cli(connect({
     base: <span class="hljs-string">"./dist"</span>,
     livereload: <span class="hljs-literal">true</span>
 }));
 </code></pre>
+<p>这个示例依赖下面这些依赖，使用npm单独安装</p>
 <ul>
-<li><a href="">bone-act-less</a></li>
-<li>[bone-cli-build]</li>
-<li>[bone-cli-connect]</li>
+<li><a href="https://github.com/wyicwx/bone-act-less">bone-act-less</a></li>
+<li><a href="https://github.com/wyicwx/bone-cli-build">bone-cli-build</a></li>
+<li><a href="https://github.com/wyicwx/bone-cli-connect">bone-cli-connect</a></li>
 </ul>
+<p>配置文件里，bone模块需要单独引用</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+</code></pre>
 
                     </div>
                 </div>
