@@ -112,10 +112,6 @@ bone.dest(<span class="hljs-string">"dist"</span>)
     .src(<span class="hljs-string">"./**/*"</span>)
     .act(less({
         ieCompat: <span class="hljs-literal">false</span>
-    }, {
-        filter: {
-            ext: <span class="hljs-string">".less"</span>
-        }
     }))
     .rename({
         extTransport: {
@@ -123,18 +119,8 @@ bone.dest(<span class="hljs-string">"dist"</span>)
         }
     });
 
-<span class="hljs-comment">// build</span>
 <span class="hljs-built_in">var</span> build = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-build'</span>);
-<span class="hljs-comment">// 加载build命令</span>
 bone.cli(build());
-
-<span class="hljs-comment">// connect本地静态文件服务器</span>
-<span class="hljs-built_in">var</span> connect = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
-<span class="hljs-comment">// 加载connect命令</span>
-bone.cli(connect({
-    base: <span class="hljs-string">"./dist"</span>,
-    livereload: <span class="hljs-literal">true</span>
-}));
 </code></pre>
 <p>这个示例依赖下面这些依赖，使用npm单独安装</p>
 <ul>
@@ -144,6 +130,50 @@ bone.cli(connect({
 </ul>
 <p>配置文件里，bone模块需要单独引用</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+</code></pre>
+<p>像下面的配置，将src下的所有文件和文件夹映射到dist文件夹下</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">"dist"</span>)
+    .cwd(<span class="hljs-string">"~/src"</span>)
+    .src(<span class="hljs-string">"./**/*"</span>)
+</code></pre>
+<p>act模块需要手动引入，使用<code>act()</code>函数来加载，less模块因为自身带有过滤器所以只会处理后缀名为<code>.less</code>的文件，<code>ieCompat</code>是传递给less模块的参数</p>
+<pre><code class="lang-javascript">var <span class="hljs-keyword">less</span> = bone.require('bone-act-<span class="hljs-keyword">less</span>');
+
+bone.dest(<span class="hljs-string">"dist"</span>)
+    .cwd(<span class="hljs-string">"~/src"</span>)
+    .src(<span class="hljs-string">"./**/*"</span>)
+    .act(<span class="hljs-keyword">less</span>({
+        ieCompat: <span class="hljs-keyword">false</span>
+    }))
+</code></pre>
+<p>使用<code>rename()</code>函数对文件进行重命名，前面使用less模块对less文件进行了处理，这里通过<code>extTransport</code>参数对修改后缀为<code>.less</code>的文件为<code>.css</code>后缀</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">"dist"</span>)
+    .cwd(<span class="hljs-string">"~/src"</span>)
+    .src(<span class="hljs-string">"./**/*"</span>)
+    .act(less({
+        ieCompat: false
+    }))
+    .<span class="hljs-keyword">rename</span>({
+        extTransport: {
+            <span class="hljs-string">".less"</span>: <span class="hljs-string">".css"</span>
+        }
+    });
+</code></pre>
+<p>单独加载build模块，通过<code>bone.cli()</code>函数进行加载，加载后可以使用<code>bone build</code>命令将所有文件生成到本地</p>
+<pre><code class="lang-javascript">var build = require(<span class="hljs-string">'bone-cli-build'</span>)<span class="hljs-comment">;</span>
+bone.cli(build())<span class="hljs-comment">;</span>
+</code></pre>
+<p>上面仅仅是做了</p>
+<p>，单独加载connect模块，通过<code>bone.cli()</code>函数进行加载，加载后可以使用<code>bone connect</code>命令开启本地资源服务器</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> connect = require(<span class="hljs-string">'bone-cli-connect'</span>);
+bone.cli(connect({
+    <span class="hljs-keyword">base</span>: <span class="hljs-string">"./dist"</span>,
+    livereload: <span class="hljs-keyword">true</span>
+}));
+</code></pre>
+<p>如果你需要调用第三方工具可以使用<code>bone.task</code>，这里以调用grunt为例，定义一个release任务，依次执行<code>bone build</code>，<code>grunt</code>命令。</p>
+<p>在task的参数中，使用<code>build</code>而不是<code>bone build</code>是因为build是已经加载的cli命令，bone会自动去查找是否是bone已经有的命令，</p>
+<pre><code class="lang-javascript">bone.<span class="hljs-keyword">task</span>(<span class="hljs-string">'release'</span>, <span class="hljs-string">'build'</span>, <span class="hljs-string">'grunt'</span>);
 </code></pre>
 
                     </div>
