@@ -1,10 +1,11 @@
 # 简易示例
 
+这里提供了一个`bonefile.js`文件的示例
+
 ```javascript
 var bone = require('bone'); 
-// less处理器
 var less = bone.require('bone-act-less');
-// 定义文件夹dist
+
 bone.dest("dist")
     .cwd("~/src")
     .src("./**/*")
@@ -40,3 +41,6 @@ bone.cli(connect({
 
 ```
 
++ [bone-act-less]()
++ [bone-cli-build]
++ [bone-cli-connect]

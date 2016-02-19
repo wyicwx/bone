@@ -103,10 +103,10 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-">简易示例</h1>
+<p>这里提供了一个<code>bonefile.js</code>文件的示例</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>); 
-<span class="hljs-comment">// less处理器</span>
 <span class="hljs-keyword">var</span> less = bone.require(<span class="hljs-string">'bone-act-less'</span>);
-<span class="hljs-comment">// 定义文件夹dist</span>
+
 bone.dest(<span class="hljs-string">"dist"</span>)
     .cwd(<span class="hljs-string">"~/src"</span>)
     .src(<span class="hljs-string">"./**/*"</span>)
@@ -140,6 +140,11 @@ bone.cli(connect({
     livereload: <span class="hljs-literal">true</span>
 }));
 </code></pre>
+<ul>
+<li><a href="">bone-act-less</a></li>
+<li>[bone-cli-build]</li>
+<li>[bone-cli-connect]</li>
+</ul>
 
                     </div>
                 </div>

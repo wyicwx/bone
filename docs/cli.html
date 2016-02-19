@@ -147,6 +147,14 @@ bone.cli(connect());
 <p>通过执行<code>bone connect</code>可以调用<code>connect</code>模块</p>
 <pre><code class="lang-shell">$ bone <span class="hljs-built_in">connect</span>
 </code></pre>
+<p>重命名cli</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
+<span class="hljs-keyword">var</span> connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
+
+bone.cli(connect(), {
+    alias: <span class="hljs-string">'server'</span>
+});
+</code></pre>
 <h3 id="-">定义任务流</h3>
 <p>通过<code>bone.task()</code>定义任务流，用来将多个需要执行的命令连成一个任务流</p>
 <pre><code class="lang-js"><span class="hljs-selector-tag">bone</span><span class="hljs-selector-class">.task</span>(<span class="hljs-string">'release'</span>, <span class="hljs-string">'rm -rf ./dist/*'</span>, {

@@ -64,6 +64,17 @@ $ bone
 $ bone connect
 ```
 
+重命名cli
+
+```javascript
+var bone = require('bone');
+var connect = require('bone-cli-connect');
+
+bone.cli(connect(), {
+    alias: 'server'
+});
+```
+
 ### 定义任务流
 
 通过`bone.task()`定义任务流，用来将多个需要执行的命令连成一个任务流
