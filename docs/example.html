@@ -163,17 +163,43 @@ bone.dest(<span class="hljs-string">"dist"</span>)
 <pre><code class="lang-javascript">var build = require(<span class="hljs-string">'bone-cli-build'</span>)<span class="hljs-comment">;</span>
 bone.cli(build())<span class="hljs-comment">;</span>
 </code></pre>
-<p>上面仅仅是做了</p>
-<p>，单独加载connect模块，通过<code>bone.cli()</code>函数进行加载，加载后可以使用<code>bone connect</code>命令开启本地资源服务器</p>
+<p>上面的示例仅仅能定义文件和生成文件，并不是合适用来开发，在本机开发需要单独加载connect模块，connect也是cli模块，通过<code>bone.cli()</code>函数进行加载，加载后可以使用<code>bone connect</code>命令开启本地资源服务器</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> connect = require(<span class="hljs-string">'bone-cli-connect'</span>);
 bone.cli(connect({
     <span class="hljs-keyword">base</span>: <span class="hljs-string">"./dist"</span>,
     livereload: <span class="hljs-keyword">true</span>
 }));
 </code></pre>
-<p>如果你需要调用第三方工具可以使用<code>bone.task</code>，这里以调用grunt为例，定义一个release任务，依次执行<code>bone build</code>，<code>grunt</code>命令。</p>
-<p>在task的参数中，使用<code>build</code>而不是<code>bone build</code>是因为build是已经加载的cli命令，bone会自动去查找是否是bone已经有的命令，</p>
+<p>如果你需要调用第三方命令可以使用<code>bone.task</code>，这里以调用grunt为例，定义一个release任务，依次执行<code>bone build</code>，<code>grunt</code>命令。</p>
+<p>在task的参数中，使用<code>build</code>而不是<code>bone build</code>是因为<code>build</code>是已经加载的cli命令，bone会自动去查找是否是bone已有的命令，若不是bone的cli或task的命令则作为系统命令去调用，为了保证bone本身进程安全，使用子进程来调用</p>
 <pre><code class="lang-javascript">bone.<span class="hljs-keyword">task</span>(<span class="hljs-string">'release'</span>, <span class="hljs-string">'build'</span>, <span class="hljs-string">'grunt'</span>);
+</code></pre>
+<p>完整的示例如下</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">var</span> bone = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone'</span>); 
+<span class="hljs-built_in">var</span> less = bone.<span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-act-less'</span>);
+
+bone.dest(<span class="hljs-string">"dist"</span>)
+    .cwd(<span class="hljs-string">"~/src"</span>)
+    .src(<span class="hljs-string">"./**/*"</span>)
+    .act(less({
+        ieCompat: <span class="hljs-literal">false</span>
+    }))
+    .rename({
+        extTransport: {
+            <span class="hljs-string">".less"</span>: <span class="hljs-string">".css"</span>
+        }
+    });
+
+<span class="hljs-built_in">var</span> build = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-build'</span>);
+bone.cli(build());
+
+<span class="hljs-built_in">var</span> connect = <span class="hljs-keyword">require</span>(<span class="hljs-string">'bone-cli-connect'</span>);
+bone.cli(connect({
+    base: <span class="hljs-string">"./dist"</span>,
+    livereload: <span class="hljs-literal">true</span>
+}));
+
+bone.task(<span class="hljs-string">'release'</span>, <span class="hljs-string">'build'</span>, <span class="hljs-string">'grunt'</span>);
 </code></pre>
 
                     </div>
