@@ -121,23 +121,20 @@ bone.task(<span class="hljs-string">"foo"</span>, <span class="hljs-function"><s
 <pre><code class="lang-javascript">var <span class="hljs-keyword">build </span>= require(<span class="hljs-string">"bone-cli-build"</span>)<span class="hljs-comment">;</span>
 
 <span class="hljs-keyword">bone.cli(build());
-</span>
-<span class="hljs-keyword">bone.task("bar", </span><span class="hljs-string">"build"</span>, <span class="hljs-string">"foo"</span>)<span class="hljs-comment">;</span>
+</span><span class="hljs-keyword">bone.task("bar", </span><span class="hljs-string">"build"</span>, <span class="hljs-string">"foo"</span>)<span class="hljs-comment">;</span>
 </code></pre>
-<p>当然也可以去加载外部的命令，例如系统命令，以<code>rm</code>为例子</p>
+<p>当然也可以去加载外部的命令，例如系统命令，以<code>rm</code>为例子，bar任务依次调用的系统rm命令，<code>bone build</code>命令和<code>foo</code>任务</p>
 <pre><code class="lang-javascript">bone.<span class="hljs-keyword">task</span>(<span class="hljs-string">"bar"</span>, <span class="hljs-string">"rm -rf ./dist"</span>, <span class="hljs-string">"build"</span>, <span class="hljs-string">"foo"</span>);
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
-
-bone.task(<span class="hljs-string">"step1"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-comment">// do something</span>
-});
-
-bone.task(<span class="hljs-string">"step2"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-comment">// do something</span>
-});
-
-bone.task(<span class="hljs-string">"task"</span>, <span class="hljs-string">"step1"</span>, <span class="hljs-string">"step2"</span>);
+<p>通过对象传递更详细的参数，下面的代码里定义的zoo任务效果和使用<code>rm -rf ./dist</code>定义的任务一样</p>
+<pre><code class="lang-javascript">bone.task(<span class="hljs-string">"zoo"</span>, {
+<span class="hljs-symbol">    exec:</span> <span class="hljs-string">"rm"</span>,
+<span class="hljs-symbol">    params:</span> {
+<span class="hljs-symbol">        _:</span> <span class="hljs-string">"./dist"</span>,
+<span class="hljs-symbol">        f:</span> null,
+<span class="hljs-symbol">        r:</span> null
+    }
+})
 </code></pre>
 
                     </div>

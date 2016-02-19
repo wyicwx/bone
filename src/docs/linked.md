@@ -30,29 +30,22 @@ $ bone foo
 var build = require("bone-cli-build");
 
 bone.cli(build());
-
 bone.task("bar", "build", "foo");
 ```
 
-当然也可以去加载外部的命令，例如系统命令，以`rm`为例子
+当然也可以去加载外部的命令，例如系统命令，以`rm`为例子，bar任务依次调用的系统rm命令，`bone build`命令和`foo`任务
 
 ```javascript
 bone.task("bar", "rm -rf ./dist", "build", "foo");
 ```
-
-
-
+通过对象传递更详细的参数，下面的代码里定义的zoo任务效果和使用`rm -rf ./dist`定义的任务一样
 ```javascript
-var bone = require('bone');
-
-bone.task("step1", function() {
-    // do something
-});
-
-bone.task("step2", function() {
-    // do something
-});
-
-bone.task("task", "step1", "step2");
+bone.task("zoo", {
+    exec: "rm",
+    params: {
+        _: "./dist",
+        f: null,
+        r: null
+    }
+})
 ```
-
