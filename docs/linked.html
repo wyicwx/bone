@@ -103,20 +103,30 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-">调用任务流</h1>
-<p>bone的任务流和<code>Grunt</code>、<code>Gulp</code>的任务流概念是相同的，通过定义一个个的基本的任务单元，再串联起来调用，唯一的区别的是bone的任务流提供调用系统命令的能力。</p>
+<p>任务流是bone中非常重要的一个特性，任务流和<code>Grunt</code>、<code>Gulp</code>的任务流概念相同，通过定义一个个的基本的任务单元，依次执行。bone的任务流还提供了调用系统命令的能力。</p>
 <p>一个项目往往会有各种各样的辅助脚本，如开发调试、优化压缩、打包部署、在线debug等，不同的脚本可能使用不同的语言实现，也有不同的调用方式，bone提供了一种比较开放的方式能将所有的脚本整合在一起。</p>
 <p><code>bone-cli</code>模块提供了<code>bone.task</code>函数实现任务流来处理事物，先看看一个例子</p>
+<p>这个示例里定义了一个<code>foo</code>的任务，这个任务由一个函数组成</p>
+<p>一个基本的任务单元由两部分组成，任务名称和处理单元，处理单元可以是字符串、对象、函数，上面的代码中的<code>foo</code>任务对应的处理单元是一个函数。</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">"bone"</span>);
 
-bone.task(<span class="hljs-string">"step1"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+bone.task(<span class="hljs-string">"foo"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-comment">// do something</span>
 });
 </code></pre>
-<p>一个基本的任务单元由两部分组成，任务名称和处理单元，处理单元可以是字符串、对象、函数，上面的代码中的<code>step1</code>任务对应的处理单元是函数。</p>
 <p>要执行这个任务，通过<code>bone 任务名</code>的方式执行这个任务</p>
-<pre><code class="lang-sh">$ <span class="hljs-keyword">bone </span>step1
+<pre><code class="lang-sh">$ <span class="hljs-keyword">bone </span>foo
 </code></pre>
-<p>有了一个基本的任务step1，我们继续定义其他的任务，并将任务</p>
+<p>任务也可以去调用其他任务，下面的示例定义了一个<code>bar</code>任务，依次调用了<code>bone build</code>命令和<code>foo</code>任务，这里参数使用<code>build</code>而不是使用<code>bone build</code>，是因为bone已经加载名为<code>build</code>的cli</p>
+<pre><code class="lang-javascript">var <span class="hljs-keyword">build </span>= require(<span class="hljs-string">"bone-cli-build"</span>)<span class="hljs-comment">;</span>
+
+<span class="hljs-keyword">bone.cli(build());
+</span>
+<span class="hljs-keyword">bone.task("bar", </span><span class="hljs-string">"build"</span>, <span class="hljs-string">"foo"</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>当然也可以去加载外部的命令，例如系统命令，以<code>rm</code>为例子</p>
+<pre><code class="lang-javascript">bone.<span class="hljs-keyword">task</span>(<span class="hljs-string">"bar"</span>, <span class="hljs-string">"rm -rf ./dist"</span>, <span class="hljs-string">"build"</span>, <span class="hljs-string">"foo"</span>);
+</code></pre>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bone'</span>);
 
 bone.task(<span class="hljs-string">"step1"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
