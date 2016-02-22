@@ -103,6 +103,63 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-">处理器开发</h1>
+<p>如果已有的处理器无法满足需求，你可以通过这篇文章定制化自己的处理器</p>
+<p>假设我们需要替换文件内容</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = require(<span class="hljs-string">"bone"</span>);
+
+<span class="hljs-keyword">var</span> copyRightAct = bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> content = buffer.toString();
+
+    content = <span class="hljs-string">""</span>;
+
+    <span class="hljs-keyword">this</span>.cacheable();
+
+    <span class="hljs-keyword">callback</span>(<span class="hljs-literal">null</span>, content);
+});
+</code></pre>
+<p>执行函数内<code>this</code>指向runtime对象，runtime对象保存了处理器所处理的文件信息并提供了相关函数</p>
+<pre><code class="lang-javascript">bone.wrapper(function(buffer, encoding, callback) {
+    console.log(this);
+    /*
+    {
+        source: '/path/to/source/file.js',
+        sourceParsed: { // path.parse('/path/to/source/file')
+            root: '/',
+            dir: '/path/to/source',
+            base: 'file.js',
+            ext: '.js',
+            name: 'file'
+        },
+        destination: '/path/to/destination/file.js',
+        destinationParsed: <span class="hljs-meta">{...}</span>, // path.parse('/path/to/destination/file'),
+        bone: <span class="hljs-meta">{...}</span>, // bone对象
+        fs: <span class="hljs-meta">{...}</span>, // bone提供的fs对象
+        options: function() <span class="hljs-meta">{...}</span>,
+        cacheable: function() <span class="hljs-meta">{...}</span>,
+        addDependency: function() <span class="hljs-meta">{...}</span>
+    }
+     */
+
+    callback(null, buffer);    
+});
+</code></pre>
+<p>runtime中，<code>source</code>对应act所处理的文件的映射来源，<code>destination</code>是映射文件的目标路径</p>
+<h4 id="options-">options():</h4>
+<p>参数：Object</p>
+<p>函数返回调用act传入的参数</p>
+<pre><code class="lang-javascript">
+<span class="hljs-keyword">var</span> act = bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> option = <span class="hljs-keyword">this</span>.options({
+
+    });
+
+    <span class="hljs-comment">// do something...</span>
+
+    <span class="hljs-keyword">callback</span>(<span class="hljs-literal">null</span>, buffer);
+});
+</code></pre>
+<h4 id="cacheable-">cacheable():</h4>
+<h4 id="adddependency-">addDependency():</h4>
 
                     </div>
                 </div>
