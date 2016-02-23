@@ -102,7 +102,164 @@
                 </div>
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
-                        <p>coming soon.</p>
+                        <h1 id="-api">内建api</h1>
+<ul>
+<li><a href="#pathresolvefilepath-dir">pathResolve()</a></li>
+<li><a href="#createreadstreamfilepath">createReadStream()</a></li>
+<li><a href="#mkdirdir">mkdir()</a></li>
+<li><a href="#rmfilepath">rm()</a></li>
+<li><a href="#createwritestreamfilepath-option">createWriteStream()</a></li>
+<li><a href="#readfilefilepath-option-callback">readFile()</a></li>
+<li><a href="#writefilefilepath-callback">writeFile()</a></li>
+<li><a href="#searchsearchvalue-option">search()</a></li>
+<li><a href="#refresh">refresh()</a></li>
+<li><a href="#readdirdir">readDir()</a></li>
+<li><a href="#existfilefilepath">existFile()</a></li>
+</ul>
+<p><strong>注意</strong>:<code>fs</code>对象只有在<code>处理器</code>和<code>自定义命令行</code>内通过参数传递获得</p>
+<h4 id="pathresolve-filepath-dir-">pathResolve(filePath, dir)</h4>
+<p>解析文件路径为绝对路径，在bone中除了<code>./</code>,<code>../</code>,<code>/</code>这三种相对路径符号，还添加了<code>~</code>符号用来表示项目根目录，项目根目录为<code>bonefile.js</code>文件所在目录，项目根目录保存在<code>bone.status.base</code>上</p>
+<p>bone的所有接口中文件路径都通过<code>pathResolve</code>函数来解析，参数dir没有定义的情况下默认为项目根目录，后面的代码没有另外声明情况下项目根目录为<code>/base/path</code></p>
+<pre><code class="lang-javascript">fs.pathResolve(<span class="hljs-string">'~/a/b/c'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-string">'/base/path/a/b/c'</span>
+
+fs.pathResolve(<span class="hljs-string">'./a/b/c'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-string">'/base/path/a/b/c'</span>
+
+fs.pathResolve(<span class="hljs-string">'./a/b/c'</span>, <span class="hljs-string">'/base/otherpath'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-string">'/base/otherpath/a/b/c'</span>
+
+fs.pathResolve(<span class="hljs-string">'../'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-string">'/base'</span>
+</code></pre>
+<p>对于绝对路径不影响</p>
+<pre><code class="lang-javascript">fs.pathResolve(<span class="hljs-string">'/base/otherpath'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-string">'/base/otherpath'</span>
+</code></pre>
+<h4 id="createreadstream-filepath-">createReadStream(filePath)</h4>
+<p>创建一个读取虚拟文件或者真实文件的流对象，当读取的文件不存在时会丢出一个错误</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src(<span class="hljs-string">'~/main.js'</span>)
+
+bone.setup(<span class="hljs-string">'./'</span>)<span class="hljs-comment">;</span>
+
+var stream = fs.createReadStream(<span class="hljs-string">'~/dist/main.js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>通过option可传递act对象，给读取的文件追加处理器</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> streamAct = fs.createReadStream(<span class="hljs-string">'~/dist/main.js'</span>, {
+    act: concat()
+});
+</code></pre>
+<h4 id="mkdir-dir-">mkdir(dir)</h4>
+<p>创建文件夹，支持递归创建</p>
+<pre><code class="lang-javascript">fs.<span class="hljs-keyword">mkdir</span>(<span class="hljs-string">'~/dist/release/js'</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<h4 id="rm-filepath-">rm(filePath)</h4>
+<p>删除文件或文件夹，当传入参数是一个文件夹时会删除其子文件夹及文件</p>
+<p><em>ps:这个函数非常危险，请确认后再使用</em></p>
+<pre><code class="lang-javascript">fs.rm(<span class="hljs-string">'~/dist'</span>)
+</code></pre>
+<h4 id="createwritestream-filepath-option-">createWriteStream(filePath, option)</h4>
+<p>创建一个本地文件的写入流</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> writeStream = fs.createWriteStream(<span class="hljs-string">'~/dist/release/js/main.js'</span>);
+</code></pre>
+<p>如果在一个不存在的文件夹下创建一个写入流函数会丢出一个错误，通过option传递focus参数可以在创建写入流之前创建文件夹</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> wStream = fs.createWriteStream(<span class="hljs-string">'~/dist/release/js/main.js'</span>, {
+    focus: <span class="hljs-literal">true</span>
+});
+</code></pre>
+<h4 id="readfile-filepath-option-callback-">readFile(filePath, option, callback)</h4>
+<p>读取文件，参数同<a href="#createreadstreamfilepath">createReadStream</a></p>
+<pre><code class="lang-javascript">fs.readFile(<span class="hljs-string">'~/dist/not/exist/file.js'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e, buffer</span>) </span>{
+    <span class="hljs-keyword">if</span>(e) {
+        <span class="hljs-built_in">console</span>.log(e);
+    }
+});
+
+fs.readFile(<span class="hljs-string">'~/dist/app.js'</span>, {
+    act: concat()
+}, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e, buffer</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(buffer.toString());
+})
+</code></pre>
+<h4 id="writefile-filepath-callback-">writeFile(filePath, callback)</h4>
+<p>写文件</p>
+<p>参数同<a href="#createwritestreamfilepath-option">createWriteStream()</a></p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">fs</span><span class="hljs-selector-class">.writeFile</span>(<span class="hljs-string">'~/dist/foo.js'</span>, <span class="hljs-string">'hello world'</span>, {
+    <span class="hljs-attribute">focus</span>: true
+});
+</code></pre>
+<h4 id="search-searchvalue-option-">search(searchValue, option)</h4>
+<p>支持<a href="https://github.com/isaacs/node-glob">glob</a>语法的文件搜索，传入notFs参数仅搜索虚拟文件</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src([
+        <span class="hljs-string">'~/src/main.js'</span>,
+        <span class="hljs-string">'~/src/lib/jquery.js'</span>
+    ]);
+
+bone.search(<span class="hljs-string">'./**/*'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-string">'/base/path/dist/main.js'</span>
+<span class="hljs-string">'/base/path/dist/jquery.js'</span>
+<span class="hljs-string">'/base/path/src/main.js'</span>
+<span class="hljs-string">'/base/path/src/lib/jquery.js'</span>
+
+bone.search(<span class="hljs-string">'./**/*'</span>, {
+    <span class="hljs-symbol">notFs:</span> <span class="hljs-keyword">true</span>
+});
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-string">'/base/path/dist/main.js'</span>
+<span class="hljs-string">'/base/path/dist/jquery.js'</span>
+</code></pre>
+<h4 id="readdir-dir-">readDir(dir)</h4>
+<p>读取文件，传入参数notFs仅读取虚拟文件夹</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src([
+        <span class="hljs-string">'~/src/main.js'</span>,
+        <span class="hljs-string">'~/src/lib/jquery.js'</span>
+    ]);
+
+fs.readDir(<span class="hljs-string">'./dist'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+[<span class="hljs-string">'main.js'</span>, <span class="hljs-string">'jquery.js'</span>]
+
+fs.readDir(<span class="hljs-string">'~/src'</span>, {
+    <span class="hljs-symbol">notFs:</span> <span class="hljs-keyword">true</span>
+});
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+[]
+</code></pre>
+<h4 id="existfile-filepath-">existFile(filePath)</h4>
+<p>返回文件是否存在，传入参数notFs仅判断虚拟文件</p>
+<pre><code class="lang-javascript">bone.dest(<span class="hljs-string">'dist'</span>)
+    .src([
+        <span class="hljs-string">'~/src/main.js'</span>,
+        <span class="hljs-string">'~/src/lib/jquery.js'</span>
+    ]);
+
+fs.existFile(<span class="hljs-string">'./dist/main.js'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-keyword">true</span>
+
+fs.existFile(<span class="hljs-string">'./dist/index.js'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-keyword">false</span>
+
+fs.existFile(<span class="hljs-string">'~/src/main.js'</span>);
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-keyword">true</span>
+
+fs.existFile(<span class="hljs-string">'~/src/main.js'</span>, {
+    <span class="hljs-symbol">notFs:</span> <span class="hljs-keyword">true</span>
+});
+<span class="hljs-regexp">//</span> <span class="hljs-keyword">return</span>
+<span class="hljs-keyword">false</span>
+</code></pre>
 
                     </div>
                 </div>
