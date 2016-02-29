@@ -1,5 +1,24 @@
 # 内建api
 
+bone提供fs对象来访问虚拟文件系统，fs对象的接口也可以用于访问本地文件系统。有两种方式能获得fs对象：
+
+1、通过处理器的runtime获得
+```javascript
+bone.wrapper(function(buffer, encoding, callback) {
+    var fs = this.fs;
+
+    callback(null, buffer);
+});
+```
+2、通过cli的参数获得
+```javascript
+exports = function(command, bone, fs) {
+    // fs是bone的fs对象
+};
+```
+
+下面是所有fs的api列表：
+
 + [pathResolve()](#pathresolvefilepath-dir)
 + [createReadStream()](#createreadstreamfilepath)
 + [mkdir()](#mkdirdir)

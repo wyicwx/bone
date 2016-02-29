@@ -104,7 +104,8 @@
                     <div class="markdown-body">
                         <h1 id="-">处理器开发</h1>
 <p>如果已有的处理器无法满足需求，你可以通过这篇文章定制化自己的处理器</p>
-<p>假设我们需要替换文件内容</p>
+<p>在bone
+假设我们需要替换文件内容</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> bone = require(<span class="hljs-string">"bone"</span>);
 
 <span class="hljs-keyword">var</span> copyRightAct = bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
@@ -147,19 +148,58 @@
 <h4 id="options-">options():</h4>
 <p>参数：Object</p>
 <p>函数返回调用act传入的参数</p>
-<pre><code class="lang-javascript">
-<span class="hljs-keyword">var</span> act = bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> act = bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">buffer, encoding, callback</span>) </span>{
     <span class="hljs-keyword">var</span> option = <span class="hljs-keyword">this</span>.options({
-
+        foo: <span class="hljs-literal">true</span>,
+        zoo: <span class="hljs-number">0</span>
     });
 
-    <span class="hljs-comment">// do something...</span>
+    <span class="hljs-built_in">console</span>.log(option);
+    <span class="hljs-comment">/* 
+        {
+            foo: true,
+            bar: true,
+            zoo: 100
+        } 
+     */</span>
+});
 
-    <span class="hljs-keyword">callback</span>(<span class="hljs-literal">null</span>, buffer);
+bone.dest(<span class="hljs-string">'js'</span>)
+    .src(<span class="hljs-string">'~/src/bar.ja'</span>)
+    .act(act({
+        bar: <span class="hljs-literal">true</span>,
+        zoo: <span class="hljs-number">100</span>
+    }));
+</code></pre>
+<h4 id="cacheable-">cacheable()</h4>
+<p>cacheable用来设置该处理器处理后的内容是否可以被缓存</p>
+<pre><code class="lang-javascript">bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+    <span class="hljs-keyword">this</span>.cacheable(); <span class="hljs-comment">// 设置为可被缓存</span>
+    <span class="hljs-comment">// ...</span>
 });
 </code></pre>
-<h4 id="cacheable-">cacheable():</h4>
-<h4 id="adddependency-">addDependency():</h4>
+<p>当一个虚拟文件有多个处理器的时候，需要所有处理器都设置为可被缓存该虚拟文件才会被缓存，否则不缓存</p>
+<h4 id="adddependency-">addDependency()</h4>
+<p>在处理器中使用fs读取文件时，自动将所读取的文件记录为该处理文件的依赖文件</p>
+<pre><code class="lang-javascript">bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+    <span class="hljs-keyword">this</span>.fs.readFile(<span class="hljs-string">'~/foo.js'</span>); <span class="hljs-comment">// 在该处理器内读取了~/foo.js文件，则自动将~/foo.js记录为依赖文件</span>
+    <span class="hljs-comment">// ...</span>
+});
+</code></pre>
+<p>当模块在使用fs的接口之外需要依赖其他文件，使用addDependency单独添加依赖文件</p>
+<pre><code class="lang-javascript">bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+    <span class="hljs-keyword">this</span>.addDependency(<span class="hljs-string">'~/bar.js'</span>); 
+    <span class="hljs-comment">// ...</span>
+});
+</code></pre>
+<h3 id="-">包装成处理器模块</h3>
+<p>使用bone.require()方法来引用</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">module</span>.<span class="hljs-title">exports</span>.<span class="hljs-title">act</span> =</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> {</span>
+
+};
+
+<span class="hljs-function"><span class="hljs-keyword">module</span>.<span class="hljs-title">exports</span>.<span class="hljs-title">filter</span> =</span> {};
+</code></pre>
 
                     </div>
                 </div>

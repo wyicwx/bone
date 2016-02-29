@@ -103,6 +103,20 @@
                 <div id="content" class="col-md-9">
                     <div class="markdown-body">
                         <h1 id="-api">内建api</h1>
+<p>bone提供fs对象来访问虚拟文件系统，fs对象的接口也可以用于访问本地文件系统。有两种方式能获得fs对象：</p>
+<p>1、通过处理器的runtime获得</p>
+<pre><code class="lang-javascript">bone.wrapper(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(buffer, encoding, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> fs = <span class="hljs-keyword">this</span>.fs;
+
+    <span class="hljs-keyword">callback</span>(<span class="hljs-literal">null</span>, buffer);
+});
+</code></pre>
+<p>2、通过cli的参数获得</p>
+<pre><code class="lang-javascript">exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(command, bone, fs)</span> </span>{
+    <span class="hljs-comment">// fs是bone的fs对象</span>
+};
+</code></pre>
+<p>下面是所有fs的api列表：</p>
 <ul>
 <li><a href="#pathresolvefilepath-dir">pathResolve()</a></li>
 <li><a href="#createreadstreamfilepath">createReadStream()</a></li>
