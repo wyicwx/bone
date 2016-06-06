@@ -763,16 +763,18 @@ describe('bone.watch', function() {
                 return done(false);
             }
 
-            fs.writeFileSync(sourcePath, 'change file');
-
             setTimeout(function() {
-                if (cache.get(filePath)) {
-                    return done(false);
-                }
+                fs.writeFileSync(sourcePath, 'change file');
+                setTimeout(function() {
+                    if (cache.get(filePath)) {
+                        return done(false);
+                    }
 
-                done();
-                bone.status.watch = false;
-            }, 600);
+                    done();
+                    bone.status.watch = false;
+                }, 500);
+            }, 500);
+
         });
     });
 
@@ -817,21 +819,23 @@ describe('bone.watch', function() {
         fs.writeFile(addFile, 'test', function() {
             setTimeout(function() {
                 bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesA) {
-                    fs.unlink(addFile, function() {
-                        setTimeout(function() {
-                            bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesB) {
-                                var diff = _.difference(dependenciesA, dependenciesB);
+                    setTimeout(function() {
+                        fs.unlink(addFile, function() {
+                            setTimeout(function() {
+                                bone.utils.fs.dependentFile('~/dist/deleteFile/foo.js', function(err, dependenciesB) {
+                                    var diff = _.difference(dependenciesA, dependenciesB);
 
-                                if (diff.length == 1 && diff[0] == addFile) {
-                                    done();
-                                } else {
-                                    done(false);
-                                }
-                            });
-                        }, 400);
-                    });
+                                    if (diff.length == 1 && diff[0] == addFile) {
+                                        done();
+                                    } else {
+                                        done(false);
+                                    }
+                                });
+                            }, 500);
+                        });
+                    }, 500);
                 });
-            }, 400);
+            }, 500);
         });
     });
 });
