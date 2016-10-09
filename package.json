@@ -1,6 +1,6 @@
 {
   "name": "bone",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "web frontend develop toolkit",
   "main": "index.js",
   "scripts": {
@@ -10,13 +10,13 @@
   "author": "wyicwx@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "akostream": "~0.0.5",
-    "colors": "~0.6.1",
+    "akostream": "^0.0.5",
+    "colors": "^0.6.1",
     "gaze": "^1.1.2",
-    "glob": "~3.2.9",
+    "glob": "^7.1.1",
     "lodash": "^3.10.1",
-    "minimatch": "~0.2.14",
-    "mkdirp": "~0.5.0",
+    "minimatch": "^3.0.2",
+    "mkdirp": "^0.5.0",
     "resolve": "^1.1.6",
     "through2": "^0.4.2"
   },
@@ -29,7 +29,7 @@
     "blanket": "*",
     "bone-act-concat": "^0.1.3",
     "bone-act-less": "^0.1.1",
-    "istanbul": "~0.3.2",
+    "istanbul": "^0.4.5",
     "mocha": "*"
   },
   "repository": {
