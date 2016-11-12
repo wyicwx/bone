@@ -401,9 +401,9 @@ describe('bone.fs', function() {
             }
         });
 
-        it('setting single defaultAct for fs', function(done) {
+        it('setting single globalAct for fs', function(done) {
             var fs = FileSystem.getFs({
-                defaultAct: bone.wrapper(function(buffer, encoding, callback) {
+                globalAct: bone.wrapper(function(buffer, encoding, callback) {
                     callback(null, buffer.toString() + '1');
                 })
             });
@@ -427,9 +427,9 @@ describe('bone.fs', function() {
             });
         });
 
-        it('setting multi defaultAct for fs', function(done) {
+        it('setting multi globalAct for fs', function(done) {
             var fs = FileSystem.getFs({
-                defaultAct: [bone.wrapper(function(buffer, encoding, callback) {
+                globalAct: [bone.wrapper(function(buffer, encoding, callback) {
                         callback(null, buffer.toString() + '1');
                     }),
                     bone.wrapper(function(buffer, encoding, callback) {

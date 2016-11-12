@@ -1,3 +1,7 @@
++ 2016-11-12 v0.4.1
+    + 替换watch组件为gaze
+    + 增加act函数global参数，global为true情况下，该文件所用的插件读取文件都会带上该处理器进行处理
+    + 替换FileSystem.getFs的defaultAct参数命为globalAct
 + 2016-02-18 v0.3.1
     + rename增加extTransport项实现后缀动态映射
 + 2016-01-11 v0.3.0
