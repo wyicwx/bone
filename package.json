@@ -1,6 +1,6 @@
 {
   "name": "bone",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "web frontend develop toolkit",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "akostream": "^0.0.5",
+    "chokidar": "^1.7.0",
     "colors": "^0.6.1",
-    "gaze": "^1.1.2",
     "glob": "^7.1.1",
     "lodash": "^3.10.1",
     "minimatch": "^3.0.2",
